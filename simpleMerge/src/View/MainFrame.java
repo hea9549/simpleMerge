@@ -2,15 +2,17 @@ package View;
 
 import Controller.MainController;
 import Data.DataId;
-import Observer.MainFrameObserver;
+import Observer.Observer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Created by ParkHaeSung on 2017-05-15.
  */
-public class MainFrame extends JFrame implements MainFrameObserver{
+public class MainFrame extends JFrame implements Observer{
     private ViewerPanel leftViewer,rightViewer;
     private JButton btn = new JButton("버튼 아이디 1");
     public MainFrame(){
@@ -22,7 +24,7 @@ public class MainFrame extends JFrame implements MainFrameObserver{
         setVisible(true);
 
         add(btn,BorderLayout.CENTER);
-        btn.addActionListener(new MainController.MainViewActionListener().setActionSubjectId(DataId.BTN_TEST));
+        btn.addActionListener(new MainController.MainViewActionListener().setActionSubjectId(DataId.BTN_TEST).build());
     }
     public ViewerPanel getLeftViewer() {
         return leftViewer;
@@ -33,7 +35,18 @@ public class MainFrame extends JFrame implements MainFrameObserver{
     }
 
     @Override
-    public void updateContents(String contents) {
-
+    public void update(Map<Integer, String> data) {
+        Iterator<Integer> keyIterator = data.keySet().iterator();
+        while (keyIterator.hasNext()){
+            int key;
+            switch (key = keyIterator.next()){
+                case DataId.STR_CONTENT:
+                    //컨텐츠 데이터세팅
+                    System.out.println("아 들어온데이터는요 !! = "+data.get(key));
+                    break;
+                default:
+                    System.out.println("옵저버 로 부터 알 수없는 데이터 받음 = "+data.get(key));
+            }
+        }
     }
 }

@@ -1,18 +1,20 @@
 package View;
 
-import Observer.ViewerObserver;
 import Model.ViewerModel;
+import Observer.Observer;
 
 import javax.swing.*;
+import java.util.Map;
 
 /**
  * Created by ParkHaeSung on 2017-05-23.
  */
-public class ViewerPanel extends JPanel implements ViewerObserver {
+public class ViewerPanel extends JPanel implements Observer {
 
     ViewerModel mainModel;
+
     @Override
-    public void updateContents(String contents) {
+    public void update(Map<Integer, String> data) {
 
     }
 }

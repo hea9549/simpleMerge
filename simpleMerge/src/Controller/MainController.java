@@ -74,6 +74,10 @@ public class MainController {
             this.actionSubjectId = actionSubjectId;
             return this;
         }
+
+        public MainViewActionListener build(){
+            return this;
+        }
     }
 
 }
