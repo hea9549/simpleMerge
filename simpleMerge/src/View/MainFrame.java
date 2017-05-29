@@ -14,17 +14,25 @@ import java.util.Map;
  */
 public class MainFrame extends JFrame implements Observer{
     private ViewerPanel leftViewer,rightViewer;
+    private TopMenuPanel topMenuPanel;
+    private CenterMenuPanel centerMenuPanel;
     private JButton btn = new JButton("버튼 아이디 1");
     public MainFrame(){
         leftViewer = new ViewerPanel();
         rightViewer = new ViewerPanel();
+        topMenuPanel = new TopMenuPanel();
+        centerMenuPanel = new CenterMenuPanel();
         setLayout(new BorderLayout());
-        setBounds(100,100,300,200);
+        setBounds(100,0,1500,1000);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
-
+        add(topMenuPanel,BorderLayout.NORTH);
+        add(centerMenuPanel,BorderLayout.CENTER);
+        add(leftViewer,BorderLayout.WEST);
+        add(rightViewer,BorderLayout.EAST);
+/*
         add(btn,BorderLayout.CENTER);
-        btn.addActionListener(new MainController.MainViewActionListener().setActionSubjectId(DataId.BTN_TEST).build());
+        btn.addActionListener(new MainController.MainViewActionListener().setActionSubjectId(DataId.BTN_TEST).build());*/
     }
     public ViewerPanel getLeftViewer() {
         return leftViewer;
