@@ -1,9 +1,7 @@
 package Controller;
 
 import Data.DataId;
-import Model.MainModel;
-import Model.ModelProvider;
-import Model.ViewerModel;
+import Model.*;
 import View.MainFrame;
 
 import java.awt.event.ActionEvent;
@@ -19,16 +17,14 @@ public class MainController {
     private MainFrame mainFrame;
 
     public MainController(){
-        ViewerModel viewerModel = new ViewerModel();
-        viewerModel.addObserver(mainFrame.getLeftViewer());
-        viewerModel.addObserver(mainFrame.getRightViewer());
-        ModelProvider.getInstance().registerModel("viewerModel",viewerModel);
-        this.leftViewerController = new ViewerController();
-        this.rightViewController = new ViewerController();
+
         this.mainFrame = new MainFrame();
         this.mainModel = new MainModel();
+        this.leftViewerController = new ViewerController();
+        this.rightViewController = new ViewerController();
         mainModel.addObserver(mainFrame);
         ModelProvider.getInstance().registerModel("mainModel",mainModel);
+        initProgram();
     }
 
     public static void main(String[] args){
@@ -44,7 +40,6 @@ public class MainController {
                 case 0:
                     break;
                 case DataId.BTN_TEST:
-                    System.out.println("테스트 버튼이 눌렸습니당");
                     break;
                 default:
                     break;
@@ -54,6 +49,22 @@ public class MainController {
         public MainViewActionListener(int actionId){
             this.actionSubjectId = actionId;
         }
+    }
+
+    private void initProgram(){
+        ViewerModel viewerModel = new ViewerModel();
+        viewerModel.addObserver(mainFrame.getLeftViewer());
+        viewerModel.addObserver(mainFrame.getRightViewer());
+        ModelProvider.getInstance().registerModel("viewerModel",viewerModel);
+
+        TopModel topModel = new TopModel();
+        topModel.addObserver(mainFrame.getTopMenuPanel());
+        ModelProvider.getInstance().registerModel("topModel",topModel);
+
+        CenterModel centerModel = new CenterModel();
+        centerModel.addObserver(mainFrame.getCenterMenuPanel());
+        ModelProvider.getInstance().registerModel("centerModel",centerModel);
+
     }
 
 }
