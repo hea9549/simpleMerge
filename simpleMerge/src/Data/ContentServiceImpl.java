@@ -26,6 +26,8 @@ public class ContentServiceImpl implements ContentService {
         leftContent = contents[0];
         rightContent = contents[1];
 
+        reverseContents();
+
         viewerModel.setLeftContents(leftContent);
         viewerModel.setRightContents(rightContent);
 //        for (; ; ) {
@@ -58,6 +60,20 @@ public class ContentServiceImpl implements ContentService {
                 .setContent(content)
                 .setIndex(index)
                 .build();
+    }
+
+    private void reverseContents() {
+        ArrayList<ComparableString> temp;
+
+        temp = new ArrayList<>();
+        for (int i = this.leftContent.size() - 1; i >= 0; i--)
+            temp.add(this.leftContent.get(i));
+        leftContent = temp;
+
+        temp = new ArrayList<>();
+        for (int i = this.rightContent.size() - 1; i >= 0; i--)
+            temp.add(this.rightContent.get(i));
+        rightContent = temp;
     }
 
     private ArrayList<ComparableString>[] editDistance() {
