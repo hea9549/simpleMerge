@@ -11,7 +11,6 @@ import java.util.Map;
  * Created by ParkHaeSung on 2017-05-23.
  */
 public class ViewerPanel extends JPanel implements Observer {
-
     ViewerModel mainModel;
     JTextField contents;
     public ViewerPanel(){
