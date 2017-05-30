@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.ModelProvider;
 import Model.ViewerModel;
 
 import java.awt.event.ActionEvent;
@@ -11,12 +12,8 @@ import java.awt.event.ActionListener;
 public class ViewerController {
     private ViewerModel model;
 
-    public ViewerController(ViewerModel model){
-        this.model = model;
-    }
-
-    public void setModel(ViewerModel model) {
-        this.model = model;
+    public ViewerController(){
+        this.model = (ViewerModel) ModelProvider.getInstance().getModel("viewerModel");
     }
 
     public class ViewerPanelActionListener implements ActionListener{
@@ -25,21 +22,8 @@ public class ViewerController {
         public void actionPerformed(ActionEvent e) {
 
         }
-
-        public int getActionId() {
-            return actionId;
-        }
-
-        public void setActionId(int actionId) {
+        public ViewerPanelActionListener(int actionId){
             this.actionId = actionId;
-        }
-
-        public ViewerPanelActionListener setActionSubjectId(int actionId){
-            this.actionId = actionId;
-            return this;
-        }
-        public ViewerPanelActionListener build(){
-            return this;
         }
     }
 }

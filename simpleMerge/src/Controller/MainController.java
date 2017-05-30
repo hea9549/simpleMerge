@@ -2,6 +2,7 @@ package Controller;
 
 import Data.DataId;
 import Model.MainModel;
+import Model.ModelProvider;
 import Model.ViewerModel;
 import View.MainFrame;
 
@@ -14,36 +15,20 @@ import java.awt.event.ActionListener;
  * */
 public class MainController {
     private ViewerController leftViewerController,rightViewController;
-    private ViewerModel leftViewerModel,rightViewerModel;
     private MainModel mainModel;
     private MainFrame mainFrame;
 
     public MainController(){
-        this.leftViewerModel = new ViewerModel();
-        this.rightViewerModel = new ViewerModel();
-        this.leftViewerController = new ViewerController(leftViewerModel);
-        this.rightViewController = new ViewerController(rightViewerModel);
+        ViewerModel viewerModel = new ViewerModel();
+        viewerModel.addObserver(mainFrame.getLeftViewer());
+        viewerModel.addObserver(mainFrame.getRightViewer());
+        ModelProvider.getInstance().registerModel("viewerModel",viewerModel);
+        this.leftViewerController = new ViewerController();
+        this.rightViewController = new ViewerController();
         this.mainFrame = new MainFrame();
         this.mainModel = new MainModel();
-        leftViewerModel.addObserver(mainFrame.getLeftViewer());
-        rightViewerModel.addObserver(mainFrame.getRightViewer());
         mainModel.addObserver(mainFrame);
-    }
-
-    public MainController(MainModel mainModel){
-        this.leftViewerModel = new ViewerModel();
-        this.rightViewerModel = new ViewerModel();
-        this.leftViewerController = new ViewerController(leftViewerModel);
-        this.rightViewController = new ViewerController(rightViewerModel);
-        this.mainFrame = new MainFrame();
-        this.mainModel = mainModel;
-        leftViewerModel.addObserver(mainFrame.getLeftViewer());
-        rightViewerModel.addObserver(mainFrame.getRightViewer());
-        this.mainModel.addObserver(mainFrame);
-    }
-
-    public void setMainModel(MainModel mainModel) {
-        this.mainModel = mainModel;
+        ModelProvider.getInstance().registerModel("mainModel",mainModel);
     }
 
     public static void main(String[] args){
@@ -66,17 +51,8 @@ public class MainController {
             }
         }
 
-        public int getActionSubjectId() {
-            return actionSubjectId;
-        }
-
-        public MainViewActionListener setActionSubjectId(int actionSubjectId) {
-            this.actionSubjectId = actionSubjectId;
-            return this;
-        }
-
-        public MainViewActionListener build(){
-            return this;
+        public MainViewActionListener(int actionId){
+            this.actionSubjectId = actionId;
         }
     }
 

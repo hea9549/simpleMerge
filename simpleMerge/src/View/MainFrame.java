@@ -1,6 +1,5 @@
 package View;
 
-import Controller.MainController;
 import Data.DataId;
 import Observer.Observer;
 
@@ -30,9 +29,6 @@ public class MainFrame extends JFrame implements Observer{
         add(centerMenuPanel,BorderLayout.CENTER);
         add(leftViewer,BorderLayout.WEST);
         add(rightViewer,BorderLayout.EAST);
-/*
-        add(btn,BorderLayout.CENTER);
-        btn.addActionListener(new MainController.MainViewActionListener().setActionSubjectId(DataId.BTN_TEST).build());*/
     }
     public ViewerPanel getLeftViewer() {
         return leftViewer;
@@ -43,12 +39,12 @@ public class MainFrame extends JFrame implements Observer{
     }
 
     @Override
-    public void update(Map<Integer, String> data) {
+    public void update(Map<Integer, Object> data) {
         Iterator<Integer> keyIterator = data.keySet().iterator();
         while (keyIterator.hasNext()){
             int key;
             switch (key = keyIterator.next()){
-                case DataId.STR_CONTENT:
+                case DataId.UPDATE_LEFT_CONTENT:
                     //컨텐츠 데이터세팅
                     System.out.println("아 들어온데이터는요 !! = "+data.get(key));
                     break;
