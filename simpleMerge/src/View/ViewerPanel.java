@@ -22,7 +22,7 @@ public class ViewerPanel extends JPanel implements Observer {
         setVisible(true);
     }
     @Override
-    public void update(Map<Integer, String> data) {
+    public void update(Map<Integer, Object> data) {
 
     }
 

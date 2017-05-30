@@ -38,6 +38,8 @@ public class MainFrame extends JFrame implements Observer{
         return rightViewer;
     }
 
+    public TopMenuPanel getTopMenuPanel(){ return topMenuPanel;}
+    public CenterMenuPanel getCenterMenuPanel() { return centerMenuPanel; }
     @Override
     public void update(Map<Integer, Object> data) {
         Iterator<Integer> keyIterator = data.keySet().iterator();
