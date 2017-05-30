@@ -52,6 +52,14 @@ public class ContentServiceImpl implements ContentService {
         }
     }
 
+    private ComparableString makeCompStr(byte flag, String content, int index) {
+        return new ComparableString.Builder()
+                .setFlags(flag)
+                .setContent(content)
+                .setIndex(index)
+                .build();
+    }
+
     private ArrayList<ComparableString>[] editDistance() {
         int leftContentSize = leftContent.size();
         int rightContentSize = rightContent.size();
@@ -100,75 +108,91 @@ public class ContentServiceImpl implements ContentService {
         // ComparableString.Build -> new method "makeCompStr(Flag, content, index)"
         while (idx_i != 0 || idx_j != 0) {
             if (idx_i == 0) {
-                tempStr = new ComparableString.Builder()
-                        .setFlags(ComparableString.EMPTY)
-                        .setContent("")
-                        .setIndex(leftIndex)
-                        .build();
+                tempStr = makeCompStr(ComparableString.EMPTY, "", leftIndex);
+//                tempStr = new ComparableString.Builder()
+//                        .setFlags(ComparableString.EMPTY)
+//                        .setContent("")
+//                        .setIndex(leftIndex)
+//                        .build();
                 leftResult.add(tempStr);
                 leftIndex++;
 
-                tempStr = new ComparableString.Builder()
-                        .setFlags(ComparableString.ADDED)
-                        .setContent(rightContent.get(idx_j - 1).getContentString())
-                        .setIndex(rightIndex)
-                        .build();
+                tempStr = makeCompStr(ComparableString.ADDED
+                        , rightContent.get(idx_j - 1).getContentString(), rightIndex);
+//                tempStr = new ComparableString.Builder()
+//                        .setFlags(ComparableString.ADDED)
+//                        .setContent(rightContent.get(idx_j - 1).getContentString())
+//                        .setIndex(rightIndex)
+//                        .build();
                 rightResult.add(tempStr);
                 rightIndex++;
 
                 idx_j--;
             } else if (idx_j == 0) {
-                tempStr = new ComparableString.Builder()
-                        .setFlags(ComparableString.ADDED)
-                        .setContent(leftContent.get(idx_i - 1).getContentString())
-                        .setIndex(leftIndex)
-                        .build();
+                tempStr = makeCompStr(ComparableString.ADDED
+                        , leftContent.get(idx_i - 1).getContentString(), leftIndex);
+//                tempStr = new ComparableString.Builder()
+//                        .setFlags(ComparableString.ADDED)
+//                        .setContent(leftContent.get(idx_i - 1).getContentString())
+//                        .setIndex(leftIndex)
+//                        .build();
                 leftResult.add(tempStr);
                 leftIndex++;
 
-                tempStr = new ComparableString.Builder()
-                        .setFlags(ComparableString.EMPTY)
-                        .setContent("")
-                        .setIndex(rightIndex)
-                        .build();
+                tempStr = makeCompStr(ComparableString.EMPTY, "", rightIndex);
+//                tempStr = new ComparableString.Builder()
+//                        .setFlags(ComparableString.EMPTY)
+//                        .setContent("")
+//                        .setIndex(rightIndex)
+//                        .build();
                 rightResult.add(tempStr);
                 rightIndex++;
 
                 idx_i--;
             } else {
-                tempScore = findMin(scoreMatrix[idx_i - 1][idx_j - 1], scoreMatrix[idx_i - 1][idx_j], scoreMatrix[idx_i][idx_j - 1]);
+                tempScore = findMin(scoreMatrix[idx_i - 1][idx_j - 1]
+                        , scoreMatrix[idx_i - 1][idx_j], scoreMatrix[idx_i][idx_j - 1]);
 
                 if (tempScore == scoreMatrix[idx_i - 1][idx_j - 1]) {
                     if (scoreMatrix[idx_i][idx_j] == tempScore) {
-                        tempStr = new ComparableString.Builder()
-                                .setFlags(ComparableString.EQUAL)
-                                .setContent(leftContent.get(idx_i - 1).getContentString())
-                                .setIndex(leftIndex)
-                                .build();
+                        tempStr = makeCompStr(ComparableString.EQUAL
+                                , leftContent.get(idx_i - 1).getContentString(), leftIndex);
+//                        tempStr = new ComparableString.Builder()
+//                                .setFlags(ComparableString.EQUAL)
+//                                .setContent(leftContent.get(idx_i - 1).getContentString())
+//                                .setIndex(leftIndex)
+//                                .build();
                         leftResult.add(tempStr);
                         leftIndex++;
 
-                        tempStr = new ComparableString.Builder()
-                                .setFlags(ComparableString.EQUAL)
-                                .setContent(rightContent.get(idx_j - 1).getContentString())
-                                .setIndex(rightIndex)
-                                .build();
+
+                        tempStr = makeCompStr(ComparableString.EQUAL
+                                , rightContent.get(idx_j - 1).getContentString(), rightIndex);
+//                        tempStr = new ComparableString.Builder()
+//                                .setFlags(ComparableString.EQUAL)
+//                                .setContent(rightContent.get(idx_j - 1).getContentString())
+//                                .setIndex(rightIndex)
+//                                .build();
                         rightResult.add(tempStr);
                         rightIndex++;
                     } else {
-                        tempStr = new ComparableString.Builder()
-                                .setFlags(ComparableString.DIFF)
-                                .setContent(leftContent.get(idx_i - 1).getContentString())
-                                .setIndex(leftIndex)
-                                .build();
+                        tempStr = makeCompStr(ComparableString.DIFF
+                                , leftContent.get(idx_i - 1).getContentString(), leftIndex);
+//                        tempStr = new ComparableString.Builder()
+//                                .setFlags(ComparableString.DIFF)
+//                                .setContent(leftContent.get(idx_i - 1).getContentString())
+//                                .setIndex(leftIndex)
+//                                .build();
                         leftResult.add(tempStr);
                         leftIndex++;
 
-                        tempStr = new ComparableString.Builder()
-                                .setFlags(ComparableString.DIFF)
-                                .setContent(rightContent.get(idx_j - 1).getContentString())
-                                .setIndex(rightIndex)
-                                .build();
+                        tempStr = makeCompStr(ComparableString.DIFF
+                                , rightContent.get(idx_j - 1).getContentString(), rightIndex);
+//                        tempStr = new ComparableString.Builder()
+//                                .setFlags(ComparableString.DIFF)
+//                                .setContent(rightContent.get(idx_j - 1).getContentString())
+//                                .setIndex(rightIndex)
+//                                .build();
                         rightResult.add(tempStr);
                         rightIndex++;
                     }
@@ -176,37 +200,43 @@ public class ContentServiceImpl implements ContentService {
                     idx_i--;
                     idx_j--;
                 } else if (tempScore == scoreMatrix[idx_i - 1][idx_j]) {
-                    tempStr = new ComparableString.Builder()
-                            .setFlags(ComparableString.ADDED)
-                            .setContent(leftContent.get(idx_i - 1).getContentString())
-                            .setIndex(leftIndex)
-                            .build();
+                    tempStr = makeCompStr(ComparableString.ADDED
+                            , leftContent.get(idx_i - 1).getContentString(), leftIndex);
+//                    tempStr = new ComparableString.Builder()
+//                            .setFlags(ComparableString.ADDED)
+//                            .setContent(leftContent.get(idx_i - 1).getContentString())
+//                            .setIndex(leftIndex)
+//                            .build();
                     leftResult.add(tempStr);
                     leftIndex++;
 
-                    tempStr = new ComparableString.Builder()
-                            .setFlags(ComparableString.EMPTY)
-                            .setContent("")
-                            .setIndex(rightIndex)
-                            .build();
+                    tempStr = makeCompStr(ComparableString.EMPTY, "", rightIndex);
+//                    tempStr = new ComparableString.Builder()
+//                            .setFlags(ComparableString.EMPTY)
+//                            .setContent("")
+//                            .setIndex(rightIndex)
+//                            .build();
                     rightResult.add(tempStr);
                     rightIndex++;
 
                     idx_i--;
                 } else {
-                    tempStr = new ComparableString.Builder()
-                            .setFlags(ComparableString.EMPTY)
-                            .setContent("")
-                            .setIndex(leftIndex)
-                            .build();
+                    tempStr = makeCompStr(ComparableString.EMPTY, "", leftIndex);
+//                    tempStr = new ComparableString.Builder()
+//                            .setFlags(ComparableString.EMPTY)
+//                            .setContent("")
+//                            .setIndex(leftIndex)
+//                            .build();
                     leftResult.add(tempStr);
                     leftIndex++;
 
-                    tempStr = new ComparableString.Builder()
-                            .setFlags(ComparableString.ADDED)
-                            .setContent(rightContent.get(idx_j - 1).getContentString())
-                            .setIndex(rightIndex)
-                            .build();
+                    tempStr = makeCompStr(ComparableString.ADDED
+                            , rightContent.get(idx_j - 1).getContentString(), rightIndex);
+//                    tempStr = new ComparableString.Builder()
+//                            .setFlags(ComparableString.ADDED)
+//                            .setContent(rightContent.get(idx_j - 1).getContentString())
+//                            .setIndex(rightIndex)
+//                            .build();
                     rightResult.add(tempStr);
                     rightIndex++;
 
