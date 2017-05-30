@@ -23,7 +23,7 @@ public class Observable{
         return false;
     }
 
-    public void notifyChange(Map<Integer, String> data){
+    public void notifyChange(Map<Integer, Object> data){
         for(int i = 0 ; i < observerList.size();i++){
             observerList.get(i).update(data);
         }
