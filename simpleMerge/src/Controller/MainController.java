@@ -40,7 +40,6 @@ public class MainController {
             switch (actionSubjectId){
                 case DataId.ACTION_BTN_COMPARE:
                     ContentService contentService = new ContentServiceImpl();
-                    contentService.compare();
                     break;
                 default:
                     break;

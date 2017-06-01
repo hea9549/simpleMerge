@@ -2,7 +2,6 @@ package Data;
 
 import Model.ModelProvider;
 import Model.ViewerModel;
-import com.sun.org.glassfish.gmbal.ParameterNames;
 
 import java.util.ArrayList;
 
@@ -10,15 +9,9 @@ import java.util.ArrayList;
  * Created by ParkHaeSung on 2017-05-30.
  */
 public class ContentServiceImpl implements ContentService {
-    private ArrayList<ComparableBlock> leftContent;
-    private ArrayList<ComparableBlock> rightContent;
 
     @Override
-    public void compare() {
-        ViewerModel leftViewerModel = (ViewerModel) ModelProvider.getInstance().getModel("leftViewerModel");
-        ViewerModel rightViewerModel = (ViewerModel) ModelProvider.getInstance().getModel("rightViewerModel");
-        leftContent = leftViewerModel.getContentsBlock();
-        rightContent = rightViewerModel.getContentsBlock();
+    public ArrayList<ComparableBlock>[] compare(ArrayList<ComparableBlock> leftContent,ArrayList<ComparableBlock> rightContent) {
 
 
         ArrayList<ComparableBlock>[] contents;
@@ -44,9 +37,7 @@ public class ContentServiceImpl implements ContentService {
                 System.out.println("알고리즘 속 왼쪽꺼 , state = "+leftContent.get(i).getContents().get(j).getState());
             }
         }
-        leftViewerModel.setContentsBlock(leftContent);
-        rightViewerModel.setContentsBlock(rightContent);
-
+        return contents;
     }
 
     private int findMin(int num1, int num2, int num3) {
