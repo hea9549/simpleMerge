@@ -28,6 +28,6 @@ public class ViewerPanel extends JPanel implements Observer {
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(500,500);
+        return new Dimension(650,500);
     }
 }
