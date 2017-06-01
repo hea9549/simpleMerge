@@ -35,20 +35,33 @@ public class ViewerPanel extends JPanel implements Observer {
     }
 
     private void setMenuPanel(){
-        btn_load = new JButton("로드");
+        btn_load = new JButton(new ImageIcon("img/white_load.png"));
+        btn_load.setOpaque(false);
+        btn_load.setContentAreaFilled(false);
+        btn_load.setBorderPainted(false);
         btn_load.addActionListener(new ViewerController.ViewerPanelActionListener(DataId.ACTION_VIEWER_BTN_LOAD));
-        btn_edit = new JButton("에딧");
+
+        btn_edit = new JButton(new ImageIcon("img/white_edit.png"));
+        btn_edit.setOpaque(false);
+        btn_edit.setContentAreaFilled(false);
+        btn_edit.setBorderPainted(false);
         btn_edit.addActionListener(new ViewerController.ViewerPanelActionListener(DataId.ACTION_VIEWER_BTN_EDIT));
-        btn_save = new JButton("세이부");
+
+        btn_save = new JButton(new ImageIcon("img/white_save.png"));
+        btn_save.setOpaque(false);
+        btn_save.setContentAreaFilled(false);
+        btn_save.setBorderPainted(false);
         btn_save.addActionListener(new ViewerController.ViewerPanelActionListener(DataId.ACTION_VIEWER_BTN_SAVE));
+
         menuPanel.add(btn_load);
         menuPanel.add(btn_edit);
         menuPanel.add(btn_save);
+        menuPanel.setBackground(Color.GRAY);
     }
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(650, 900);
+        return new Dimension(600, 700);
     }
 
     private void updateContent(ArrayList<ComparableBlock> contentsBlock) {

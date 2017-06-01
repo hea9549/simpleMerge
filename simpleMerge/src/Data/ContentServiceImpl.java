@@ -39,10 +39,10 @@ public class ContentServiceImpl implements ContentService {
         leftContent = contents[0];
         rightContent = contents[1];
 
+
         leftViewerModel.setContentsBlock(leftContent);
         rightViewerModel.setContentsBlock(rightContent);
     }
-
     private int findMin(int num1, int num2, int num3) {
         if (num1 < num2) {
             if (num1 < num3)
@@ -211,6 +211,7 @@ public class ContentServiceImpl implements ContentService {
 
         resultBlocks[0] = leftBlocks;
         resultBlocks[1] = rightBlocks;
+
 
         return resultBlocks;
     }
