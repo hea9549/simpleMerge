@@ -79,8 +79,8 @@ public class ComparableString {
     }
 
     public static class Builder {
-        byte state = 0;
-        String content = "";
+        private byte state = 0;
+        private String content = "";
         public Builder setFlags(byte... param) {
             for (int i = 0; i < param.length; i++) {
                 if (param[i] == EQUAL) state += EQUAL;

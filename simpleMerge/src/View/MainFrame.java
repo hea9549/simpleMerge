@@ -1,12 +1,9 @@
 package View;
 
 import Data.DataId;
-import Observer.Observer;
-
+import Observer.*;
 import javax.swing.*;
 import java.awt.*;
-import java.util.Iterator;
-import java.util.Map;
 
 /**
  * Created by ParkHaeSung on 2017-05-15.
@@ -40,19 +37,10 @@ public class MainFrame extends JFrame implements Observer{
 
     public TopMenuPanel getTopMenuPanel(){ return topMenuPanel;}
     public CenterMenuPanel getCenterMenuPanel() { return centerMenuPanel; }
+
+
     @Override
-    public void update(Map<Integer, Object> data) {
-        Iterator<Integer> keyIterator = data.keySet().iterator();
-        while (keyIterator.hasNext()){
-            int key;
-            switch (key = keyIterator.next()){
-                case DataId.UPDATE_LEFT_CONTENT:
-                    //컨텐츠 데이터세팅
-                    System.out.println("아 들어온데이터는요 !! = "+data.get(key));
-                    break;
-                default:
-                    System.out.println("옵저버 로 부터 알 수없는 데이터 받음 = "+data.get(key));
-            }
-        }
+    public void updateView(UpdateEvent updateEvent) {
+
     }
 }

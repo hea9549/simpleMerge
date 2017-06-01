@@ -12,14 +12,16 @@ public class ModelProvider {
     private Map<String,Object> modelMap = new HashMap<String,Object>();
     private ModelProvider(){
     }
+
     public static ModelProvider getInstance(){
         if(instance == null) instance = new ModelProvider();
         return instance;
     }
 
     /**
-     * @return Object : when there is model
-     *          false : when there is already same key
+     * @param key key name for find model that is register when call {@link #registerModel}
+     * @return <strong>Object</strong>: when there is model<br/>
+     *          <strong>null</strong> : when there is already same key
      * */
     public Object getModel(String key){
         Iterator<String> modelIterator = modelMap.keySet().iterator();
@@ -30,8 +32,10 @@ public class ModelProvider {
     }
 
     /**
-     * @return true : when register success
-     *          false : when there is already same key
+     * @param key primary key for find model object when call {@link #getModel(String key)}
+     * @param model for register model object to use like DI
+     * @return <strong>true</strong> : when register success<br/>
+     *          <strong>false</strong> : when there is already same key
      * */
     public boolean registerModel(String key,Object model){
         Iterator<String> modelIterator = modelMap.keySet().iterator();
