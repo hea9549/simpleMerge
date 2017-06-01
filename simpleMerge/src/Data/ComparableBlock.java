@@ -15,6 +15,7 @@ public class ComparableBlock {
     private ArrayList<ComparableString> contents;
     public ComparableBlock(byte state){
         this.state = state;
+        contents = new ArrayList<>();
     }
     public ComparableBlock(byte state,ArrayList<ComparableString> contents){
         this.state= state;
