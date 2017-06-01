@@ -84,6 +84,10 @@ public class ComparableString {
         this.index = index;
     }
 
+    public byte getState() {
+        return state;
+    }
+
     static class Builder {
         byte state = 0;
         int index = -1;
