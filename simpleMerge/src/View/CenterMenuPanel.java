@@ -1,10 +1,8 @@
 package View;
 
-import Observer.Observer;
-
+import Observer.*;
 import javax.swing.*;
 import java.awt.*;
-import java.util.Map;
 
 /**
  * Created by ParkHaeSung on 2017-05-29.
@@ -68,6 +66,7 @@ public class CenterMenuPanel extends JPanel implements Observer {
     }
 
     @Override
-    public void update(Map<Integer, Object> data) {
+    public void updateView(UpdateEvent updateEvent) {
+
     }
 }

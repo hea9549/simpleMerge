@@ -1,5 +1,7 @@
 package Controller;
 
+import Data.ContentService;
+import Data.ContentServiceImpl;
 import Data.DataId;
 import Model.*;
 import View.MainFrame;
@@ -20,8 +22,6 @@ public class MainController {
 
         this.mainFrame = new MainFrame();
         this.mainModel = new MainModel();
-        this.leftViewerController = new ViewerController();
-        this.rightViewController = new ViewerController();
         mainModel.addObserver(mainFrame);
         ModelProvider.getInstance().registerModel("mainModel",mainModel);
         initProgram();
@@ -37,9 +37,9 @@ public class MainController {
         public void actionPerformed(ActionEvent e) {
             System.out.println("아이디 = "+actionSubjectId);
             switch (actionSubjectId){
-                case 0:
-                    break;
-                case DataId.BTN_TEST:
+                case DataId.ACTION_BTN_COMPARE:
+                    ContentService contentService = new ContentServiceImpl();
+                    contentService.compare();
                     break;
                 default:
                     break;
@@ -52,10 +52,16 @@ public class MainController {
     }
 
     private void initProgram(){
-        ViewerModel viewerModel = new ViewerModel();
-        viewerModel.addObserver(mainFrame.getLeftViewer());
-        viewerModel.addObserver(mainFrame.getRightViewer());
-        ModelProvider.getInstance().registerModel("viewerModel",viewerModel);
+        ViewerModel leftViewerModel = new ViewerModel();
+        leftViewerModel.addObserver(mainFrame.getLeftViewer());
+        ModelProvider.getInstance().registerModel("leftViewerModel",leftViewerModel);
+
+        ViewerModel rightViewerModel = new ViewerModel();
+        rightViewerModel.addObserver(mainFrame.getRightViewer());
+        ModelProvider.getInstance().registerModel("rightViewerModel",leftViewerModel);
+
+        this.leftViewerController = new ViewerController(leftViewerModel);
+        this.rightViewController = new ViewerController(rightViewerModel);
 
         TopModel topModel = new TopModel();
         topModel.addObserver(mainFrame.getTopMenuPanel());

@@ -18,11 +18,9 @@ public class ComparableString {
     public static final byte EMPTY = 0b00001000;
     private byte state = 0b00000000;
     private String contentString;
-    private int index;
 
-    private ComparableString(byte state, int index, String content){
+    private ComparableString(byte state, String content){
         this.state =state;
-        this.index = index;
         this.contentString = content;
     }
 
@@ -76,18 +74,13 @@ public class ComparableString {
         this.contentString = contentString;
     }
 
-    public int getIndex() {
-        return index;
+    public byte getState() {
+        return state;
     }
 
-    public void setIndex(int index) {
-        this.index = index;
-    }
-
-    class Builder {
-        byte state = 0;
-        int index = -1;
-        String content = "";
+    public static class Builder {
+        private byte state = 0;
+        private String content = "";
         public Builder setFlags(byte... param) {
             for (int i = 0; i < param.length; i++) {
                 if (param[i] == EQUAL) state += EQUAL;
@@ -100,13 +93,9 @@ public class ComparableString {
 
         public ComparableString build() {
             checkValid();
-            return new ComparableString(state,index,content);
+            return new ComparableString(state,content);
         }
 
-        public Builder setIndex(int index){
-            this.index = index;
-            return this;
-        }
 
         public Builder setContent(String content){
             this.content = content;
@@ -115,7 +104,6 @@ public class ComparableString {
 
         private void checkValid() {
             if((ADDED & state) == ADDED && (EMPTY & state) == EMPTY)throw new IllegalArgumentException("더해진것과 빈게 동시에 있을 수 없음");
-            if(index == -1 || index < 0) throw new IllegalArgumentException("index is not initial or cannot under 0");
             if((EQUAL & state) == EQUAL&& (DIFF & state) == DIFF) throw new IllegalArgumentException("같음과 다름이 동시에 존재할 수 없음");
         }
     }
