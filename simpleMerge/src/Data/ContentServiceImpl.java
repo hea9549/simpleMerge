@@ -104,9 +104,9 @@ public class ContentServiceImpl implements ContentService {
         int[][] scoreMatrix = new int[leftStrListSize + 1][rightStrListSize + 1];
 
         scoreMatrix[0][0] = 0;
-        for (int i = 1; i < leftStrListSize; i++)
+        for (int i = 1; i < leftStrListSize + 1; i++)
             scoreMatrix[i][0] = i;
-        for (int j = 1; j < rightStrListSize; j++)
+        for (int j = 1; j < rightStrListSize + 1; j++)
             scoreMatrix[0][j] = j;
 
         for (int i = 1; i < leftStrListSize + 1; i++) {
