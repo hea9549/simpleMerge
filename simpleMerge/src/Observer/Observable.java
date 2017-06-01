@@ -2,7 +2,6 @@ package Observer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by ParkHaeSung on 2017-05-24.
@@ -23,9 +22,9 @@ public class Observable{
         return false;
     }
 
-    public void notifyChange(Map<Integer, Object> data){
+    public void notifyChange(UpdateEvent updateEvent){
         for(int i = 0 ; i < observerList.size();i++){
-            observerList.get(i).update(data);
+            observerList.get(i).updateView(updateEvent);
         }
     }
 }
