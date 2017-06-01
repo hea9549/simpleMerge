@@ -52,19 +52,19 @@ public class TopMenuPanel extends JPanel implements Observer{
         add(rightAll);
 
         diffLine.setSize(200,20);
-        diffLine.setLocation(1150,70);
+        diffLine.setLocation(1100,70);
         f1=new Font("Arial Black", Font.BOLD, 20);
         diffLine.setForeground(Color.WHITE);
         diffLine.setFont(f1);
         add(diffLine);
 
         setSize(250,250);
-        setBackground(new Color(240, 173, 203));
+        setBackground(new Color(244, 158, 186));
         setVisible(true);
     }
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(1500,100);
+        return new Dimension(1350,100);
     }
 
 

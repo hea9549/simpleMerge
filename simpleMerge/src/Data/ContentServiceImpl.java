@@ -20,7 +20,7 @@ public class ContentServiceImpl implements ContentService {
         ViewerModel rightViewerModel = (ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel");
         leftContent = leftViewerModel.getContentsBlock();
         rightContent = rightViewerModel.getContentsBlock();
-
+/*
         ArrayList<ComparableString>[] contents = new ArrayList[2];
         contents = editDistance();
 
@@ -38,10 +38,9 @@ public class ContentServiceImpl implements ContentService {
 //                    .setIndex(1)
 //                    .build();
 //            leftContent.add(a);
-//        }
+//        }*/
     }
-
-    private int findMin(int num1, int num2, int num3) {
+/*    private int findMin(int num1, int num2, int num3) {
         if (num1 < num2) {
             if (num1 < num3)
                 return num1;
@@ -266,5 +265,5 @@ public class ContentServiceImpl implements ContentService {
         result[1] = rightResult;
 
         return result;
-    }
+    }*/
 }
