@@ -28,4 +28,12 @@ public class ViewerModel extends Observable {
         notifyChange(notifyValue);
         notifyValue.clear();
     }
+
+    public ArrayList<ComparableString> getLeftContents() {
+        return leftContent;
+    }
+
+    public ArrayList<ComparableString> getRightContents() {
+        return rightContent;
+    }
 }
