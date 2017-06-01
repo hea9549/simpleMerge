@@ -55,10 +55,13 @@ public class MainController {
     }
 
     private void initProgram(){
-        ViewerModel viewerModel = new ViewerModel();
-        viewerModel.addObserver(mainFrame.getLeftViewer());
-        viewerModel.addObserver(mainFrame.getRightViewer());
-        ModelProvider.getInstance().registerModel("viewerModel",viewerModel);
+        ViewerModel leftViewerModel = new ViewerModel();
+        leftViewerModel.addObserver(mainFrame.getLeftViewer());
+        ModelProvider.getInstance().registerModel("leftViewerModel",leftViewerModel);
+
+        ViewerModel rightViewerModel = new ViewerModel();
+        rightViewerModel.addObserver(mainFrame.getRightViewer());
+        ModelProvider.getInstance().registerModel("rightViewerModel",leftViewerModel);
 
         TopModel topModel = new TopModel();
         topModel.addObserver(mainFrame.getTopMenuPanel());

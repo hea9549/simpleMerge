@@ -16,9 +16,10 @@ public class ContentServiceImpl implements ContentService {
 
     @Override
     public void compare() {
-        ViewerModel viewerModel = (ViewerModel) ModelProvider.getInstance().getModel("viewerModel");
-        leftContent = viewerModel.getLeftContents();
-        rightContent = viewerModel.getRightContents();
+        ViewerModel leftViewerModel = (ViewerModel) ModelProvider.getInstance().getModel("leftViewerModel");
+        ViewerModel rightViewerModel = (ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel");
+        leftContent = leftViewerModel.getContentsBlock();
+        rightContent = rightViewerModel.getContentsBlock();
 
         ArrayList<ComparableString>[] contents = new ArrayList[2];
         contents = editDistance();
@@ -28,8 +29,8 @@ public class ContentServiceImpl implements ContentService {
 
         reverseContents();
 
-        viewerModel.setLeftContents(leftContent);
-        viewerModel.setRightContents(rightContent);
+        leftViewerModel.setLeftContents(leftContent);
+        leftViewerModel.setContentsBlock(rightContent);
 //        for (; ; ) {
 //            ComparableString a = new ComparableString.Builder()
 //                    .setFlags(ComparableString.DIFF)
