@@ -11,15 +11,10 @@ import java.util.ArrayList;
 /**
  * Created by ParkHaeSung on 2017-05-23.
  */
-public class LeftViewerController implements ViewerController{
+public class LeftViewerController {
     private static ViewerModel model;
     public LeftViewerController(ViewerModel model) {
         this.model = model;
-    }
-
-    @Override
-    public ActionListener getActionListener(int id) {
-        return new ViewerPanelActionListener(id);
     }
 
     public static class ViewerPanelActionListener implements ActionListener {

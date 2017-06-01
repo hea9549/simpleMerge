@@ -82,6 +82,7 @@ public class ComparableString {
         private byte state = 0;
         private String content = "";
         public Builder setFlags(byte... param) {
+            System.out.println("빌더 속인데요 파람은 = "+param[0]);
             for (int i = 0; i < param.length; i++) {
                 if (param[i] == EQUAL) state += EQUAL;
                 if (param[i] == DIFF) state += DIFF;

@@ -59,21 +59,11 @@ public class RightViewerPanel extends JPanel implements Observer {
         try {
             for (ComparableBlock comparableBlock : contentsBlock) {
                 for (ComparableString contents : comparableBlock.getContents()) {
-                    switch (contents.getState()) {
-                        case ComparableString.ADDED:
-                            styledDocument.insertString(styledDocument.getLength(), contents.getContentString()+"\n", AttributeUtil.getAddedAttribute());
-                            break;
-                        case ComparableString.DEFAULT:
-                            styledDocument.insertString(styledDocument.getLength(), contents.getContentString()+"\n", AttributeUtil.getDefaultAttribute());
-                            break;
-                        case ComparableString.EMPTY:
-                            styledDocument.insertString(styledDocument.getLength(), contents.getContentString()+"\n", AttributeUtil.getEmptyAttribute());
-                            break;
-                        case ComparableString.DIFF:
-                            styledDocument.insertString(styledDocument.getLength(), contents.getContentString()+"\n", AttributeUtil.getDiffAttribute());
-                            break;
-                    }
-
+                    styledDocument.insertString(styledDocument.getLength(), contents.getContentString()+"\n", AttributeUtil.getDefaultAttribute());
+                    if(contents.isAddedString())styledDocument.insertString(styledDocument.getLength(), contents.getContentString()+"\n", AttributeUtil.getAddedAttribute());
+                    if(contents.isEmptyString())styledDocument.insertString(styledDocument.getLength(), contents.getContentString()+"\n", AttributeUtil.getEmptyAttribute());
+                    if(contents.isDiffString())styledDocument.insertString(styledDocument.getLength(), contents.getContentString()+"\n", AttributeUtil.getDiffAttribute());
+                    System.out.println("오른쪽꺼인데요, state = "+contents.getState()+"인데요!, "+contents.isAddedString()+contents.isEmptyString()+contents.isDiffString());
                 }
             }
             jTextPane.setDocument(styledDocument);

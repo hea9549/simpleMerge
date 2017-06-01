@@ -1,5 +1,7 @@
 package View;
 
+import Controller.MainController;
+import Data.DataId;
 import Observer.*;
 import javax.swing.*;
 import java.awt.*;
@@ -56,6 +58,7 @@ public class CenterMenuPanel extends JPanel implements Observer {
         compare.setOpaque(false);
         compare.setContentAreaFilled(false);
         compare.setBorderPainted(false);
+        compare.addActionListener(new MainController.MainViewActionListener(DataId.ACTION_BTN_COMPARE));
         add(compare);
 
         setBackground(new Color(220, 210, 213));
