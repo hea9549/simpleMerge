@@ -16,7 +16,7 @@ public class AttributeUtil {
 
     public static SimpleAttributeSet getDefaultAttribute(){
         SimpleAttributeSet addedAttribute = new SimpleAttributeSet();
-        StyleConstants.setBackground(addedAttribute, Color.YELLOW);
+        StyleConstants.setBackground(addedAttribute, Color.WHITE);
         return addedAttribute;
     }
 

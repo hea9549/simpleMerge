@@ -14,7 +14,8 @@ import java.awt.event.ActionListener;
  * @since 2017-05-24
  * */
 public class MainController {
-    private ViewerController leftViewerController,rightViewController;
+    private LeftViewerController leftViewerController;
+    private RightViewerController rightViewController;
     private MainModel mainModel;
     private MainFrame mainFrame;
 
@@ -39,7 +40,6 @@ public class MainController {
             switch (actionSubjectId){
                 case DataId.ACTION_BTN_COMPARE:
                     ContentService contentService = new ContentServiceImpl();
-                    contentService.compare();
                     break;
                 default:
                     break;
@@ -60,8 +60,8 @@ public class MainController {
         rightViewerModel.addObserver(mainFrame.getRightViewer());
         ModelProvider.getInstance().registerModel("rightViewerModel",leftViewerModel);
 
-        this.leftViewerController = new ViewerController(leftViewerModel);
-        this.rightViewController = new ViewerController(rightViewerModel);
+        this.leftViewerController = new LeftViewerController(leftViewerModel);
+        this.rightViewController = new RightViewerController(rightViewerModel);
 
         TopModel topModel = new TopModel();
         topModel.addObserver(mainFrame.getTopMenuPanel());
