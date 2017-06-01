@@ -25,10 +25,12 @@ public class ComparableBlock {
         return contents.size();
     }
 
+    public ComparableString getContents(int index) {
+        return contents.get(index);
+    }
 
-
-    public ArrayList<ComparableString> getContents() {
-        return contents;
+    public void addContents(ComparableString comparableString){
+        contents.add(comparableString);
     }
 
     public void setContents(ArrayList<ComparableString> contents) {
