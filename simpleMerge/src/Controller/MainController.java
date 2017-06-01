@@ -1,5 +1,7 @@
 package Controller;
 
+import Data.ContentService;
+import Data.ContentServiceImpl;
 import Data.DataId;
 import Model.*;
 import View.MainFrame;
@@ -39,7 +41,8 @@ public class MainController {
             switch (actionSubjectId){
                 case 0:
                     break;
-                case DataId.BTN_TEST:
+                case DataId.ACTION_BTN_COMPARE:
+                    ContentService contentService = new ContentServiceImpl();
                     break;
                 default:
                     break;

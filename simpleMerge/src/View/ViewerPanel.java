@@ -4,6 +4,7 @@ import Model.ViewerModel;
 import Observer.Observer;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.util.Map;
 
@@ -16,8 +17,15 @@ public class ViewerPanel extends JPanel implements Observer {
     public ViewerPanel(){
         this.setLayout(new BorderLayout());
         /*this.setBounds(0,0,500,500);*/
-        contents = new JTextField("내용");
+        contents = new JTextField("내용"){
+            @Override
+            public void setBorder(Border border) {
+
+            }
+        };
         contents.setVisible(true);
+        TextField textField;
+
         add(contents,BorderLayout.CENTER);
         setVisible(true);
     }

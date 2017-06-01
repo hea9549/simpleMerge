@@ -11,8 +11,8 @@ import java.util.Map;
  * Created by ParkHaeSung on 2017-05-30.
  */
 public class ContentServiceImpl implements ContentService {
-    private ArrayList<ComparableString> leftContent;
-    private ArrayList<ComparableString> rightContent;
+    private ArrayList<ComparableBlock> leftContent;
+    private ArrayList<ComparableBlock> rightContent;
 
     @Override
     public void compare() {
