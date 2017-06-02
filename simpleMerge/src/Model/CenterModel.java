@@ -14,6 +14,10 @@ public class CenterModel extends Observable {
     private boolean canLowerBlock = false;
     private boolean canCompare = false;
     private int compareBlockIndex = 0;
+    public void initModel(){
+        setCanCompare(false);
+    }
+
     public boolean isCanLeftMerge() {
         return canLeftMerge;
     }

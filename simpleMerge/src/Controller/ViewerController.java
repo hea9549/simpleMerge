@@ -63,6 +63,8 @@ public class ViewerController implements Controller {
                     if(!((ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel")).isEditing()
                         &&!((ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel")).isEditing()){
                         ((CenterModel)ModelProvider.getInstance().getModel("centerModel")).setCanCompare(true);
+                    }else{
+                        ((CenterModel)ModelProvider.getInstance().getModel("centerModel")).setCanCompare(false);
                     }
 
                     break;
