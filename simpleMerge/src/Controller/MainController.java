@@ -1,5 +1,6 @@
 package Controller;
 
+import Data.ComparableBlock;
 import Data.ContentService;
 import Data.ContentServiceImpl;
 import Data.DataId;
@@ -8,30 +9,42 @@ import View.MainFrame;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 /**
  * @author ParkHaeSung
  * @since 2017-05-24
  * */
-public class MainController {
-    private LeftViewerController leftViewerController;
-    private RightViewerController rightViewController;
+public class MainController implements Controller{
+    private ViewerController leftViewerController;
+    private ViewerController rightViewerController;
     private MainModel mainModel;
     private MainFrame mainFrame;
-
     public MainController(){
-
-        this.mainFrame = new MainFrame();
+        initProgramModel();
+        this.leftViewerController = new ViewerController((ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel"));
+        this.rightViewerController = new ViewerController((ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel"));
+        this.mainFrame = new MainFrame(this,leftViewerController, rightViewerController);
+        ((ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel")).addObserver(mainFrame.getLeftViewer());
+        ((ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel")).addObserver(mainFrame.getRightViewer());
+        ((ViewerModel)ModelProvider.getInstance().getModel("centerModel")).addObserver(mainFrame.getCenterMenuPanel());
+        ((ViewerModel)ModelProvider.getInstance().getModel("topModel")).addObserver(mainFrame.getTopMenuPanel());
         this.mainModel = new MainModel();
         mainModel.addObserver(mainFrame);
         ModelProvider.getInstance().registerModel("mainModel",mainModel);
-        initProgram();
+
     }
 
     public static void main(String[] args){
         new MainController();
     }
-    public static class MainViewActionListener implements ActionListener {
+
+    @Override
+    public ActionListener getActionListener(int id) {
+        return new MainViewActionListener(id);
+    }
+
+    public class MainViewActionListener implements ActionListener {
         private int actionSubjectId = 0;
 
         @Override
@@ -40,6 +53,11 @@ public class MainController {
             switch (actionSubjectId){
                 case DataId.ACTION_BTN_COMPARE:
                     ContentService contentService = new ContentServiceImpl();
+                    ViewerModel leftModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");
+                    ViewerModel rightModel = (ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel");
+                    ArrayList<ComparableBlock>[] compareResult = contentService.compare(leftModel.getContentsBlock(),rightModel.getContentsBlock());
+                    leftModel.setContentsBlock(compareResult[0]);
+                    rightModel.setContentsBlock(compareResult[1]);
                     break;
                 default:
                     break;
@@ -51,24 +69,17 @@ public class MainController {
         }
     }
 
-    private void initProgram(){
+    private void initProgramModel(){
         ViewerModel leftViewerModel = new ViewerModel();
-        leftViewerModel.addObserver(mainFrame.getLeftViewer());
         ModelProvider.getInstance().registerModel("leftViewerModel",leftViewerModel);
 
         ViewerModel rightViewerModel = new ViewerModel();
-        rightViewerModel.addObserver(mainFrame.getRightViewer());
-        ModelProvider.getInstance().registerModel("rightViewerModel",leftViewerModel);
-
-        this.leftViewerController = new LeftViewerController(leftViewerModel);
-        this.rightViewController = new RightViewerController(rightViewerModel);
+        ModelProvider.getInstance().registerModel("rightViewerModel",rightViewerModel);
 
         TopModel topModel = new TopModel();
-        topModel.addObserver(mainFrame.getTopMenuPanel());
         ModelProvider.getInstance().registerModel("topModel",topModel);
 
         CenterModel centerModel = new CenterModel();
-        centerModel.addObserver(mainFrame.getCenterMenuPanel());
         ModelProvider.getInstance().registerModel("centerModel",centerModel);
 
     }
