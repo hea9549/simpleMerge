@@ -31,4 +31,8 @@ public class AttributeUtil {
         return emptyAttribute;
     }
 
+    public static SimpleAttributeSet setClickAttribute(SimpleAttributeSet attributeSet){
+        StyleConstants.setBackground(attributeSet,StyleConstants.getBackground(attributeSet).brighter());
+        return attributeSet;
+    }
 }
