@@ -1,5 +1,6 @@
 package View;
 
+import Controller.Controller;
 import Controller.MainController;
 import Data.DataId;
 import Observer.*;
@@ -10,21 +11,15 @@ import java.awt.*;
  * Created by ParkHaeSung on 2017-05-29.
  */
 public class CenterMenuPanel extends JPanel implements Observer {
-    /*
-    JButton right=new JButton(new ImageIcon("img/right_active.png"));
-    JButton left=new JButton(new ImageIcon("img/left_active.png"));
-    JButton up=new JButton(new ImageIcon("img/up_active.png"));
-    JButton down=new JButton(new ImageIcon("img/down_active.png"));
-    JButton compare=new JButton(new ImageIcon("img/compare_active.png"));
-    */
 
     JButton right=new JButton(new ImageIcon("img/white_right.png"));
     JButton left=new JButton(new ImageIcon("img/white_left.png"));
     JButton up=new JButton(new ImageIcon("img/white_up.png"));
     JButton down=new JButton(new ImageIcon("img/white_down.png"));
     JButton compare=new JButton(new ImageIcon("img/white_compare.png"));
-
-    CenterMenuPanel(){
+    Controller controller;
+    CenterMenuPanel(Controller controller){
+        this.controller = controller;
         right.setSize(100,95);
         right.setLocation(700, 180);
         right.setOpaque(false);
@@ -58,7 +53,7 @@ public class CenterMenuPanel extends JPanel implements Observer {
         compare.setOpaque(false);
         compare.setContentAreaFilled(false);
         compare.setBorderPainted(false);
-        compare.addActionListener(new MainController.MainViewActionListener(DataId.ACTION_BTN_COMPARE));
+        compare.addActionListener(controller.getActionListener(DataId.ACTION_BTN_COMPARE));
         add(compare);
 
         setBackground(new Color(220, 210, 213));
