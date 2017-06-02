@@ -1,5 +1,6 @@
 package View;
 
+import Controller.Controller;
 import Observer.*;
 
 import javax.swing.*;
@@ -21,8 +22,9 @@ public class TopMenuPanel extends JPanel implements Observer{
     JButton leftAll=new JButton(new ImageIcon("img/white_left_all.png"));
     JButton rightAll=new JButton(new ImageIcon("img/white_right_all.png"));
     Font f1;
-    TopMenuPanel(){
-
+    Controller controller;
+    TopMenuPanel(Controller controller){
+        this.controller = controller;
         setLayout(null);
         newProject.setSize(80,80);
         newProject.setLocation(0,10);

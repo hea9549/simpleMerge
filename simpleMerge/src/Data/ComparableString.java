@@ -24,6 +24,7 @@ public class ComparableString {
         this.contentString = content;
     }
 
+    public boolean isDefaultString() { return state == DEFAULT;}
     public boolean isEqualString() {
         return (EQUAL & state) == EQUAL;
     }

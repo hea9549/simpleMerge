@@ -3,22 +3,21 @@ package Data;
 /**
  * Created by ParkHaeSung on 2017-05-24.
  */
-public class DataId {
-    public final static int ACTION_BTN_COMPARE = 1;
-    public final static int ACTION_BTN_MERGE = 2;
-    public final static int UPDATE_VIEWER_CONTENT = 3;
-    public static final int ACTION_BTN_TEST = 999;
-    public static final int UPDATE_CENTER_CAN_LEFT_MERGE = 4;
-    public static final int UPDATE_CENTER_CAN_RIGHT_MERGE = 5;
-    public static final int UPDATE_CENTER_CAN_UPPER_BLOCK = 6;
-    public static final int UPDATE_CENTER_CAN_LOWER_BLOCK = 7;
-    public static final int UPDATE_CENTER_CAN_COMPARE = 8;
-    public static final int UPDATE_TOP_CAN_LEFT_ALL = 9;
-    public static final int UPDATE_TOP_CAN_RIGHT_ALL = 10;
-    public static final int UPDATE_TOP_CAN_SAVE_ALL = 11;
-    public static final int UPDATE_TOP_DIFF_LINE = 12;
-    public static final int UPDATE_VIEWER_EDITED = 13;
-    public static final int ACTION_VIEWER_BTN_LOAD = 14;
-    public static final int ACTION_VIEWER_BTN_EDIT = 15;
-    public static final int ACTION_VIEWER_BTN_SAVE = 16;
+public enum DataId {
+    ACTION_BTN_COMPARE
+    ,ACTION_BTN_MERGE
+    ,UPDATE_VIEWER_CONTENT
+     ,UPDATE_CENTER_CAN_LEFT_MERGE
+     ,UPDATE_CENTER_CAN_RIGHT_MERGE
+     ,UPDATE_CENTER_CAN_UPPER_BLOCK
+     ,UPDATE_CENTER_CAN_LOWER_BLOCK
+     ,UPDATE_CENTER_CAN_COMPARE
+     ,UPDATE_TOP_CAN_LEFT_ALL
+     ,UPDATE_TOP_CAN_RIGHT_ALL
+     ,UPDATE_TOP_CAN_SAVE_ALL
+     ,UPDATE_TOP_DIFF_LINE
+     ,UPDATE_VIEWER_EDITED
+     ,ACTION_VIEWER_BTN_LOAD
+     ,ACTION_VIEWER_BTN_EDIT
+     ,ACTION_VIEWER_BTN_SAVE
 }

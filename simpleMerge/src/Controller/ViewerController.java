@@ -3,9 +3,13 @@ package Controller;
 import Data.*;
 import Model.ViewerModel;
 
+import javax.xml.crypto.Data;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import Data.DataId.*;
+
+import static Data.DataId.*;
 
 /**
  * Created by ParkHaeSung on 2017-05-23.
@@ -17,19 +21,19 @@ public class ViewerController implements Controller {
     }
 
     @Override
-    public ActionListener getActionListener(int id) {
+    public ActionListener getActionListener(DataId id) {
         return new ViewerPanelActionListener(id);
     }
 
-    public class ViewerPanelActionListener implements ActionListener {
-        private int actionId = 0;
+    private class ViewerPanelActionListener implements ActionListener {
+        private DataId actionId;
 
         @Override
         public void actionPerformed(ActionEvent e) {
             switch (actionId) {
-                case DataId.ACTION_VIEWER_BTN_EDIT:
+                case ACTION_VIEWER_BTN_EDIT:
                     break;
-                case DataId.ACTION_VIEWER_BTN_LOAD:
+                case ACTION_VIEWER_BTN_LOAD:
                     FileService fileService = new TextFileService();
                     ArrayList<ComparableString> contents = fileService.getContents(fileService.getFilePath());
                     ArrayList<ComparableBlock> comparableBlocks = new ArrayList<>();
@@ -38,13 +42,13 @@ public class ViewerController implements Controller {
                     }
                     model.setContentsBlock(comparableBlocks);
                     break;
-                case DataId.ACTION_VIEWER_BTN_SAVE:
+                case ACTION_VIEWER_BTN_SAVE:
                     break;
 
             }
         }
 
-        public ViewerPanelActionListener(int actionId) {
+        public ViewerPanelActionListener(DataId actionId) {
             this.actionId = actionId;
         }
     }
