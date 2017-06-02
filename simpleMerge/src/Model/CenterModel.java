@@ -68,6 +68,9 @@ public class CenterModel extends Observable {
     }
 
     public void setCompareBlockIndex(int compareBlockIndex) {
+        ViewerModel leftViewerModel = ((ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel"));
+        ViewerModel rightViewerModel = ((ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel"));
+        if(leftViewerModel.getContentsBlock().size()-1<compareBlockIndex) return;
         this.compareBlockIndex = compareBlockIndex;
     }
 }
