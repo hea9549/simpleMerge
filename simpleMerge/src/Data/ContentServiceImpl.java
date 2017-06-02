@@ -186,47 +186,23 @@ public class ContentServiceImpl implements ContentService {
 
         comparingState prevState = comparingState.NOTCOMPARED;
         comparingState nowState;
+        comparingState nextState;
 
         // Block 만들기
-        for (int idx = 1; idx < leftStrResult.size(); idx++) {
-            tempLeftList.add(leftStrResult.get(idx - 1));
-            tempRightList.add(rightStrResult.get(idx - 1));
+        for (int idx = 0; idx < leftStrResult.size() - 1; idx++) {
+            tempLeftList.add(leftStrResult.get(idx));
+            tempRightList.add(rightStrResult.get(idx));
 
-            if (leftStrResult.get(idx - 1).getState() == rightStrResult.get(idx - 1).getState()) {
-                if (leftStrResult.get(idx - 1).getState() == ComparableString.EQUAL)
-                    nowState = comparingState.EQUAL;
-                else
-                    nowState = comparingState.DIFF;
+            nowState = getComparingState(leftStrResult.get(idx), rightStrResult.get(idx));
+            nextState = getComparingState(leftStrResult.get(idx + 1), rightStrResult.get(idx + 1));
 
-            } else {
-                if (leftStrResult.get(idx - 1).getState() == ComparableString.ADDED)
-                    nowState = comparingState.LEFTADDED;
-                else
-                    nowState = comparingState.RIGHTADDED;
-
-            }
-
-            if (!prevState.equals(comparingState.NOTCOMPARED) && !nowState.equals(prevState)) {
-                leftBlocks.add(new ComparableBlock(leftStrResult.get(idx - 1).getState(), tempLeftList));
-                rightBlocks.add(new ComparableBlock(rightStrResult.get(idx - 1).getState(), tempRightList));
+            if (!nowState.equals(nextState)) {
+                leftBlocks.add(new ComparableBlock(leftStrResult.get(idx).getState(), tempLeftList));
+                rightBlocks.add(new ComparableBlock(rightStrResult.get(idx).getState(), tempRightList));
                 tempLeftList = new ArrayList<>();
                 tempRightList = new ArrayList<>();
             }
-
-            prevState = nowState;
         }
-
-//        for (int idx = 1; idx < leftStrResult.size(); idx++) {
-//            tempLeftList.add(leftStrResult.get(idx - 1));
-//            tempRightList.add(rightStrResult.get(idx - 1));
-//
-//            if (leftStrResult.get(idx).getState() != rightStrResult.get(idx).getState()) {
-//                leftBlocks.add(new ComparableBlock(leftStrResult.get(idx - 1).getState(), tempLeftList));
-//                rightBlocks.add(new ComparableBlock(rightStrResult.get(idx - 1).getState(), tempRightList));
-//                tempLeftList = new ArrayList<>();
-//                tempRightList = new ArrayList<>();
-//            }
-//        }
 
         tempLeftList.add(leftStrResult.get(leftStrResult.size() - 1));
         tempRightList.add(rightStrResult.get(rightStrResult.size() - 1));
@@ -237,11 +213,27 @@ public class ContentServiceImpl implements ContentService {
         resultBlocks[0] = leftBlocks;
         resultBlocks[1] = rightBlocks;
 
-
         return resultBlocks;
     }
 
     enum comparingState {
         NOTCOMPARED, EQUAL, DIFF, LEFTADDED, RIGHTADDED
+    }
+
+    private comparingState getComparingState(ComparableString str1, ComparableString str2) {
+        byte strState1 = str1.getState();
+        byte strState2 = str2.getState();
+
+        if (strState1 == strState2) {
+            if (strState1 == ComparableString.EQUAL)
+                return comparingState.EQUAL;
+            else
+                return comparingState.DIFF;
+        } else {
+            if (strState1 == ComparableString.ADDED)
+                return comparingState.LEFTADDED;
+            else
+                return comparingState.RIGHTADDED;
+        }
     }
 }
