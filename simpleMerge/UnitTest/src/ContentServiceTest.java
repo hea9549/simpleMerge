@@ -79,4 +79,33 @@ public class ContentServiceTest {
         comparableBlocks1.add(block1);
         assertEquals(4, contentService.compare(comparableBlocks1, comparableBlocks2)[0].size());
     }
+
+    @Test
+    public void haesungTest(){
+        ArrayList<ComparableString> contents1 = new ArrayList<>();
+        contents1.add(new ComparableString.Builder().setFlags(ComparableString.DEFAULT).setContent("a").build());
+        contents1.add(new ComparableString.Builder().setFlags(ComparableString.DEFAULT).setContent("b").build());
+        contents1.add(new ComparableString.Builder().setFlags(ComparableString.DEFAULT).setContent("c").build());
+        contents1.add(new ComparableString.Builder().setFlags(ComparableString.DEFAULT).setContent("d").build());
+        contents1.add(new ComparableString.Builder().setFlags(ComparableString.DEFAULT).setContent("e").build());
+        ComparableBlock block1 = new ComparableBlock(ComparableBlock.DEFAULT, contents1);
+        comparableBlocks1.add(block1);
+
+        ArrayList<ComparableString> contents2 = new ArrayList<>();
+        contents2.add(new ComparableString.Builder().setFlags(ComparableString.DEFAULT).setContent("a").build());
+        contents2.add(new ComparableString.Builder().setFlags(ComparableString.DEFAULT).setContent("c").build());
+        contents2.add(new ComparableString.Builder().setFlags(ComparableString.DEFAULT).setContent("h").build());
+        contents2.add(new ComparableString.Builder().setFlags(ComparableString.DEFAULT).setContent("d").build());
+        contents2.add(new ComparableString.Builder().setFlags(ComparableString.DEFAULT).setContent("f").build());
+        ComparableBlock block2 = new ComparableBlock(ComparableBlock.DEFAULT, contents2);
+        comparableBlocks2.add(block2);
+
+        ContentService contentService = new ContentServiceImpl();
+        assertEquals(4, contentService.compare(comparableBlocks1, comparableBlocks2)[0].size());
+        assertEquals(1, contentService.compare(comparableBlocks1, comparableBlocks2)[0].get(0).getContents().size());
+        assertEquals(2, contentService.compare(comparableBlocks1, comparableBlocks2)[0].get(1).getContents().size());
+        assertEquals(1, contentService.compare(comparableBlocks1, comparableBlocks2)[0].get(2).getContents().size());
+        assertEquals(1, contentService.compare(comparableBlocks1, comparableBlocks2)[0].get(3).getContents().size());
+
+    }
 }
