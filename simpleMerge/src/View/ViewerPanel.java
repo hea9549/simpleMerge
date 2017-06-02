@@ -11,6 +11,8 @@ import java.awt.*;
 import java.util.ArrayList;
 import Util.AttributeUtil;
 
+import static Data.DataId.UPDATE_VIEWER_CONTENT;
+
 /**
  * Created by ParkHaeSung on 2017-05-23.
  */
@@ -25,7 +27,7 @@ public class ViewerPanel extends JPanel implements Observer {
         this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
         menuPanel = new JPanel(new FlowLayout());
         jTextPane = new JTextPane();
-
+        jTextPane.setContentType("text/html");
         setMenuPanel();
 
         add(menuPanel);
@@ -64,11 +66,12 @@ public class ViewerPanel extends JPanel implements Observer {
     }
 
     private void updateContent(ArrayList<ComparableBlock> contentsBlock) {
-        styledDocument = new DefaultStyledDocument();
+        styledDocument = jTextPane.getStyledDocument();
         try {
+            styledDocument.remove(0,styledDocument.getLength());
             for (ComparableBlock comparableBlock : contentsBlock) {
                 for (ComparableString contents : comparableBlock.getContents()) {
-                    styledDocument.insertString(styledDocument.getLength(), contents.getContentString()+"\n", AttributeUtil.getDefaultAttribute());
+                    if(contents.isDefaultString() || contents.isEqualString())styledDocument.insertString(styledDocument.getLength(), contents.getContentString()+"\n", AttributeUtil.getDefaultAttribute());
                     if(contents.isAddedString())styledDocument.insertString(styledDocument.getLength(), contents.getContentString()+"\n", AttributeUtil.getAddedAttribute());
                     if(contents.isEmptyString())styledDocument.insertString(styledDocument.getLength(), contents.getContentString()+"\n", AttributeUtil.getEmptyAttribute());
                     if(contents.isDiffString())styledDocument.insertString(styledDocument.getLength(), contents.getContentString()+"\n", AttributeUtil.getDiffAttribute());
@@ -86,7 +89,7 @@ public class ViewerPanel extends JPanel implements Observer {
     @Override
     public void updateView(UpdateEvent updateEvent) {
         switch (updateEvent.getId()){
-            case DataId.UPDATE_VIEWER_CONTENT:
+            case UPDATE_VIEWER_CONTENT:
                 updateContent((ArrayList)updateEvent.getObject());
                 break;
         }

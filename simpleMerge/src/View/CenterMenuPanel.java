@@ -68,7 +68,7 @@ public class CenterMenuPanel extends JPanel implements Observer {
     @Override
     public void updateView(UpdateEvent updateEvent) {
         switch(updateEvent.getId()){
-            case DataId.UPDATE_CENTER_CAN_RIGHT_MERGE:
+            case UPDATE_CENTER_CAN_RIGHT_MERGE:
                 if((Boolean)updateEvent.getObject()){
                     btn_right.setIcon(new ImageIcon("img/white_saveAll.png"));
                     btn_right.setEnabled(true);
@@ -78,7 +78,7 @@ public class CenterMenuPanel extends JPanel implements Observer {
                     btn_right.setEnabled(false);
                 }
                 break;
-            case DataId.UPDATE_CENTER_CAN_LEFT_MERGE:
+            case UPDATE_CENTER_CAN_LEFT_MERGE:
                 if((Boolean)updateEvent.getObject()){
                     btn_left.setIcon(new ImageIcon("img/white_saveAll.png"));
                     btn_left.setEnabled(true);
@@ -88,7 +88,7 @@ public class CenterMenuPanel extends JPanel implements Observer {
                     btn_left.setEnabled(false);
                 }
                 break;
-            case DataId.UPDATE_CENTER_CAN_UPPER_BLOCK:
+            case UPDATE_CENTER_CAN_UPPER_BLOCK:
                 if((Boolean)updateEvent.getObject()){
                     btn_up.setIcon(new ImageIcon("img/white_saveAll.png"));
                     btn_up.setEnabled(true);
@@ -98,7 +98,7 @@ public class CenterMenuPanel extends JPanel implements Observer {
                     btn_up.setEnabled(false);
                 }
                 break;
-            case DataId.UPDATE_CENTER_CAN_LOWER_BLOCK:
+            case UPDATE_CENTER_CAN_LOWER_BLOCK:
                 if((Boolean)updateEvent.getObject()){
                     btn_down.setIcon(new ImageIcon("img/white_saveAll.png"));
                     btn_down.setEnabled(true);
@@ -108,7 +108,7 @@ public class CenterMenuPanel extends JPanel implements Observer {
                     btn_down.setEnabled(false);
                 }
                 break;
-            case DataId.UPDATE_CENTER_CAN_COMPARE:
+            case UPDATE_CENTER_CAN_COMPARE:
                 if((Boolean)updateEvent.getObject()){
                     btn_compare.setIcon(new ImageIcon("img/white_saveAll.png"));
                     btn_compare.setEnabled(true);

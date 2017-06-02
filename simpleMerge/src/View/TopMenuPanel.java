@@ -2,6 +2,7 @@ package View;
 
 import Controller.Controller;
 import Data.DataId;
+
 import Observer.*;
 
 import javax.swing.*;
@@ -75,7 +76,7 @@ public class TopMenuPanel extends JPanel implements Observer{
     @Override
     public void updateView(UpdateEvent updateEvent) {
         switch(updateEvent.getId()){
-            case DataId.UPDATE_TOP_CAN_SAVE_ALL:
+            case UPDATE_TOP_CAN_SAVE_ALL:
                 if((Boolean)updateEvent.getObject()){
                     btn_saveAll.setIcon(new ImageIcon("img/white_saveAll.png"));
                     btn_saveAll.setEnabled(true);
@@ -85,7 +86,7 @@ public class TopMenuPanel extends JPanel implements Observer{
                     btn_saveAll.setEnabled(false);
                 }
                 break;
-            case DataId.UPDATE_TOP_CAN_LEFT_ALL:
+            case UPDATE_TOP_CAN_LEFT_ALL:
                 if((Boolean)updateEvent.getObject()){
                     btn_leftAll.setIcon(new ImageIcon("img/white_saveAll.png"));
                     btn_leftAll.setEnabled(true);
@@ -95,7 +96,7 @@ public class TopMenuPanel extends JPanel implements Observer{
                     btn_leftAll.setEnabled(false);
                 }
                 break;
-            case DataId.UPDATE_TOP_CAN_RIGHT_ALL:
+            case UPDATE_TOP_CAN_RIGHT_ALL:
                 if((Boolean)updateEvent.getObject()){
                     btn_rightAll.setIcon(new ImageIcon("img/white_saveAll.png"));
                     btn_rightAll.setEnabled(true);
@@ -105,7 +106,9 @@ public class TopMenuPanel extends JPanel implements Observer{
                     btn_rightAll.setEnabled(false);
                 }
                 break;
-            case DataId.UPDATE_TOP_DIFF_LINE:
+            case UPDATE_TOP_DIFF_LINE:
+                lb_diffLine.setText("diff line : "+((Integer)updateEvent.getObject()));
+
                 /*
                 if((Boolean)updateEvent.getObject()){
                     btn_saveAll.setIcon(new ImageIcon("img/white_saveAll.png"));

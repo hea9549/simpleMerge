@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import static Data.DataId.ACTION_BTN_COMPARE;
+
 /**
  * @author ParkHaeSung
  * @since 2017-05-24
@@ -40,18 +42,18 @@ public class MainController implements Controller{
     }
 
     @Override
-    public ActionListener getActionListener(int id) {
+    public ActionListener getActionListener(DataId id) {
         return new MainViewActionListener(id);
     }
 
-    public class MainViewActionListener implements ActionListener {
-        private int actionSubjectId = 0;
+    private class MainViewActionListener implements ActionListener {
+        private DataId actionSubjectId;
 
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("아이디 = "+actionSubjectId);
             switch (actionSubjectId){
-                case DataId.ACTION_BTN_COMPARE:
+                case ACTION_BTN_COMPARE:
                     ContentService contentService = new ContentServiceImpl();
                     ViewerModel leftModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");
                     ViewerModel rightModel = (ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel");
@@ -64,7 +66,7 @@ public class MainController implements Controller{
             }
         }
 
-        public MainViewActionListener(int actionId){
+        public MainViewActionListener(DataId actionId){
             this.actionSubjectId = actionId;
         }
     }

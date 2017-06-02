@@ -99,8 +99,8 @@ public class ContentServiceImpl implements ContentService {
 
         for (int i = 1; i < leftStrListSize + 1; i++) {
             for (int j = 1; j < rightStrListSize + 1; j++) {
-                if (leftStrList.get(i).getContentString()
-                        .compareTo(rightStrList.get(j).getContentString()) == 0)
+                if (leftStrList.get(i-1).getContentString()
+                        .compareTo(rightStrList.get(j-1).getContentString()) == 0)
                     mismatchPenalty = 0;
                 else
                     mismatchPenalty = 1;
@@ -128,7 +128,7 @@ public class ContentServiceImpl implements ContentService {
             else if (idx_right == 0) {
                 leftStrResult.add(makeCompStr(ComparableString.ADDED
                         , leftStrList.get(idx_left - 1).getContentString()));
-                rightStrList.add(makeCompStr(ComparableString.EMPTY, ""));
+                rightStrResult.add(makeCompStr(ComparableString.EMPTY, ""));
 
                 idx_left--;
             }
@@ -150,7 +150,7 @@ public class ContentServiceImpl implements ContentService {
                     else {
                         leftStrResult.add(makeCompStr(ComparableString.DIFF
                                 , leftStrList.get(idx_left - 1).getContentString()));
-                        rightStrList.add(makeCompStr(ComparableString.DIFF
+                        rightStrResult.add(makeCompStr(ComparableString.DIFF
                                 , rightStrList.get(idx_right - 1).getContentString()));
                     }
                     idx_left--;
@@ -183,6 +183,9 @@ public class ContentServiceImpl implements ContentService {
         ArrayList<ComparableString> tempLeftList = new ArrayList<>();
         ArrayList<ComparableString> tempRightList = new ArrayList<>();
 
+        byte prevState;
+        byte nowState;
+
         // Block 만들기
         for (int idx = 1; idx < leftStrResult.size(); idx++) {
             tempLeftList.add(leftStrResult.get(idx - 1));
@@ -205,7 +208,6 @@ public class ContentServiceImpl implements ContentService {
 
         resultBlocks[0] = leftBlocks;
         resultBlocks[1] = rightBlocks;
-
 
 
         return resultBlocks;
