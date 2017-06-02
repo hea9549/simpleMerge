@@ -1,11 +1,11 @@
-Unit Test ¼³Á¤¹æ¹ı
+ï»¿Unit Test ì„¤ì •ë°©ë²•
 
-1. UnitTest.iml ÆÄÀÏÀ» UnitTest Æú´õ¿¡ ³Ö´Â´Ù. (.txtÆÄÀÏÀÌ¶ó¸é È®ÀåÀÚ¸¦ .iml·Î ¹Ù²Û´Ù)
+1. UnitTest.iml íŒŒì¼ì„ UnitTest í´ë”ì— ë„£ëŠ”ë‹¤. (.txtíŒŒì¼ì´ë¼ë©´ í™•ì¥ìë¥¼ .imlë¡œ ë°”ê¾¼ë‹¤)
 
-2. IntelliJ¿¡¼­ File - Project Structure·Î µé¾î°£ µÚ, Project Settings¿¡¼­ Moules¸¦ ¼±ÅÃÇÏ°í + ¹öÆ°À» Å¬¸¯ÇÏ¿© UnitTest.iml ÆÄÀÏÀ» ¼±ÅÃÇÑ´Ù.
+2. IntelliJì—ì„œ File - Project Structureë¡œ ë“¤ì–´ê°„ ë’¤, Project Settingsì—ì„œ Moulesë¥¼ ì„ íƒí•˜ê³  + ë²„íŠ¼ì„ í´ë¦­í•˜ì—¬ UnitTest.iml íŒŒì¼ì„ ì„ íƒí•œë‹¤.
 
-3. UnitTest/lib ¾ÈÀÇ jarÆÄÀÏÀ» »èÁ¦ÇÏ°í UnitTest/src ¾ÈÀÇ TestÆÄÀÏµé Áß ÇÏ³ª¸¦ ¿¬´Ù.
+3. UnitTest/lib ì•ˆì˜ jaríŒŒì¼ì„ ì‚­ì œí•˜ê³  UnitTest/src ì•ˆì˜ TestíŒŒì¼ë“¤ ì¤‘ í•˜ë‚˜ë¥¼ ì—°ë‹¤.
 
-4. @Test ¾È¿¡ Ä¿¼­¸¦ µÎ°í alt + enter¸¦ ´­·¯ JUnit5 ¸¦ ¼±ÅÃÇÏ°í ÆË¾÷Ã¢ÀÌ ¶ß¸é ¹Ø¿¡ copy to ...¸¦ ´©¸¥´Ù.
+4. @Test ì•ˆì— ì»¤ì„œë¥¼ ë‘ê³  alt + enterë¥¼ ëˆŒëŸ¬ JUnit5 ë¥¼ ì„ íƒí•˜ê³  íŒì—…ì°½ì´ ëœ¨ë©´ ë°‘ì— copy to ...ë¥¼ ëˆ„ë¥¸ë‹¤.
 
-5. Å×½ºÆ®¸¦ ÁøÇàÇÑ´Ù.
+5. í…ŒìŠ¤íŠ¸ë¥¼ ì§„í–‰í•œë‹¤.
