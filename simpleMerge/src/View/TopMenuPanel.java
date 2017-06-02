@@ -17,7 +17,7 @@ public class TopMenuPanel extends JPanel implements Observer{
     */
     JLabel diffLine=new JLabel("Different Line");
     JButton newProject=new JButton(new ImageIcon("img/white_new.png"));
-    JButton saveAll=new JButton(new ImageIcon("img/white_save.png"));
+    JButton saveAll=new JButton(new ImageIcon("img/white_saveAll.png"));
     JButton leftAll=new JButton(new ImageIcon("img/white_left_all.png"));
     JButton rightAll=new JButton(new ImageIcon("img/white_right_all.png"));
     Font f1;
@@ -59,7 +59,8 @@ public class TopMenuPanel extends JPanel implements Observer{
         add(diffLine);
 
         setSize(250,250);
-        setBackground(new Color(244, 158, 186));
+        //setBackground(new Color(244, 158, 186));
+        setBackground(new Color(0,191,255));
         setVisible(true);
     }
     @Override

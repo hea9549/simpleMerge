@@ -56,7 +56,7 @@ public class ViewerPanel extends JPanel implements Observer {
         menuPanel.add(btn_load);
         menuPanel.add(btn_edit);
         menuPanel.add(btn_save);
-        menuPanel.setBackground(Color.GRAY);
+        menuPanel.setBackground(Color.darkGray);
     }
 
     @Override
