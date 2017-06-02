@@ -17,7 +17,7 @@ public class TopMenuPanel extends JPanel implements Observer{
     */
     JLabel diffLine=new JLabel("Different Line");
     JButton newProject=new JButton(new ImageIcon("img/white_new.png"));
-    JButton saveAll=new JButton(new ImageIcon("img/white_save.png"));
+    JButton saveAll=new JButton(new ImageIcon("img/white_saveAll.png"));
     JButton leftAll=new JButton(new ImageIcon("img/white_left_all.png"));
     JButton rightAll=new JButton(new ImageIcon("img/white_right_all.png"));
     Font f1;
@@ -52,19 +52,20 @@ public class TopMenuPanel extends JPanel implements Observer{
         add(rightAll);
 
         diffLine.setSize(200,20);
-        diffLine.setLocation(1150,70);
+        diffLine.setLocation(1100,70);
         f1=new Font("Arial Black", Font.BOLD, 20);
         diffLine.setForeground(Color.WHITE);
         diffLine.setFont(f1);
         add(diffLine);
 
         setSize(250,250);
-        setBackground(new Color(240, 173, 203));
+        //setBackground(new Color(244, 158, 186));
+        setBackground(new Color(0,191,255));
         setVisible(true);
     }
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(1500,100);
+        return new Dimension(1350,100);
     }
 
 

@@ -1,7 +1,6 @@
 package Controller;
 
 import Data.*;
-import Model.ModelProvider;
 import Model.ViewerModel;
 
 import java.awt.event.ActionEvent;

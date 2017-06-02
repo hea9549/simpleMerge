@@ -1,7 +1,5 @@
 package Data;
 
-import Model.ModelProvider;
-import Model.ViewerModel;
 
 import java.util.ArrayList;
 
@@ -39,7 +37,6 @@ public class ContentServiceImpl implements ContentService {
         }
         return contents;
     }
-
     private int findMin(int num1, int num2, int num3) {
         if (num1 < num2) {
             if (num1 < num3)
@@ -208,6 +205,7 @@ public class ContentServiceImpl implements ContentService {
 
         resultBlocks[0] = leftBlocks;
         resultBlocks[1] = rightBlocks;
+
 
 
         return resultBlocks;
