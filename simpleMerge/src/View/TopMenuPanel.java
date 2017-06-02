@@ -6,6 +6,8 @@ import Data.DataId;
 import Observer.*;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 /**
@@ -15,16 +17,19 @@ public class TopMenuPanel extends JPanel implements Observer{
 
     JLabel lb_diffLine =new JLabel("Diff Line");
 
-    JButton btn_newProject =new JButton(new ImageIcon("img/white_new.png"));
     JButton btn_saveAll =new JButton(new ImageIcon("img/gray_saveAll.png"));
     JButton btn_leftAll =new JButton(new ImageIcon("img/gray_leftAll.png"));
     JButton btn_rightAll =new JButton(new ImageIcon("img/gray_rightAll.png"));
 
     Font f1;
     Controller controller;
+    ImageIcon icon;
+
     TopMenuPanel(Controller controller){
         this.controller = controller;
         setLayout(null);
+        //setBorder(tb);
+        /*
         btn_newProject.setSize(80,80);
         btn_newProject.setLocation(0,10);
         btn_newProject.setOpaque(false);
@@ -32,10 +37,11 @@ public class TopMenuPanel extends JPanel implements Observer{
         btn_newProject.setBorderPainted(false);
         btn_newProject.addActionListener(controller.getActionListener(DataId.ACTION_BTN_NEW_PROJECT));
         add(btn_newProject);
+        */
         //lb_diffLine.setSize(100,100);
 
         btn_saveAll.setSize(80,80);
-        btn_saveAll.setLocation(100, 10);
+        btn_saveAll.setLocation(0, 10);
         btn_saveAll.setOpaque(false);
         btn_saveAll.setContentAreaFilled(false);
         btn_saveAll.setBorderPainted(false);
@@ -43,7 +49,7 @@ public class TopMenuPanel extends JPanel implements Observer{
         add(btn_saveAll);
 
         btn_leftAll.setSize(80,80);
-        btn_leftAll.setLocation(200, 10);
+        btn_leftAll.setLocation(120, 10);
         btn_leftAll.setOpaque(false);
         btn_leftAll.setContentAreaFilled(false);
         btn_leftAll.setBorderPainted(false);
@@ -51,7 +57,7 @@ public class TopMenuPanel extends JPanel implements Observer{
         add(btn_leftAll);
 
         btn_rightAll.setSize(80,80);
-        btn_rightAll.setLocation(300, 10);
+        btn_rightAll.setLocation(240, 10);
         btn_rightAll.setOpaque(false);
         btn_rightAll.setContentAreaFilled(false);
         btn_rightAll.setBorderPainted(false);
@@ -61,13 +67,13 @@ public class TopMenuPanel extends JPanel implements Observer{
         lb_diffLine.setSize(200,20);
         lb_diffLine.setLocation(1100,70);
         f1=new Font("Arial Black", Font.BOLD, 20);
-        lb_diffLine.setForeground(Color.WHITE);
+        lb_diffLine.setForeground(Color.DARK_GRAY);
         lb_diffLine.setFont(f1);
         add(lb_diffLine);
 
         setSize(250,250);
-        //setBackground(new Color(244, 158, 186));
-        setBackground(new Color(0,191,255));
+        setBackground(new Color(254, 122, 165));
+        //setBackground(new Color(68, 193, 195));
         setVisible(true);
     }
     @Override
@@ -80,7 +86,7 @@ public class TopMenuPanel extends JPanel implements Observer{
         switch(updateEvent.getId()){
             case UPDATE_TOP_CAN_SAVE_ALL:
                 if((Boolean)updateEvent.getObject()){
-                    btn_saveAll.setIcon(new ImageIcon("img/white_saveAll.png"));
+                    btn_saveAll.setIcon(new ImageIcon("img/pink_saveAll.png"));
                     btn_saveAll.setEnabled(true);
                 }
                 else{
@@ -90,7 +96,7 @@ public class TopMenuPanel extends JPanel implements Observer{
                 break;
             case UPDATE_TOP_CAN_LEFT_ALL:
                 if((Boolean)updateEvent.getObject()){
-                    btn_leftAll.setIcon(new ImageIcon("img/white_leftAll.png"));
+                    btn_leftAll.setIcon(new ImageIcon("img/pink_leftAll.png"));
                     btn_leftAll.setEnabled(true);
                 }
                 else{
@@ -100,7 +106,7 @@ public class TopMenuPanel extends JPanel implements Observer{
                 break;
             case UPDATE_TOP_CAN_RIGHT_ALL:
                 if((Boolean)updateEvent.getObject()){
-                    btn_rightAll.setIcon(new ImageIcon("img/white_rightAll.png"));
+                    btn_rightAll.setIcon(new ImageIcon("img/pink_rightAll.png"));
                     btn_rightAll.setEnabled(true);
                 }
                 else{

@@ -36,19 +36,19 @@ public class ViewerPanel extends JPanel implements Observer {
     }
 
     private void setMenuPanel(){
-        btn_load = new JButton(new ImageIcon("img/white_load.png"));
+        btn_load = new JButton(new ImageIcon("img/folder.png"));
         btn_load.setOpaque(false);
         btn_load.setContentAreaFilled(false);
         btn_load.setBorderPainted(false);
         btn_load.addActionListener(controller.getActionListener(DataId.ACTION_VIEWER_BTN_LOAD));
 
-        btn_edit = new JButton(new ImageIcon("img/white_edit.png"));
+        btn_edit = new JButton(new ImageIcon("img/edit.png"));
         btn_edit.setOpaque(false);
         btn_edit.setContentAreaFilled(false);
         btn_edit.setBorderPainted(false);
         btn_edit.addActionListener(controller.getActionListener(DataId.ACTION_VIEWER_BTN_EDIT));
 
-        btn_save = new JButton(new ImageIcon("img/white_save.png"));
+        btn_save = new JButton(new ImageIcon("img/save.png"));
         btn_save.setOpaque(false);
         btn_save.setContentAreaFilled(false);
         btn_save.setBorderPainted(false);
@@ -57,7 +57,9 @@ public class ViewerPanel extends JPanel implements Observer {
         menuPanel.add(btn_load);
         menuPanel.add(btn_edit);
         menuPanel.add(btn_save);
-        menuPanel.setBackground(Color.darkGray);
+        //menuPanel.setBackground(new Color(239, 206, 197));
+        menuPanel.setBackground(new Color(245, 210, 227));
+        //menuPanel.setBackground(new Color(50,0,10));
     }
 
     @Override
