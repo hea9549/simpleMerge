@@ -1,4 +1,6 @@
 ## Intellij
 .idea
 *.iml
+out/
 out
+*.class

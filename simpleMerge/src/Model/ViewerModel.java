@@ -13,9 +13,10 @@ import java.util.ArrayList;
 public class ViewerModel extends Observable {
     private ArrayList<ComparableBlock> contentsBlock;
     private boolean canEdit = false;
+    private boolean isEditing = false;
     private String filePath;
-    public ViewerModel(){
-        setCanEdit(false);
+    public void viewerModelInit(){
+        setEditing(false);
     }
 
     public void setContentsBlock(ArrayList<ComparableBlock> contentsBlock) {
@@ -33,7 +34,7 @@ public class ViewerModel extends Observable {
 
     public void setCanEdit(boolean canEdit) {
         this.canEdit = canEdit;
-        notifyChange(new UpdateEvent(DataId.UPDATE_VIEWER_EDITED, canEdit));
+        notifyChange(new UpdateEvent(DataId.UPDATE_VIEWER_CAN_EDIT, canEdit));
     }
 
     public String getFilePath() {
@@ -42,5 +43,14 @@ public class ViewerModel extends Observable {
 
     public void setFilePath(String filePath) {
         this.filePath = filePath;
+    }
+
+    public boolean isEditing() {
+        return isEditing;
+    }
+
+    public void setEditing(boolean editing) {
+        isEditing = editing;
+        notifyChange(new UpdateEvent(DataId.UPDATE_VIEWER_IS_EDITING, isEditing));
     }
 }

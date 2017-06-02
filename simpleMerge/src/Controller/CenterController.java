@@ -28,6 +28,11 @@ public class CenterController implements Controller {
 
     @Override
     public ActionListener getActionListener(DataId id) {
+        return new CenterControllerActionListener(id);
+    }
+
+    @Override
+    public ActionListener getActionListener(DataId id, Object extraData) {
         return null;
     }
 
@@ -43,8 +48,12 @@ public class CenterController implements Controller {
                     ArrayList<ComparableBlock>[] compareResult = contentService.compare(leftModel.getContentsBlock(),rightModel.getContentsBlock());
                     leftModel.setContentsBlock(compareResult[0]);
                     rightModel.setContentsBlock(compareResult[1]);
+                    centerModel.setCanCompare(false);
                     break;
             }
+        }
+        private CenterControllerActionListener(DataId dataId){
+            this.actionSubjectId = dataId;
         }
     }
 }

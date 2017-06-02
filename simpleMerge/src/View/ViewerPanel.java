@@ -11,8 +11,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import Util.AttributeUtil;
 
-import static Data.DataId.UPDATE_VIEWER_CONTENT;
-
 /**
  * Created by ParkHaeSung on 2017-05-23.
  */
@@ -46,7 +44,7 @@ public class ViewerPanel extends JPanel implements Observer {
         btn_edit.setOpaque(false);
         btn_edit.setContentAreaFilled(false);
         btn_edit.setBorderPainted(false);
-        btn_edit.addActionListener(controller.getActionListener(DataId.ACTION_VIEWER_BTN_EDIT));
+        btn_edit.addActionListener(controller.getActionListener(DataId.ACTION_VIEWER_BTN_EDIT,jTextPane.getStyledDocument()));
 
         btn_save = new JButton(new ImageIcon("img/white_save.png"));
         btn_save.setOpaque(false);
@@ -75,7 +73,6 @@ public class ViewerPanel extends JPanel implements Observer {
                     if(contents.isAddedString())styledDocument.insertString(styledDocument.getLength(), contents.getContentString()+"\n", AttributeUtil.getAddedAttribute());
                     if(contents.isEmptyString())styledDocument.insertString(styledDocument.getLength(), contents.getContentString()+"\n", AttributeUtil.getEmptyAttribute());
                     if(contents.isDiffString())styledDocument.insertString(styledDocument.getLength(), contents.getContentString()+"\n", AttributeUtil.getDiffAttribute());
-                    System.out.println("왼쪽꺼인데요, state = "+contents.getState()+"인데요!, "+contents.isAddedString()+contents.isEmptyString()+contents.isDiffString());
                     }
             }
             jTextPane.setDocument(styledDocument);
@@ -91,6 +88,25 @@ public class ViewerPanel extends JPanel implements Observer {
         switch (updateEvent.getId()){
             case UPDATE_VIEWER_CONTENT:
                 updateContent((ArrayList)updateEvent.getObject());
+                break;
+            case UPDATE_VIEWER_CAN_EDIT:
+                if((Boolean)updateEvent.getObject()){
+                    btn_edit.setIcon(new ImageIcon("img/white_edit.png"));
+                    btn_edit.setEnabled(true);
+                }
+                else{
+                    btn_edit.setIcon(new ImageIcon("img/gray_edit.png"));
+                    btn_edit.setEnabled(false);
+                }
+                break;
+            case UPDATE_VIEWER_IS_EDITING:
+                if((Boolean)updateEvent.getObject()){
+                    jTextPane.setEnabled(true);
+                    btn_edit.setIcon(new ImageIcon("img/red_edit.png"));
+                }else{
+                    jTextPane.setEnabled(false);
+                    btn_edit.setIcon(new ImageIcon("img/white_edit.png"));
+                }
                 break;
         }
     }

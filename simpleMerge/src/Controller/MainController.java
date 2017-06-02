@@ -33,6 +33,8 @@ public class MainController implements Controller{
         ((ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel")).addObserver(mainFrame.getRightViewer());
         ((CenterModel)ModelProvider.getInstance().getModel("centerModel")).addObserver(mainFrame.getCenterMenuPanel());
         ((TopModel)ModelProvider.getInstance().getModel("topModel")).addObserver(mainFrame.getTopMenuPanel());
+        ((ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel")).viewerModelInit();
+        ((ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel")).viewerModelInit();
         this.mainModel = new MainModel();
         mainModel.addObserver(mainFrame);
         ModelProvider.getInstance().registerModel("mainModel",mainModel);
@@ -46,6 +48,11 @@ public class MainController implements Controller{
     @Override
     public ActionListener getActionListener(DataId id) {
         return new MainViewActionListener(id);
+    }
+
+    @Override
+    public ActionListener getActionListener(DataId id, Object extraData) {
+        return null;
     }
 
     private class MainViewActionListener implements ActionListener {

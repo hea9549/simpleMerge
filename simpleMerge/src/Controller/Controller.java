@@ -9,4 +9,5 @@ import java.awt.event.ActionListener;
  */
 public interface Controller {
     ActionListener getActionListener(DataId id);
+    ActionListener getActionListener(DataId id,Object extraData);
 }

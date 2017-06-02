@@ -109,6 +109,7 @@ public class CenterMenuPanel extends JPanel implements Observer {
                 }
                 break;
             case UPDATE_CENTER_CAN_COMPARE:
+                System.out.println("컴페어가능여부가 도착했어요! ="+(Boolean)updateEvent.getObject());
                 if((Boolean)updateEvent.getObject()){
                     btn_compare.setIcon(new ImageIcon("img/white_compare.png"));
                     btn_compare.setEnabled(true);
