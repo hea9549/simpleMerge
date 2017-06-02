@@ -21,4 +21,8 @@ public class DataId {
     public static final int ACTION_VIEWER_BTN_LOAD = 14;
     public static final int ACTION_VIEWER_BTN_EDIT = 15;
     public static final int ACTION_VIEWER_BTN_SAVE = 16;
+    public static final int ACTION_BTN_NEW_PROJECT = 17;
+    public static final int ACTION_BTN_SAVE_ALL = 18;
+    public static final int ACTION_BTN_LEFT_ALL = 19;
+    public static final int ACTION_BTN_RIGHT_ALL = 19;
 }
