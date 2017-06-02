@@ -1,0 +1,11 @@
+Unit Test 설정방법
+
+1. UnitTest.iml 파일을 UnitTest 폴더에 넣는다. (.txt파일이라면 확장자를 .iml로 바꾼다)
+
+2. IntelliJ에서 File - Project Structure로 들어간 뒤, Project Settings에서 Moules를 선택하고 + 버튼을 클릭하여 UnitTest.iml 파일을 선택한다.
+
+3. UnitTest/lib 안의 jar파일을 삭제하고 UnitTest/src 안의 Test파일들 중 하나를 연다.
+
+4. @Test 안에 커서를 두고 alt + enter를 눌러 JUnit5 를 선택하고 팝업창이 뜨면 밑에 copy to ...를 누른다.
+
+5. 테스트를 진행한다.
