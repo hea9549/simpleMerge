@@ -27,7 +27,6 @@ public class TextFileService implements FileService {
             String s;
             while ((s = in.readLine()) != null) {
                 contents.add(new ComparableString.Builder().setFlags(ComparableString.DEFAULT).setContent(s).build());
-                System.out.println(s);
             }
             in.close();
         } catch (Exception e) {

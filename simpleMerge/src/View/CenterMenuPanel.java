@@ -1,5 +1,8 @@
 package View;
 
+import Controller.Controller;
+import Controller.MainController;
+import Data.DataId;
 import Observer.*;
 import javax.swing.*;
 import java.awt.*;
@@ -15,10 +18,11 @@ public class CenterMenuPanel extends JPanel implements Observer {
     JButton down=new JButton(new ImageIcon("img/white_down.png"));
     JButton compare=new JButton(new ImageIcon("img/white_compare.png"));
 
-    CenterMenuPanel(){
-        setLayout(null);
-        right.setSize(100,100);
-        right.setLocation(18, 70);
+    Controller controller;
+    CenterMenuPanel(Controller controller){
+        this.controller = controller;
+            right.setSize(100,100);
+            right.setLocation(18, 70);
         right.setOpaque(false);
         right.setContentAreaFilled(false);
         right.setBorderPainted(false);
@@ -50,6 +54,7 @@ public class CenterMenuPanel extends JPanel implements Observer {
         compare.setOpaque(false);
         compare.setContentAreaFilled(false);
         compare.setBorderPainted(false);
+        compare.addActionListener(controller.getActionListener(DataId.ACTION_BTN_COMPARE));
         add(compare);
 
         setBackground(new Color(188, 181, 182));
