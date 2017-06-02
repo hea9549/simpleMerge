@@ -13,11 +13,13 @@ import java.awt.*;
  */
 public class TopMenuPanel extends JPanel implements Observer{
 
-    JLabel lb_diffLine =new JLabel("Different Line");
+    JLabel lb_diffLine =new JLabel("Diff Line");
+
     JButton btn_newProject =new JButton(new ImageIcon("img/white_new.png"));
-    JButton btn_saveAll =new JButton(new ImageIcon("img/white_saveAll.png"));
-    JButton btn_leftAll =new JButton(new ImageIcon("img/white_left_all.png"));
-    JButton btn_rightAll =new JButton(new ImageIcon("img/white_right_all.png"));
+    JButton btn_saveAll =new JButton(new ImageIcon("img/gray_saveAll.png"));
+    JButton btn_leftAll =new JButton(new ImageIcon("img/gray_leftAll.png"));
+    JButton btn_rightAll =new JButton(new ImageIcon("img/gray_rightAll.png"));
+
     Font f1;
     Controller controller;
     TopMenuPanel(Controller controller){
@@ -82,43 +84,32 @@ public class TopMenuPanel extends JPanel implements Observer{
                     btn_saveAll.setEnabled(true);
                 }
                 else{
-                    btn_saveAll.setIcon(new ImageIcon("img/white_saveAll.png"));
+                    btn_saveAll.setIcon(new ImageIcon("img/gray_saveAll.png"));
                     btn_saveAll.setEnabled(false);
                 }
                 break;
             case UPDATE_TOP_CAN_LEFT_ALL:
                 if((Boolean)updateEvent.getObject()){
-                    btn_leftAll.setIcon(new ImageIcon("img/white_saveAll.png"));
+                    btn_leftAll.setIcon(new ImageIcon("img/white_leftAll.png"));
                     btn_leftAll.setEnabled(true);
                 }
                 else{
-                    btn_leftAll.setIcon(new ImageIcon("img/white_saveAll.png"));
+                    btn_leftAll.setIcon(new ImageIcon("img/gray_leftAll.png"));
                     btn_leftAll.setEnabled(false);
                 }
                 break;
             case UPDATE_TOP_CAN_RIGHT_ALL:
                 if((Boolean)updateEvent.getObject()){
-                    btn_rightAll.setIcon(new ImageIcon("img/white_saveAll.png"));
+                    btn_rightAll.setIcon(new ImageIcon("img/white_rightAll.png"));
                     btn_rightAll.setEnabled(true);
                 }
                 else{
-                    btn_rightAll.setIcon(new ImageIcon("img/white_saveAll.png"));
+                    btn_rightAll.setIcon(new ImageIcon("img/gray_rightAll.png"));
                     btn_rightAll.setEnabled(false);
                 }
                 break;
             case UPDATE_TOP_DIFF_LINE:
-                lb_diffLine.setText("diff line : "+((Integer)updateEvent.getObject()));
-
-                /*
-                if((Boolean)updateEvent.getObject()){
-                    btn_saveAll.setIcon(new ImageIcon("img/white_saveAll.png"));
-                    btn_saveAll.setEnabled(true);
-                }
-                else{
-                    btn_saveAll.setIcon(new ImageIcon("img/white_saveAll.png"));
-                    btn_saveAll.setEnabled(false);
-                }
-                */
+                lb_diffLine.setText("Diff Line : " + ((Integer)updateEvent.getObject()));
                 break;
         }
     }

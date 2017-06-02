@@ -70,51 +70,51 @@ public class CenterMenuPanel extends JPanel implements Observer {
         switch(updateEvent.getId()){
             case UPDATE_CENTER_CAN_RIGHT_MERGE:
                 if((Boolean)updateEvent.getObject()){
-                    btn_right.setIcon(new ImageIcon("img/white_saveAll.png"));
+                    btn_right.setIcon(new ImageIcon("img/white_right.png"));
                     btn_right.setEnabled(true);
                 }
                 else{
-                    btn_right.setIcon(new ImageIcon("img/white_saveAll.png"));
+                    btn_right.setIcon(new ImageIcon("img/gray_right.png"));
                     btn_right.setEnabled(false);
                 }
                 break;
             case UPDATE_CENTER_CAN_LEFT_MERGE:
                 if((Boolean)updateEvent.getObject()){
-                    btn_left.setIcon(new ImageIcon("img/white_saveAll.png"));
+                    btn_left.setIcon(new ImageIcon("img/white_left.png"));
                     btn_left.setEnabled(true);
                 }
                 else{
-                    btn_left.setIcon(new ImageIcon("img/white_saveAll.png"));
+                    btn_left.setIcon(new ImageIcon("img/gray_left.png"));
                     btn_left.setEnabled(false);
                 }
                 break;
             case UPDATE_CENTER_CAN_UPPER_BLOCK:
                 if((Boolean)updateEvent.getObject()){
-                    btn_up.setIcon(new ImageIcon("img/white_saveAll.png"));
+                    btn_up.setIcon(new ImageIcon("img/white_up.png"));
                     btn_up.setEnabled(true);
                 }
                 else{
-                    btn_up.setIcon(new ImageIcon("img/white_saveAll.png"));
+                    btn_up.setIcon(new ImageIcon("img/gray_up.png"));
                     btn_up.setEnabled(false);
                 }
                 break;
             case UPDATE_CENTER_CAN_LOWER_BLOCK:
                 if((Boolean)updateEvent.getObject()){
-                    btn_down.setIcon(new ImageIcon("img/white_saveAll.png"));
+                    btn_down.setIcon(new ImageIcon("img/white_down.png"));
                     btn_down.setEnabled(true);
                 }
                 else{
-                    btn_down.setIcon(new ImageIcon("img/white_saveAll.png"));
+                    btn_down.setIcon(new ImageIcon("img/gray_down.png"));
                     btn_down.setEnabled(false);
                 }
                 break;
             case UPDATE_CENTER_CAN_COMPARE:
                 if((Boolean)updateEvent.getObject()){
-                    btn_compare.setIcon(new ImageIcon("img/white_saveAll.png"));
+                    btn_compare.setIcon(new ImageIcon("img/white_compare.png"));
                     btn_compare.setEnabled(true);
                 }
                 else{
-                    btn_compare.setIcon(new ImageIcon("img/white_saveAll.png"));
+                    btn_compare.setIcon(new ImageIcon("img/gray_compare.png"));
                     btn_compare.setEnabled(false);
                 }
                 break;
