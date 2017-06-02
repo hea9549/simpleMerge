@@ -6,16 +6,18 @@ import Observer.Observable;
 import Observer.UpdateEvent;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by ParkHaeSung on 2017-05-23.
  */
 public class ViewerModel extends Observable {
     private ArrayList<ComparableBlock> contentsBlock;
-    private boolean isEdited = false;
+    private boolean canEdit = false;
     private String filePath;
+    public ViewerModel(){
+        setCanEdit(false);
+    }
+
     public void setContentsBlock(ArrayList<ComparableBlock> contentsBlock) {
         this.contentsBlock = contentsBlock;
         notifyChange(new UpdateEvent(DataId.UPDATE_VIEWER_CONTENT,contentsBlock));
@@ -25,13 +27,13 @@ public class ViewerModel extends Observable {
         return contentsBlock;
     }
 
-    public boolean isEdited() {
-        return isEdited;
+    public boolean isCanEdit() {
+        return canEdit;
     }
 
-    public void setEdited(boolean edited) {
-        isEdited = edited;
-        notifyChange(new UpdateEvent(DataId.UPDATE_VIEWER_EDITED,edited));
+    public void setCanEdit(boolean canEdit) {
+        this.canEdit = canEdit;
+        notifyChange(new UpdateEvent(DataId.UPDATE_VIEWER_EDITED, canEdit));
     }
 
     public String getFilePath() {

@@ -21,8 +21,8 @@ public class CenterMenuPanel extends JPanel implements Observer {
     Controller controller;
     CenterMenuPanel(Controller controller){
         this.controller = controller;
-            right.setSize(100,100);
-            right.setLocation(18, 70);
+        right.setSize(100,100);
+        right.setLocation(18, 70);
         right.setOpaque(false);
         right.setContentAreaFilled(false);
         right.setBorderPainted(false);

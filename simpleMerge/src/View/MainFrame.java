@@ -15,7 +15,7 @@ public class MainFrame extends JFrame implements Observer{
     private CenterMenuPanel centerMenuPanel;
     private JButton btn = new JButton("버튼 아이디 1");
     private Controller controller;
-    public MainFrame(Controller mainController,Controller leftViewerController,Controller rightViewerController){
+    public MainFrame(Controller mainController,Controller leftViewerController,Controller rightViewerController,Controller centerController){
         this.controller = mainController;
         leftViewer = new ViewerPanel(leftViewerController);
         rightViewer = new ViewerPanel(rightViewerController);
