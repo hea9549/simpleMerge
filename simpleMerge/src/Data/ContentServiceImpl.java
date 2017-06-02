@@ -183,6 +183,9 @@ public class ContentServiceImpl implements ContentService {
         ArrayList<ComparableString> tempLeftList = new ArrayList<>();
         ArrayList<ComparableString> tempRightList = new ArrayList<>();
 
+        byte prevState;
+        byte nowState;
+
         // Block 만들기
         for (int idx = 1; idx < leftStrResult.size(); idx++) {
             tempLeftList.add(leftStrResult.get(idx - 1));
