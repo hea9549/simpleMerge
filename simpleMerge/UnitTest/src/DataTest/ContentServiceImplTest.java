@@ -1,3 +1,5 @@
+package DataTest;
+
 import Data.ComparableBlock;
 import Data.ComparableString;
 import Data.ContentService;
@@ -11,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /**
  * Created by ParkHaeSung on 2017-06-02.
  */
-public class ContentServiceTest {
+public class ContentServiceImplTest {
     ArrayList<ComparableBlock> comparableBlocks1 = new ArrayList<>();
     ArrayList<ComparableBlock> comparableBlocks2 = new ArrayList<>();
 
