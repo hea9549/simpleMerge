@@ -8,6 +8,7 @@ import Model.ViewerModel;
 
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
+import javax.swing.text.View;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -82,9 +83,17 @@ public class ViewerController implements Controller {
                     model.setContentsBlock(comparableBlocks);
                     break;
                 case ACTION_VIEWER_BTN_SAVE:
+                    ArrayList<String> stringToSave = new ArrayList<>();
+                    fileService = new TextFileService();
 
+                    for(int i = 0; i< model.getContentsBlock().size(); i++){
+                        for(int j = 0; j<model.getContentsBlock().get(i).getContents().size(); j++) {
+                            stringToSave.add(model.getContentsBlock().get(i).getContents(j).getContentString());
+                        }
+                    }
 
-
+                    fileService.saveFile(model.getFile(), stringToSave);
+                    
                     break;
 
             }
