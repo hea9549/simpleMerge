@@ -13,6 +13,11 @@ public class TopModel extends Observable {
     private boolean canSaveAll;
     private int diffLine;
 
+    public void initModel(){
+        setCanLeftAll(false);
+        setCanRightAll(false);
+    }
+
     public boolean isCanLeftAll() {
         return canLeftAll;
     }

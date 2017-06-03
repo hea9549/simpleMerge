@@ -36,6 +36,7 @@ public class MainController implements Controller{
         ((ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel")).viewerModelInit();
         ((ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel")).viewerModelInit();
         ((CenterModel)ModelProvider.getInstance().getModel("centerModel")).initModel();
+        ((TopModel)ModelProvider.getInstance().getModel("topModel")).initModel();
         this.mainModel = new MainModel();
         mainModel.addObserver(mainFrame);
         ModelProvider.getInstance().registerModel("mainModel",mainModel);

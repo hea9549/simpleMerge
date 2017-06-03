@@ -103,13 +103,15 @@ public class ViewerPanel extends JPanel implements Observer {
                 break;
             case UPDATE_VIEWER_IS_EDITING:
                 if((Boolean)updateEvent.getObject()){
-                    jTextPane.setEnabled(true);
+                    jTextPane.setEditable(true);
                     btn_edit.setIcon(new ImageIcon("img/red_edit.png"));
                 }else{
-                    jTextPane.setEnabled(false);
+                    jTextPane.setEditable(false);
                     btn_edit.setIcon(new ImageIcon("img/edit.png"));
                 }
                 break;
+            case UPDATE_VIEWER_CAN_SAVE:
+                btn_save.setEnabled((Boolean)updateEvent.getObject());
         }
     }
 }

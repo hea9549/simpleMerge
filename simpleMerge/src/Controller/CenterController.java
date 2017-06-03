@@ -82,6 +82,8 @@ public class CenterController implements Controller {
                     rightModel = (ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel");
                     contentService= new ContentServiceImpl();
                     contentService.merge(rightModel,leftModel);
+                    leftModel.setCanSave(true);
+                    rightModel.setCanSave(true);
                     if(!setNextBlockIndex())if(!setPrevBlockIndex()){
                         mergeFinishModelSetting();
                     };
@@ -91,6 +93,8 @@ public class CenterController implements Controller {
                     rightModel = (ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel");
                     contentService= new ContentServiceImpl();
                     contentService.merge(leftModel,rightModel);
+                    leftModel.setCanSave(true);
+                    rightModel.setCanSave(true);
                     if(!setNextBlockIndex())if(!setPrevBlockIndex()){
                         mergeFinishModelSetting();
                     };

@@ -53,7 +53,10 @@ public class ViewerController implements Controller {
                         } catch (BadLocationException e1) {
                             e1.printStackTrace();
                         }
+                        model.setCanSave(true);
                         model.setContentsBlock(inputBlock);
+                    }else{
+                        model.setCanSave(false);
                     }
                     model.setEditing(!model.isEditing());
                     checkCanCompare();
