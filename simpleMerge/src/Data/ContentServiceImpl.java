@@ -1,6 +1,10 @@
 package Data;
 
 
+import Model.CenterModel;
+import Model.ModelProvider;
+import Model.ViewerModel;
+
 import java.util.ArrayList;
 
 /**
@@ -36,6 +40,31 @@ public class ContentServiceImpl implements ContentService {
             }
         }
         return contents;
+    }
+
+    @Override
+    public boolean merge(ViewerModel sourceModel, ViewerModel targetModel) {
+        CenterModel centerModel = (CenterModel) ModelProvider.getInstance().getModel("centerModel");
+        if(sourceModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).isEqualString())return false;
+        if(sourceModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).isEmptyString()){
+            sourceModel.getContentsBlock().remove(centerModel.getCompareBlockIndex());
+            targetModel.getContentsBlock().remove(centerModel.getCompareBlockIndex());
+            targetModel.setContentsBlock(targetModel.getContentsBlock());
+            sourceModel.setContentsBlock(sourceModel.getContentsBlock());
+            return true;
+        }
+        for(int i = 0;i<sourceModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).getContents().size();i++){
+            ComparableString str = sourceModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).getContents().get(i);
+            ComparableString leftContents = targetModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).getContents().get(i);
+            leftContents.setContentString(str.getContentString());
+            leftContents.setEqual();
+            str.setEqual();
+        }
+        targetModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).setEqual();
+        sourceModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).setEqual();
+        targetModel.setContentsBlock(targetModel.getContentsBlock());
+        sourceModel.setContentsBlock(sourceModel.getContentsBlock());
+        return true;
     }
 
     private int findMin(int num1, int num2, int num3) {

@@ -22,6 +22,7 @@ public class CenterMenuPanel extends JPanel implements Observer {
     CenterMenuPanel(Controller controller){
         setLayout(null);
         this.controller = controller;
+        btn_compare.setDisabledIcon(new ImageIcon("img/gray_compare.png"));
 
         btn_right.setSize(50,50);
         btn_right.setLocation(40, 80);
@@ -119,11 +120,9 @@ public class CenterMenuPanel extends JPanel implements Observer {
             case UPDATE_CENTER_CAN_COMPARE:
                 System.out.println("컴페어가능여부가 도착했어요! ="+(Boolean)updateEvent.getObject());
                 if((Boolean)updateEvent.getObject()){
-                    btn_compare.setIcon(new ImageIcon("img/compare.png"));
                     btn_compare.setEnabled(true);
                 }
                 else{
-                    btn_compare.setIcon(new ImageIcon("img/gray_compare.png"));
                     btn_compare.setEnabled(false);
                 }
                 break;

@@ -38,9 +38,10 @@ public class CenterController implements Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             ViewerModel leftModel,rightModel;
+            ContentService contentService;
             switch (actionSubjectId){
                 case ACTION_BTN_COMPARE:
-                    ContentService contentService = new ContentServiceImpl();
+                    contentService= new ContentServiceImpl();
                     leftModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");
                     rightModel = (ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel");
                     ArrayList<ComparableBlock>[] compareResult = contentService.compare(leftModel.getContentsBlock(),rightModel.getContentsBlock());
@@ -56,34 +57,16 @@ public class CenterController implements Controller {
                 case ACTION_BTN_MERGE_LEFT:
                     leftModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");
                     rightModel = (ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel");
-                    for(int i = 0;i<rightModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).getContents().size();i++){
-                        ComparableString str = rightModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).getContents().get(i);
-                        ComparableString leftContents = leftModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).getContents().get(i);
-                        leftContents.setContentString(str.getContentString());
-                        leftContents.setEqual();
-                        str.setEqual();
-                    }
-                    leftModel.setContentsBlock(leftModel.getContentsBlock());
-                    rightModel.setContentsBlock(rightModel.getContentsBlock());
-                    leftModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).setEqual();
-                    rightModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).setEqual();
-                    setNextBlockIndex();
+                    contentService= new ContentServiceImpl();
+                    contentService.merge(rightModel,leftModel);
+                    if(!setNextBlockIndex())setPrevBlockIndex();
                     break;
                 case ACTION_BTN_MERGE_RIGHT:
                     leftModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");
                     rightModel = (ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel");
-                    for(int i = 0;i<leftModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).getContents().size();i++){
-                        ComparableString str = leftModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).getContents().get(i);
-                        ComparableString rightContent = rightModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).getContents().get(i);
-                        rightContent.setContentString(str.getContentString());
-                        rightContent.setEqual();
-                        str.setEqual();
-                    }
-                    leftModel.setContentsBlock(leftModel.getContentsBlock());
-                    rightModel.setContentsBlock(rightModel.getContentsBlock());
-                    leftModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).setEqual();
-                    rightModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).setEqual();
-                    setNextBlockIndex();
+                    contentService= new ContentServiceImpl();
+                    contentService.merge(leftModel,rightModel);
+                    if(!setNextBlockIndex())setPrevBlockIndex();
                     break;
                 case ACTION_BTN_UPPER:
                     setPrevBlockIndex();
@@ -96,13 +79,15 @@ public class CenterController implements Controller {
         private CenterControllerActionListener(DataId dataId){
             this.actionSubjectId = dataId;
         }
-        private void setNextBlockIndex(){
-            ViewerModel leftModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");;
+        private boolean setNextBlockIndex(){
+            ViewerModel leftModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");
+            if(centerModel.getCompareBlockIndex()+1>leftModel.getContentsBlock().size())return false;
             for(int i = centerModel.getCompareBlockIndex()+1;i<leftModel.getContentsBlock().size();i++){
                 if(leftModel.getContentsBlock().get(i).isEqualString())continue;
                 centerModel.setCompareBlockIndex(i);
-                break;
+                return true;
             }
+            return false;
         }
         private void setPrevBlockIndex(){
             ViewerModel leftModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");;

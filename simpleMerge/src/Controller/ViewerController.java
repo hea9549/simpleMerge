@@ -7,13 +7,10 @@ import Model.ViewerModel;
 
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
-import javax.xml.crypto.Data;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
-import Data.DataId.*;
-
-import static Data.DataId.*;
 
 /**
  * Created by ParkHaeSung on 2017-05-23.
@@ -69,8 +66,10 @@ public class ViewerController implements Controller {
 
                     break;
                 case ACTION_VIEWER_BTN_LOAD:
+                    String filePath;
                     FileService fileService = new TextFileService();
-                    ArrayList<ComparableString> contents = fileService.getContents(fileService.getFilePath());
+                    ArrayList<ComparableString> contents = fileService.getContents(filePath = fileService.getFilePath());
+                    model.setFile(new File(filePath));
                     ArrayList<ComparableBlock> comparableBlocks = new ArrayList<>();
                     if(contents!= null){
                         comparableBlocks.add(new ComparableBlock(ComparableBlock.DEFAULT,contents));
