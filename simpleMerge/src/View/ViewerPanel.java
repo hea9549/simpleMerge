@@ -20,6 +20,7 @@ public class ViewerPanel extends JPanel implements Observer {
     JButton btn_edit=new JButton(new ImageIcon("img/edit.png"));
     JButton btn_save=new JButton(new ImageIcon("img/save.png"));
     JTextPane jTextPane;
+    JScrollPane scroll;
     StyledDocument styledDocument;
     Controller controller;
     public ViewerPanel(Controller controller) {
@@ -28,13 +29,25 @@ public class ViewerPanel extends JPanel implements Observer {
         btn_load.setDisabledIcon(new ImageIcon("img/not_folder.png"));
         btn_edit.setDisabledIcon(new ImageIcon("img/not_edit.png"));
         btn_save.setDisabledIcon(new ImageIcon("img/not_save.png"));
-        menuPanel = new JPanel(new FlowLayout());
+        menuPanel = new JPanel(new FlowLayout()){
+            @Override
+            public Dimension getPreferredSize() {
+                return new Dimension(600,70);
+            }
+        };
         jTextPane = new JTextPane();
         jTextPane.setContentType("text/html");
+        scroll=new JScrollPane(jTextPane){
+            @Override
+            public Dimension getPreferredSize() {
+                return new Dimension(600,630);
+            }
+        };
+        scroll.setViewportView(jTextPane);
+        //scroll.getViewport().add(jTextPane);
         setMenuPanel();
-
         add(menuPanel);
-        add(jTextPane);
+        add(scroll);
         setVisible(true);
     }
 
