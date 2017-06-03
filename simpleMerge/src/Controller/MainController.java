@@ -28,7 +28,7 @@ public class MainController implements Controller{
         this.leftViewerController = new ViewerController((ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel"));
         this.rightViewerController = new ViewerController((ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel"));
         this.centerController = new CenterController((CenterModel)ModelProvider.getInstance().getModel("centerModel"));
-        this.mainFrame = new MainFrame(this,leftViewerController, rightViewerController,centerController);
+        this.mainFrame = new MainFrame(this, leftViewerController, rightViewerController,centerController);
         ((ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel")).addObserver(mainFrame.getLeftViewer());
         ((ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel")).addObserver(mainFrame.getRightViewer());
         ((CenterModel)ModelProvider.getInstance().getModel("centerModel")).addObserver(mainFrame.getCenterMenuPanel());
