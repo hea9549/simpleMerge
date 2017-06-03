@@ -12,16 +12,20 @@ import java.awt.*;
  */
 public class CenterMenuPanel extends JPanel implements Observer {
 
-    JButton btn_right=new JButton(new ImageIcon("img/gray_right.png"));
-    JButton btn_left=new JButton(new ImageIcon("img/gray_left.png"));
-    JButton btn_up=new JButton(new ImageIcon("img/gray_up.png"));
-    JButton btn_down=new JButton(new ImageIcon("img/gray_down.png"));
-    JButton btn_compare=new JButton(new ImageIcon("img/gray_compare.png"));
+    JButton btn_right=new JButton(new ImageIcon("img/right.png"));
+    JButton btn_left=new JButton(new ImageIcon("img/left.png"));
+    JButton btn_up=new JButton(new ImageIcon("img/up.png"));
+    JButton btn_down=new JButton(new ImageIcon("img/down.png"));
+    JButton btn_compare=new JButton(new ImageIcon("img/compare.png"));
 
     Controller controller;
     CenterMenuPanel(Controller controller){
         setLayout(null);
         this.controller = controller;
+        btn_right.setDisabledIcon(new ImageIcon("img/gray_right.png"));
+        btn_left.setDisabledIcon(new ImageIcon("img/gray_left.png"));
+        btn_up.setDisabledIcon(new ImageIcon("img/gray_up.png"));
+        btn_down.setDisabledIcon(new ImageIcon("img/gray_down.png"));
         btn_compare.setDisabledIcon(new ImageIcon("img/gray_compare.png"));
 
         btn_right.setSize(50,50);
@@ -79,41 +83,33 @@ public class CenterMenuPanel extends JPanel implements Observer {
         switch(updateEvent.getId()){
             case UPDATE_CENTER_CAN_RIGHT_MERGE:
                 if((Boolean)updateEvent.getObject()){
-                    btn_right.setIcon(new ImageIcon("img/right.png"));
                     btn_right.setEnabled(true);
                 }
                 else{
-                    btn_right.setIcon(new ImageIcon("img/gray_right.png"));
                     btn_right.setEnabled(false);
                 }
                 break;
             case UPDATE_CENTER_CAN_LEFT_MERGE:
                 if((Boolean)updateEvent.getObject()){
-                    btn_left.setIcon(new ImageIcon("img/left.png"));
                     btn_left.setEnabled(true);
                 }
                 else{
-                    btn_left.setIcon(new ImageIcon("img/gray_left.png"));
                     btn_left.setEnabled(false);
                 }
                 break;
             case UPDATE_CENTER_CAN_UPPER_BLOCK:
                 if((Boolean)updateEvent.getObject()){
-                    btn_up.setIcon(new ImageIcon("img/up.png"));
                     btn_up.setEnabled(true);
                 }
                 else{
-                    btn_up.setIcon(new ImageIcon("img/gray_up.png"));
                     btn_up.setEnabled(false);
                 }
                 break;
             case UPDATE_CENTER_CAN_LOWER_BLOCK:
                 if((Boolean)updateEvent.getObject()){
-                    btn_down.setIcon(new ImageIcon("img/down.png"));
                     btn_down.setEnabled(true);
                 }
                 else{
-                    btn_down.setIcon(new ImageIcon("img/gray_down.png"));
                     btn_down.setEnabled(false);
                 }
                 break;

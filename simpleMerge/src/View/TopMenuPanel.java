@@ -17,28 +17,19 @@ public class TopMenuPanel extends JPanel implements Observer{
 
     JLabel lb_diffLine =new JLabel("Diff Line");
 
-    JButton btn_saveAll =new JButton(new ImageIcon("img/gray_saveAll.png"));
-    JButton btn_leftAll =new JButton(new ImageIcon("img/gray_leftAll.png"));
-    JButton btn_rightAll =new JButton(new ImageIcon("img/gray_rightAll.png"));
+    JButton btn_saveAll =new JButton(new ImageIcon("img/pink_saveAll.png"));
+    JButton btn_leftAll =new JButton(new ImageIcon("img/pink_leftAll.png"));
+    JButton btn_rightAll =new JButton(new ImageIcon("img/pink_rightAll.png"));
 
     Font f1;
     Controller controller;
-    ImageIcon icon;
 
     TopMenuPanel(Controller controller){
         this.controller = controller;
         setLayout(null);
-        //setBorder(tb);
-        /*
-        btn_newProject.setSize(80,80);
-        btn_newProject.setLocation(0,10);
-        btn_newProject.setOpaque(false);
-        btn_newProject.setContentAreaFilled(false);
-        btn_newProject.setBorderPainted(false);
-        btn_newProject.addActionListener(controller.getActionListener(DataId.ACTION_BTN_NEW_PROJECT));
-        add(btn_newProject);
-        */
-        //lb_diffLine.setSize(100,100);
+        btn_saveAll.setDisabledIcon(new ImageIcon("img/gray_saveAll.png"));
+        btn_leftAll.setDisabledIcon(new ImageIcon("img/gray_leftAll.png"));
+        btn_rightAll.setDisabledIcon(new ImageIcon("img/gray_rightAll.png"));
 
         btn_saveAll.setSize(80,80);
         btn_saveAll.setLocation(0, 10);
@@ -86,31 +77,25 @@ public class TopMenuPanel extends JPanel implements Observer{
         switch(updateEvent.getId()){
             case UPDATE_TOP_CAN_SAVE_ALL:
                 if((Boolean)updateEvent.getObject()){
-                    btn_saveAll.setIcon(new ImageIcon("img/pink_saveAll.png"));
                     btn_saveAll.setEnabled(true);
                 }
                 else{
-                    btn_saveAll.setIcon(new ImageIcon("img/gray_saveAll.png"));
                     btn_saveAll.setEnabled(false);
                 }
                 break;
             case UPDATE_TOP_CAN_LEFT_ALL:
                 if((Boolean)updateEvent.getObject()){
-                    btn_leftAll.setIcon(new ImageIcon("img/pink_leftAll.png"));
                     btn_leftAll.setEnabled(true);
                 }
                 else{
-                    btn_leftAll.setIcon(new ImageIcon("img/gray_leftAll.png"));
                     btn_leftAll.setEnabled(false);
                 }
                 break;
             case UPDATE_TOP_CAN_RIGHT_ALL:
                 if((Boolean)updateEvent.getObject()){
-                    btn_rightAll.setIcon(new ImageIcon("img/pink_rightAll.png"));
                     btn_rightAll.setEnabled(true);
                 }
                 else{
-                    btn_rightAll.setIcon(new ImageIcon("img/gray_rightAll.png"));
                     btn_rightAll.setEnabled(false);
                 }
                 break;
