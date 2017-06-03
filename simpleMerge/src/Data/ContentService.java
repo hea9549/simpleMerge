@@ -1,5 +1,7 @@
 package Data;
 
+import Model.ViewerModel;
+
 import java.util.ArrayList;
 
 /**
@@ -7,4 +9,5 @@ import java.util.ArrayList;
  */
 public interface ContentService {
     ArrayList<ComparableBlock>[] compare(ArrayList<ComparableBlock> leftContent, ArrayList<ComparableBlock> rightContent);
+    boolean merge(ViewerModel sourceModel,ViewerModel targetModel);
 }
