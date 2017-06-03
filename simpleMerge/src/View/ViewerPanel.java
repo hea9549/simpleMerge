@@ -93,11 +93,11 @@ public class ViewerPanel extends JPanel implements Observer {
                 break;
             case UPDATE_VIEWER_CAN_EDIT:
                 if((Boolean)updateEvent.getObject()){
-                    btn_edit.setIcon(new ImageIcon("img/white_edit.png"));
+                    btn_edit.setIcon(new ImageIcon("img/edit.png"));
                     btn_edit.setEnabled(true);
                 }
                 else{
-                    btn_edit.setIcon(new ImageIcon("img/gray_edit.png"));
+                    btn_edit.setIcon(new ImageIcon("img/edit.png"));
                     btn_edit.setEnabled(false);
                 }
                 break;
@@ -107,7 +107,7 @@ public class ViewerPanel extends JPanel implements Observer {
                     btn_edit.setIcon(new ImageIcon("img/red_edit.png"));
                 }else{
                     jTextPane.setEnabled(false);
-                    btn_edit.setIcon(new ImageIcon("img/white_edit.png"));
+                    btn_edit.setIcon(new ImageIcon("img/edit.png"));
                 }
                 break;
         }

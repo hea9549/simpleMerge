@@ -81,7 +81,7 @@ public class ContentServiceTest {
     }
 
     @Test
-    public void haesungTest(){
+    public void inBlockLineNumTest(){
         ArrayList<ComparableString> contents1 = new ArrayList<>();
         contents1.add(new ComparableString.Builder().setFlags(ComparableString.DEFAULT).setContent("a").build());
         contents1.add(new ComparableString.Builder().setFlags(ComparableString.DEFAULT).setContent("b").build());
