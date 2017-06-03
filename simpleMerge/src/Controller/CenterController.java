@@ -32,13 +32,15 @@ public class CenterController implements Controller {
         }
         return false;
     }
-    private void setPrevBlockIndex(){
-        ViewerModel leftModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");;
+    private boolean setPrevBlockIndex(){
+        ViewerModel leftModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");
+        if(centerModel.getCompareBlockIndex()-1<0)return false;
         for(int i = centerModel.getCompareBlockIndex()-1;i>=0 ;i--){
             if(leftModel.getContentsBlock().get(i).isEqualString())continue;
             centerModel.setCompareBlockIndex(i);
             break;
         }
+        return false;
     }
     @Override
     public ActionListener getActionListener(DataId id) {
@@ -70,20 +72,28 @@ public class CenterController implements Controller {
                         break;
                     }
                     centerModel.setCanCompare(false);
+                    ((CenterModel)ModelProvider.getInstance().getModel("centerModel")).setCanUpperBlock(true);
+                    ((CenterModel)ModelProvider.getInstance().getModel("centerModel")).setCanLowerBlock(true);
+                    ((CenterModel)ModelProvider.getInstance().getModel("centerModel")).setCanLeftMerge(true);
+                    ((CenterModel)ModelProvider.getInstance().getModel("centerModel")).setCanRightMerge(true);
                     break;
                 case ACTION_BTN_MERGE_LEFT:
                     leftModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");
                     rightModel = (ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel");
                     contentService= new ContentServiceImpl();
                     contentService.merge(rightModel,leftModel);
-                    if(!setNextBlockIndex())setPrevBlockIndex();
+                    if(!setNextBlockIndex())if(!setPrevBlockIndex()){
+                        mergeFinishModelSetting();
+                    };
                     break;
                 case ACTION_BTN_MERGE_RIGHT:
                     leftModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");
                     rightModel = (ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel");
                     contentService= new ContentServiceImpl();
                     contentService.merge(leftModel,rightModel);
-                    if(!setNextBlockIndex())setPrevBlockIndex();
+                    if(!setNextBlockIndex())if(!setPrevBlockIndex()){
+                        mergeFinishModelSetting();
+                    };
                     break;
                 case ACTION_BTN_UPPER:
                     setPrevBlockIndex();
@@ -97,5 +107,10 @@ public class CenterController implements Controller {
             this.actionSubjectId = dataId;
         }
 
+    }
+
+    private void mergeFinishModelSetting() {
+        ((CenterModel)ModelProvider.getInstance().getModel("centerModel")).setCanUpperBlock(false);
+        ((CenterModel)ModelProvider.getInstance().getModel("centerModel")).setCanLowerBlock(false);
     }
 }

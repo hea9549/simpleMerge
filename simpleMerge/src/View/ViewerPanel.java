@@ -107,6 +107,7 @@ public class ViewerPanel extends JPanel implements Observer {
                     btn_edit.setIcon(new ImageIcon("img/red_edit.png"));
                 }else{
                     jTextPane.setEnabled(false);
+                    btn_edit.setIcon(new ImageIcon("img/edit.png"));
                 }
                 break;
         }

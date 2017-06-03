@@ -40,7 +40,6 @@ public class ViewerController implements Controller {
         public void actionPerformed(ActionEvent e) {
             switch (actionId) {
                 case ACTION_VIEWER_BTN_EDIT:
-                    System.out.println("에딧버튼 이벤트");
                     if(model.isEditing()){
                         StyledDocument styledDocument = (StyledDocument)extraData;
                         ArrayList<ComparableBlock> inputBlock= new ArrayList<ComparableBlock>();
@@ -57,30 +56,19 @@ public class ViewerController implements Controller {
                         model.setContentsBlock(inputBlock);
                     }
                     model.setEditing(!model.isEditing());
-                    System.out.println(!((ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel")).isEditing()
-                            &&!((ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel")).isEditing());
-                    if(!((ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel")).isEditing()
-                        &&!((ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel")).isEditing()){
-                        ((CenterModel)ModelProvider.getInstance().getModel("centerModel")).setCanCompare(true);
-                        ((TopModel)ModelProvider.getInstance().getModel("topModel")).setCanLeftAll(true);
-                        ((TopModel)ModelProvider.getInstance().getModel("topModel")).setCanRightAll(true);
-                    }else{
-                        ((CenterModel)ModelProvider.getInstance().getModel("centerModel")).setCanCompare(false);
-                        ((TopModel)ModelProvider.getInstance().getModel("topModel")).setCanLeftAll(false);
-                        ((TopModel)ModelProvider.getInstance().getModel("topModel")).setCanRightAll(false);
-                    }
-
+                    checkCanCompare();
                     break;
                 case ACTION_VIEWER_BTN_LOAD:
-                    String filePath;
+                    File file;
                     FileService fileService = new TextFileService();
-                    ArrayList<ComparableString> contents = fileService.getContents(filePath = fileService.getFilePath());
-                    model.setFile(new File(filePath));
+                    ArrayList<ComparableString> contents = fileService.getContents(file = fileService.getFilePath());
+                    model.setFile(file);
                     ArrayList<ComparableBlock> comparableBlocks = new ArrayList<>();
                     if(contents!= null){
                         comparableBlocks.add(new ComparableBlock(ComparableBlock.DEFAULT,contents));
                     }
                     model.setContentsBlock(comparableBlocks);
+                    checkCanCompare();
                     break;
                 case ACTION_VIEWER_BTN_SAVE:
                     ArrayList<String> stringToSave = new ArrayList<>();
@@ -91,9 +79,7 @@ public class ViewerController implements Controller {
                             stringToSave.add(model.getContentsBlock().get(i).getContents(j).getContentString());
                         }
                     }
-
-                    fileService.saveFile(model.getFile(), stringToSave);
-                    
+                    model.setFile(fileService.saveFile(model.getFile(), stringToSave));
                     break;
 
             }
@@ -106,5 +92,22 @@ public class ViewerController implements Controller {
             this.actionId = actionId;
             this.extraData = extraData;
         }
+    }
+
+    private void checkCanCompare() {
+        if(!((ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel")).isEditing()
+                &&!((ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel")).isEditing()
+                &&((ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel")).getContentsBlock()!=null
+                &&((ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel")).getContentsBlock()!=null){
+            ((CenterModel)ModelProvider.getInstance().getModel("centerModel")).setCanCompare(true);
+            ((TopModel)ModelProvider.getInstance().getModel("topModel")).setCanLeftAll(true);
+            ((TopModel)ModelProvider.getInstance().getModel("topModel")).setCanRightAll(true);
+        }else{
+            ((CenterModel)ModelProvider.getInstance().getModel("centerModel")).setCanCompare(false);
+
+            ((TopModel)ModelProvider.getInstance().getModel("topModel")).setCanLeftAll(false);
+            ((TopModel)ModelProvider.getInstance().getModel("topModel")).setCanRightAll(false);
+        }
+
     }
 }
