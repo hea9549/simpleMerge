@@ -5,6 +5,7 @@ import Data.DataId;
 import Observer.Observable;
 import Observer.UpdateEvent;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -14,7 +15,7 @@ public class ViewerModel extends Observable {
     private ArrayList<ComparableBlock> contentsBlock;
     private boolean canEdit = false;
     private boolean isEditing = false;
-    private String filePath;
+    private File file;
     public void viewerModelInit(){
         setEditing(false);
     }
@@ -37,12 +38,12 @@ public class ViewerModel extends Observable {
         notifyChange(new UpdateEvent(DataId.UPDATE_VIEWER_CAN_EDIT, canEdit));
     }
 
-    public String getFilePath() {
-        return filePath;
+    public File getFile() {
+        return file;
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    public void setFile(File file) {
+        this.file = file;
     }
 
     public boolean isEditing() {

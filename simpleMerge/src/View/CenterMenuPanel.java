@@ -22,10 +22,12 @@ public class CenterMenuPanel extends JPanel implements Observer {
     CenterMenuPanel(Controller controller){
         setLayout(null);
         this.controller = controller;
+
         btn_right.setDisabledIcon(new ImageIcon("img/gray_right.png"));
         btn_left.setDisabledIcon(new ImageIcon("img/gray_left.png"));
         btn_up.setDisabledIcon(new ImageIcon("img/gray_up.png"));
         btn_down.setDisabledIcon(new ImageIcon("img/gray_down.png"));
+
         btn_compare.setDisabledIcon(new ImageIcon("img/gray_compare.png"));
 
         btn_right.setSize(50,50);
