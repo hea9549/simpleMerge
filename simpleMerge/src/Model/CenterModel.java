@@ -16,6 +16,11 @@ public class CenterModel extends Observable {
     private int compareBlockIndex = 0;
     public void initModel(){
         setCanCompare(false);
+        setCanLeftMerge(false);
+        setCanRightMerge(false);
+        setCanUpperBlock(false);
+        setCanLowerBlock(false);
+
     }
 
     public boolean isCanLeftMerge() {
@@ -69,7 +74,6 @@ public class CenterModel extends Observable {
 
     public void setCompareBlockIndex(int compareBlockIndex) {
         ViewerModel leftViewerModel = ((ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel"));
-        ViewerModel rightViewerModel = ((ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel"));
         if(leftViewerModel.getContentsBlock().size()-1<compareBlockIndex) return;
         this.compareBlockIndex = compareBlockIndex;
     }
