@@ -88,7 +88,7 @@ public class ViewerController implements Controller {
                     }
 
                     fileService.saveFile(model.getFile(), stringToSave);
-                    
+
                     break;
 
             }
