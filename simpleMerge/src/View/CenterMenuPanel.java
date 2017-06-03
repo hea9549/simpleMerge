@@ -124,7 +124,7 @@ public class CenterMenuPanel extends JPanel implements Observer {
                 }
                 else{
                     btn_compare.setIcon(new ImageIcon("img/gray_compare.png"));
-                    btn_compare.setEnabled(false);
+                    btn_compare.setDisabledIcon(new ImageIcon("img/gray_compare.png"));
                 }
                 break;
         }
