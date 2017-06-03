@@ -6,7 +6,6 @@ import Data.DataId;
 import Observer.*;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 
@@ -102,6 +101,7 @@ public class TopMenuPanel extends JPanel implements Observer{
             case UPDATE_TOP_DIFF_LINE:
                 lb_diffLine.setText("Diff Line : " + ((Integer)updateEvent.getObject()));
                 break;
+
         }
     }
 }

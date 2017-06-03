@@ -106,7 +106,7 @@ public class ContentServiceImpl implements ContentService {
             for (int j = 1; j < rightStrListSize + 1; j++) {
                 if (leftStrList.get(i - 1).getContentString()
                         .compareTo(rightStrList.get(j - 1).getContentString()) == 0)
-                    mismatchPenalty = 0;
+                    mismatchPenalty = -1;
                 else
                     mismatchPenalty = 1;
 
@@ -114,6 +114,13 @@ public class ContentServiceImpl implements ContentService {
                         , scoreMatrix[i - 1][j] + gapPenalty
                         , scoreMatrix[i][j - 1] + gapPenalty);
             }
+        }
+
+        for (int i = 0; i < leftStrListSize + 1; i++) {
+            for (int j = 0; j < rightStrListSize + 1; j++) {
+                System.out.print(scoreMatrix[i][j]);
+            }
+            System.out.println();
         }
 
         int idx_left = leftStrListSize;
@@ -139,13 +146,28 @@ public class ContentServiceImpl implements ContentService {
             }
             // ScoreMatrix 벽이 아닐 때
             else {
-                int tempScore = findMin(scoreMatrix[idx_left - 1][idx_right - 1]
-                        , scoreMatrix[idx_left - 1][idx_right], scoreMatrix[idx_left][idx_right - 1]);
+                int tempScore = scoreMatrix[idx_left][idx_right];
 
+                // ScoreMatrix를 위쪽으로 trace
+                if (tempScore == scoreMatrix[idx_left - 1][idx_right] + 1) {
+                    leftStrResult.add(makeCompStr(ComparableString.ADDED
+                            , leftStrList.get(idx_left - 1).getContentString()));
+                    rightStrResult.add(makeCompStr(ComparableString.EMPTY, ""));
+
+                    idx_left--;
+                }
+                // ScoreMatrix를 왼쪽으로 trace
+                else if (tempScore == scoreMatrix[idx_left][idx_right - 1] + 1) {
+                    leftStrResult.add(makeCompStr(ComparableString.EMPTY, ""));
+                    rightStrResult.add(makeCompStr(ComparableString.ADDED
+                            , rightStrList.get(idx_right - 1).getContentString()));
+
+                    idx_right--;
+                }
                 // ScoreMatrix를 대각선으로 trace
-                if (tempScore == scoreMatrix[idx_left - 1][idx_right - 1]) {
+                else {
                     // 두 String이 같을 경우
-                    if (scoreMatrix[idx_left][idx_right] == tempScore) {
+                    if (tempScore == scoreMatrix[idx_left - 1][idx_right - 1] - 1) {
                         leftStrResult.add(makeCompStr(ComparableString.EQUAL
                                 , leftStrList.get(idx_left - 1).getContentString()));
                         rightStrResult.add(makeCompStr(ComparableString.EQUAL
@@ -159,22 +181,6 @@ public class ContentServiceImpl implements ContentService {
                                 , rightStrList.get(idx_right - 1).getContentString()));
                     }
                     idx_left--;
-                    idx_right--;
-                }
-                // ScoreMatrix를 위쪽으로 trace
-                else if (tempScore == scoreMatrix[idx_left - 1][idx_right]) {
-                    leftStrResult.add(makeCompStr(ComparableString.ADDED
-                            , leftStrList.get(idx_left - 1).getContentString()));
-                    rightStrResult.add(makeCompStr(ComparableString.EMPTY, ""));
-
-                    idx_left--;
-                }
-                // ScoreMatrix를 왼쪽으로 trace
-                else {
-                    leftStrResult.add(makeCompStr(ComparableString.EMPTY, ""));
-                    rightStrResult.add(makeCompStr(ComparableString.ADDED
-                            , rightStrList.get(idx_right - 1).getContentString()));
-
                     idx_right--;
                 }
             }
