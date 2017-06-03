@@ -42,31 +42,6 @@ public class ContentServiceImpl implements ContentService {
         return contents;
     }
 
-    @Override
-    public boolean merge(ViewerModel sourceModel, ViewerModel targetModel) {
-        CenterModel centerModel = (CenterModel) ModelProvider.getInstance().getModel("centerModel");
-        if(sourceModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).isEqualString())return false;
-        if(sourceModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).isEmptyString()){
-            sourceModel.getContentsBlock().remove(centerModel.getCompareBlockIndex());
-            targetModel.getContentsBlock().remove(centerModel.getCompareBlockIndex());
-            targetModel.setContentsBlock(targetModel.getContentsBlock());
-            sourceModel.setContentsBlock(sourceModel.getContentsBlock());
-            return true;
-        }
-        for(int i = 0;i<sourceModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).getContents().size();i++){
-            ComparableString str = sourceModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).getContents().get(i);
-            ComparableString leftContents = targetModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).getContents().get(i);
-            leftContents.setContentString(str.getContentString());
-            leftContents.setEqual();
-            str.setEqual();
-        }
-        targetModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).setEqual();
-        sourceModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).setEqual();
-        targetModel.setContentsBlock(targetModel.getContentsBlock());
-        sourceModel.setContentsBlock(sourceModel.getContentsBlock());
-        return true;
-    }
-
     private int findMin(int num1, int num2, int num3) {
         if (num1 < num2) {
             if (num1 < num3)
@@ -245,10 +220,11 @@ public class ContentServiceImpl implements ContentService {
         return resultBlocks;
     }
 
-    enum comparingState {
-        NOTCOMPARED, EQUAL, DIFF, LEFTADDED, RIGHTADDED
-    }
 
+
+    enum comparingState {
+        NOTCOMPARED, EQUAL, DIFF, LEFTADDED, RIGHTADDED;
+    }
     private comparingState getComparingState(ComparableString str1, ComparableString str2) {
         byte strState1 = str1.getState();
         byte strState2 = str2.getState();
@@ -265,4 +241,30 @@ public class ContentServiceImpl implements ContentService {
                 return comparingState.RIGHTADDED;
         }
     }
+
+    @Override
+    public boolean merge(ViewerModel sourceModel, ViewerModel targetModel) {
+        CenterModel centerModel = (CenterModel) ModelProvider.getInstance().getModel("centerModel");
+        if(sourceModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).isEqualString())return false;
+        if(sourceModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).isEmptyString()){
+            sourceModel.getContentsBlock().remove(centerModel.getCompareBlockIndex());
+            targetModel.getContentsBlock().remove(centerModel.getCompareBlockIndex());
+            targetModel.setContentsBlock(targetModel.getContentsBlock());
+            sourceModel.setContentsBlock(sourceModel.getContentsBlock());
+            return true;
+        }
+        for(int i = 0;i<sourceModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).getContents().size();i++){
+            ComparableString str = sourceModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).getContents().get(i);
+            ComparableString leftContents = targetModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).getContents().get(i);
+            leftContents.setContentString(str.getContentString());
+            leftContents.setEqual();
+            str.setEqual();
+        }
+        targetModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).setEqual();
+        sourceModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).setEqual();
+        targetModel.setContentsBlock(targetModel.getContentsBlock());
+        sourceModel.setContentsBlock(sourceModel.getContentsBlock());
+        return true;
+    }
+
 }

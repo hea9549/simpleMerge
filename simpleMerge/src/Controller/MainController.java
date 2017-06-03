@@ -41,7 +41,26 @@ public class MainController implements Controller{
         ModelProvider.getInstance().registerModel("mainModel",mainModel);
 
     }
-
+    private boolean setNextBlockIndex(){
+        ViewerModel leftModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");
+        CenterModel centerModel = (CenterModel)ModelProvider.getInstance().getModel("centerModel");
+        if(centerModel.getCompareBlockIndex()+1>leftModel.getContentsBlock().size())return false;
+        for(int i = centerModel.getCompareBlockIndex()+1;i<leftModel.getContentsBlock().size();i++){
+            if(leftModel.getContentsBlock().get(i).isEqualString())continue;
+            centerModel.setCompareBlockIndex(i);
+            return true;
+        }
+        return false;
+    }
+    private void setPrevBlockIndex(){
+        ViewerModel leftModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");;
+        CenterModel centerModel = (CenterModel)ModelProvider.getInstance().getModel("centerModel");
+        for(int i = centerModel.getCompareBlockIndex()-1;i>=0 ;i--){
+            if(leftModel.getContentsBlock().get(i).isEqualString())continue;
+            centerModel.setCompareBlockIndex(i);
+            break;
+        }
+    }
     public static void main(String[] args){
         new MainController();
     }
@@ -61,10 +80,22 @@ public class MainController implements Controller{
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("아이디 = "+actionSubjectId);
+            ViewerModel leftModel,rightModel;
+            ContentService contentService;
             switch (actionSubjectId){
-                case ACTION_BTN_COMPARE:
-
+                case ACTION_BTN_LEFT_ALL:
+                    leftModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");
+                    rightModel = (ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel");
+                    contentService = new ContentServiceImpl();
+                    while(contentService.merge(rightModel,leftModel))setNextBlockIndex();
+                    break;
+                case ACTION_BTN_RIGHT_ALL:
+                    leftModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");
+                    rightModel = (ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel");
+                    contentService = new ContentServiceImpl();
+                    while(contentService.merge(leftModel,rightModel))setNextBlockIndex();
+                    break;
+                case ACTION_BTN_SAVE_ALL:
                     break;
                 default:
                     break;

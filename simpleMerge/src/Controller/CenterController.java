@@ -22,7 +22,24 @@ public class CenterController implements Controller {
         leftViewerModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");
         rightViewerModel = (ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel");
     }
-
+    private boolean setNextBlockIndex(){
+        ViewerModel leftModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");
+        if(centerModel.getCompareBlockIndex()+1>leftModel.getContentsBlock().size())return false;
+        for(int i = centerModel.getCompareBlockIndex()+1;i<leftModel.getContentsBlock().size();i++){
+            if(leftModel.getContentsBlock().get(i).isEqualString())continue;
+            centerModel.setCompareBlockIndex(i);
+            return true;
+        }
+        return false;
+    }
+    private void setPrevBlockIndex(){
+        ViewerModel leftModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");;
+        for(int i = centerModel.getCompareBlockIndex()-1;i>=0 ;i--){
+            if(leftModel.getContentsBlock().get(i).isEqualString())continue;
+            centerModel.setCompareBlockIndex(i);
+            break;
+        }
+    }
     @Override
     public ActionListener getActionListener(DataId id) {
         return new CenterControllerActionListener(id);
@@ -79,23 +96,6 @@ public class CenterController implements Controller {
         private CenterControllerActionListener(DataId dataId){
             this.actionSubjectId = dataId;
         }
-        private boolean setNextBlockIndex(){
-            ViewerModel leftModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");
-            if(centerModel.getCompareBlockIndex()+1>leftModel.getContentsBlock().size())return false;
-            for(int i = centerModel.getCompareBlockIndex()+1;i<leftModel.getContentsBlock().size();i++){
-                if(leftModel.getContentsBlock().get(i).isEqualString())continue;
-                centerModel.setCompareBlockIndex(i);
-                return true;
-            }
-            return false;
-        }
-        private void setPrevBlockIndex(){
-            ViewerModel leftModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");;
-            for(int i = centerModel.getCompareBlockIndex()-1;i>=0 ;i--){
-                if(leftModel.getContentsBlock().get(i).isEqualString())continue;
-                centerModel.setCompareBlockIndex(i);
-                break;
-            }
-        }
+
     }
 }

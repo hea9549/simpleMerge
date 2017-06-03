@@ -3,6 +3,7 @@ package Controller;
 import Data.*;
 import Model.CenterModel;
 import Model.ModelProvider;
+import Model.TopModel;
 import Model.ViewerModel;
 
 import javax.swing.text.BadLocationException;
@@ -60,8 +61,12 @@ public class ViewerController implements Controller {
                     if(!((ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel")).isEditing()
                         &&!((ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel")).isEditing()){
                         ((CenterModel)ModelProvider.getInstance().getModel("centerModel")).setCanCompare(true);
+                        ((TopModel)ModelProvider.getInstance().getModel("topModel")).setCanLeftAll(true);
+                        ((TopModel)ModelProvider.getInstance().getModel("topModel")).setCanRightAll(true);
                     }else{
                         ((CenterModel)ModelProvider.getInstance().getModel("centerModel")).setCanCompare(false);
+                        ((TopModel)ModelProvider.getInstance().getModel("topModel")).setCanLeftAll(false);
+                        ((TopModel)ModelProvider.getInstance().getModel("topModel")).setCanRightAll(false);
                     }
 
                     break;
