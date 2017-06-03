@@ -28,6 +28,7 @@ public class CenterMenuPanel extends JPanel implements Observer {
         btn_right.setOpaque(false);
         btn_right.setContentAreaFilled(false);
         btn_right.setBorderPainted(false);
+        btn_right.addActionListener(controller.getActionListener(DataId.ACTION_BTN_MERGE_RIGHT));
         add(btn_right);
 
 
@@ -36,6 +37,7 @@ public class CenterMenuPanel extends JPanel implements Observer {
         btn_left.setOpaque(false);
         btn_left.setContentAreaFilled(false);
         btn_left.setBorderPainted(false);
+        btn_left.addActionListener(controller.getActionListener(DataId.ACTION_BTN_MERGE_LEFT));
         add(btn_left);
 
         btn_up.setSize(50,50);
@@ -43,6 +45,7 @@ public class CenterMenuPanel extends JPanel implements Observer {
         btn_up.setOpaque(false);
         btn_up.setContentAreaFilled(false);
         btn_up.setBorderPainted(false);
+        btn_up.addActionListener(controller.getActionListener(DataId.ACTION_BTN_UPPER));
         add(btn_up);
 
         btn_down.setSize(50,50);
@@ -50,6 +53,7 @@ public class CenterMenuPanel extends JPanel implements Observer {
         btn_down.setOpaque(false);
         btn_down.setContentAreaFilled(false);
         btn_down.setBorderPainted(false);
+        btn_down.addActionListener(controller.getActionListener(DataId.ACTION_BTN_LOWER));
         add(btn_down);
 
         btn_compare.setSize(100,100);
