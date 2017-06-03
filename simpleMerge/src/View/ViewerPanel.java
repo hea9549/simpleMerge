@@ -16,13 +16,18 @@ import Util.AttributeUtil;
  */
 public class ViewerPanel extends JPanel implements Observer {
     JPanel menuPanel;
-    JButton btn_load,btn_edit,btn_save;
+    JButton btn_load=new JButton(new ImageIcon("img/folder.png"));
+    JButton btn_edit=new JButton(new ImageIcon("img/edit.png"));
+    JButton btn_save=new JButton(new ImageIcon("img/save.png"));
     JTextPane jTextPane;
     StyledDocument styledDocument;
     Controller controller;
     public ViewerPanel(Controller controller) {
         this.controller =controller;
         this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+        btn_load.setDisabledIcon(new ImageIcon("img/not_folder.png"));
+        btn_edit.setDisabledIcon(new ImageIcon("img/not_edit.png"));
+        btn_save.setDisabledIcon(new ImageIcon("img/not_save.png"));
         menuPanel = new JPanel(new FlowLayout());
         jTextPane = new JTextPane();
         jTextPane.setContentType("text/html");
@@ -34,19 +39,16 @@ public class ViewerPanel extends JPanel implements Observer {
     }
 
     private void setMenuPanel(){
-        btn_load = new JButton(new ImageIcon("img/folder.png"));
         btn_load.setOpaque(false);
         btn_load.setContentAreaFilled(false);
         btn_load.setBorderPainted(false);
         btn_load.addActionListener(controller.getActionListener(DataId.ACTION_VIEWER_BTN_LOAD));
 
-        btn_edit = new JButton(new ImageIcon("img/edit.png"));
         btn_edit.setOpaque(false);
         btn_edit.setContentAreaFilled(false);
         btn_edit.setBorderPainted(false);
         btn_edit.addActionListener(controller.getActionListener(DataId.ACTION_VIEWER_BTN_EDIT,jTextPane.getStyledDocument()));
 
-        btn_save = new JButton(new ImageIcon("img/save.png"));
         btn_save.setOpaque(false);
         btn_save.setContentAreaFilled(false);
         btn_save.setBorderPainted(false);
@@ -71,10 +73,10 @@ public class ViewerPanel extends JPanel implements Observer {
             styledDocument.remove(0,styledDocument.getLength());
             for (ComparableBlock comparableBlock : contentsBlock) {
                 for (ComparableString contents : comparableBlock.getContents()) {
-                    if(contents.isDefaultString() || contents.isEqualString())styledDocument.insertString(styledDocument.getLength(), contents.getContentString()+"\n", AttributeUtil.getDefaultAttribute());
-                    if(contents.isAddedString())styledDocument.insertString(styledDocument.getLength(), contents.getContentString()+"\n", AttributeUtil.getAddedAttribute());
-                    if(contents.isEmptyString())styledDocument.insertString(styledDocument.getLength(), contents.getContentString()+"\n", AttributeUtil.getEmptyAttribute());
-                    if(contents.isDiffString())styledDocument.insertString(styledDocument.getLength(), contents.getContentString()+"\n", AttributeUtil.getDiffAttribute());
+                        if(contents.isDefaultString() || contents.isEqualString())styledDocument.insertString(styledDocument.getLength(), contents.getContentString()+"\n", AttributeUtil.getDefaultAttribute());
+                        if(contents.isAddedString())styledDocument.insertString(styledDocument.getLength(), contents.getContentString()+"\n", AttributeUtil.getAddedAttribute());
+                        if(contents.isEmptyString())styledDocument.insertString(styledDocument.getLength(), contents.getContentString()+"\n", AttributeUtil.getEmptyAttribute());
+                        if(contents.isDiffString())styledDocument.insertString(styledDocument.getLength(), contents.getContentString()+"\n", AttributeUtil.getDiffAttribute());
                     }
             }
             jTextPane.setDocument(styledDocument);
@@ -93,11 +95,9 @@ public class ViewerPanel extends JPanel implements Observer {
                 break;
             case UPDATE_VIEWER_CAN_EDIT:
                 if((Boolean)updateEvent.getObject()){
-                    btn_edit.setIcon(new ImageIcon("img/edit.png"));
                     btn_edit.setEnabled(true);
                 }
                 else{
-                    btn_edit.setIcon(new ImageIcon("img/edit.png"));
                     btn_edit.setEnabled(false);
                 }
                 break;
@@ -107,7 +107,6 @@ public class ViewerPanel extends JPanel implements Observer {
                     btn_edit.setIcon(new ImageIcon("img/red_edit.png"));
                 }else{
                     jTextPane.setEnabled(false);
-                    btn_edit.setIcon(new ImageIcon("img/edit.png"));
                 }
                 break;
         }
