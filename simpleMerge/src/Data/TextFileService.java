@@ -3,10 +3,7 @@ package Data;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -45,5 +42,32 @@ public class TextFileService implements FileService {
         chooser.setFileFilter(new FileNameExtensionFilter("txt file","txt"));
         chooser.showOpenDialog(null);
         return chooser.getSelectedFile().getPath();
+    }
+
+    @Override
+    public void saveFile(File fileToSave, ArrayList<String> contentsToSave) {
+//        String filePathToSave = fileToSave.getAbsolutePath();
+
+        BufferedWriter bw = null;
+
+        try {
+            bw = new BufferedWriter(new FileWriter(fileToSave));
+
+            for(int i =0; i<contentsToSave.size(); i++) {
+                bw.write(contentsToSave.get(i));
+                bw.newLine();
+            }
+
+            bw.flush();
+        } catch (IOException e){
+            e.printStackTrace();
+        } finally {
+            if(bw != null)
+                try {
+                    bw.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+        }
     }
 }
