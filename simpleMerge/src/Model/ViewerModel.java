@@ -6,16 +6,19 @@ import Observer.Observable;
 import Observer.UpdateEvent;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by ParkHaeSung on 2017-05-23.
  */
 public class ViewerModel extends Observable {
     private ArrayList<ComparableBlock> contentsBlock;
-    private boolean isEdited = false;
+    private boolean canEdit = false;
+    private boolean isEditing = false;
     private String filePath;
+    public void viewerModelInit(){
+        setEditing(false);
+    }
+
     public void setContentsBlock(ArrayList<ComparableBlock> contentsBlock) {
         this.contentsBlock = contentsBlock;
         notifyChange(new UpdateEvent(DataId.UPDATE_VIEWER_CONTENT,contentsBlock));
@@ -25,13 +28,13 @@ public class ViewerModel extends Observable {
         return contentsBlock;
     }
 
-    public boolean isEdited() {
-        return isEdited;
+    public boolean isCanEdit() {
+        return canEdit;
     }
 
-    public void setEdited(boolean edited) {
-        isEdited = edited;
-        notifyChange(new UpdateEvent(DataId.UPDATE_VIEWER_EDITED,edited));
+    public void setCanEdit(boolean canEdit) {
+        this.canEdit = canEdit;
+        notifyChange(new UpdateEvent(DataId.UPDATE_VIEWER_CAN_EDIT, canEdit));
     }
 
     public String getFilePath() {
@@ -40,5 +43,14 @@ public class ViewerModel extends Observable {
 
     public void setFilePath(String filePath) {
         this.filePath = filePath;
+    }
+
+    public boolean isEditing() {
+        return isEditing;
+    }
+
+    public void setEditing(boolean editing) {
+        isEditing = editing;
+        notifyChange(new UpdateEvent(DataId.UPDATE_VIEWER_IS_EDITING, isEditing));
     }
 }

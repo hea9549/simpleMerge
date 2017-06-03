@@ -22,12 +22,14 @@ public class CenterMenuPanel extends JPanel implements Observer {
     CenterMenuPanel(Controller controller){
         setLayout(null);
         this.controller = controller;
+
         btn_right.setSize(50,50);
         btn_right.setLocation(40, 80);
         btn_right.setOpaque(false);
         btn_right.setContentAreaFilled(false);
         btn_right.setBorderPainted(false);
         add(btn_right);
+
 
         btn_left.setSize(50,50);
         btn_left.setLocation(40, 180);
@@ -111,6 +113,7 @@ public class CenterMenuPanel extends JPanel implements Observer {
                 }
                 break;
             case UPDATE_CENTER_CAN_COMPARE:
+                System.out.println("컴페어가능여부가 도착했어요! ="+(Boolean)updateEvent.getObject());
                 if((Boolean)updateEvent.getObject()){
                     btn_compare.setIcon(new ImageIcon("img/compare.png"));
                     btn_compare.setEnabled(true);

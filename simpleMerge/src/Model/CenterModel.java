@@ -13,6 +13,11 @@ public class CenterModel extends Observable {
     private boolean canUpperBlock = false;
     private boolean canLowerBlock = false;
     private boolean canCompare = false;
+    private int compareBlockIndex = 0;
+    public void initModel(){
+        setCanCompare(false);
+    }
+
     public boolean isCanLeftMerge() {
         return canLeftMerge;
     }
@@ -56,5 +61,13 @@ public class CenterModel extends Observable {
     public void setCanCompare(boolean canCompare) {
         this.canCompare = canCompare;
         notifyChange(new UpdateEvent(DataId.UPDATE_CENTER_CAN_COMPARE,canCompare));
+    }
+
+    public int getCompareBlockIndex() {
+        return compareBlockIndex;
+    }
+
+    public void setCompareBlockIndex(int compareBlockIndex) {
+        this.compareBlockIndex = compareBlockIndex;
     }
 }

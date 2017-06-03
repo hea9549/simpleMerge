@@ -15,14 +15,16 @@ public class MainFrame extends JFrame implements Observer{
     private CenterMenuPanel centerMenuPanel;
     private JButton btn = new JButton("버튼 아이디 1");
     private Controller controller;
-    public MainFrame(Controller mainController,Controller leftViewerController,Controller rightViewerController){
+
+
+    public MainFrame(Controller mainController,Controller leftViewerController,Controller rightViewerController, Controller centerController){
         super("Simple Merge");
         this.controller = mainController;
         leftViewer = new ViewerPanel(leftViewerController);
         rightViewer = new ViewerPanel(rightViewerController);
         topMenuPanel = new TopMenuPanel(mainController);
         setBackground(new Color(188, 181, 182));
-        centerMenuPanel = new CenterMenuPanel(mainController);
+        centerMenuPanel = new CenterMenuPanel(centerController);
         setLayout(new BorderLayout());
         setBounds(100,0,1350,800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

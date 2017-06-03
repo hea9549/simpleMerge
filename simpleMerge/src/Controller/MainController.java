@@ -20,17 +20,22 @@ import static Data.DataId.ACTION_BTN_COMPARE;
 public class MainController implements Controller{
     private ViewerController leftViewerController;
     private ViewerController rightViewerController;
+    private CenterController centerController;
     private MainModel mainModel;
     private MainFrame mainFrame;
     public MainController(){
         initProgramModel();
         this.leftViewerController = new ViewerController((ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel"));
         this.rightViewerController = new ViewerController((ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel"));
-        this.mainFrame = new MainFrame(this,leftViewerController, rightViewerController);
+        this.centerController = new CenterController((CenterModel)ModelProvider.getInstance().getModel("centerModel"));
+        this.mainFrame = new MainFrame(this, leftViewerController, rightViewerController,centerController);
         ((ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel")).addObserver(mainFrame.getLeftViewer());
         ((ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel")).addObserver(mainFrame.getRightViewer());
         ((CenterModel)ModelProvider.getInstance().getModel("centerModel")).addObserver(mainFrame.getCenterMenuPanel());
         ((TopModel)ModelProvider.getInstance().getModel("topModel")).addObserver(mainFrame.getTopMenuPanel());
+        ((ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel")).viewerModelInit();
+        ((ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel")).viewerModelInit();
+        ((CenterModel)ModelProvider.getInstance().getModel("centerModel")).initModel();
         this.mainModel = new MainModel();
         mainModel.addObserver(mainFrame);
         ModelProvider.getInstance().registerModel("mainModel",mainModel);
@@ -46,6 +51,11 @@ public class MainController implements Controller{
         return new MainViewActionListener(id);
     }
 
+    @Override
+    public ActionListener getActionListener(DataId id, Object extraData) {
+        return null;
+    }
+
     private class MainViewActionListener implements ActionListener {
         private DataId actionSubjectId;
 
@@ -54,12 +64,7 @@ public class MainController implements Controller{
             System.out.println("아이디 = "+actionSubjectId);
             switch (actionSubjectId){
                 case ACTION_BTN_COMPARE:
-                    ContentService contentService = new ContentServiceImpl();
-                    ViewerModel leftModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");
-                    ViewerModel rightModel = (ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel");
-                    ArrayList<ComparableBlock>[] compareResult = contentService.compare(leftModel.getContentsBlock(),rightModel.getContentsBlock());
-                    leftModel.setContentsBlock(compareResult[0]);
-                    rightModel.setContentsBlock(compareResult[1]);
+
                     break;
                 default:
                     break;
