@@ -22,8 +22,8 @@ public class ViewerPanel extends JPanel implements Observer {
     JTextPane jTextPane;
     JScrollPane scroll;
     StyledDocument styledDocument;
-    Controller controller;
-    public ViewerPanel(Controller controller) {
+    ViewController controller;
+    public ViewerPanel(ViewController controller) {
         this.controller =controller;
         this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
         btn_load.setDisabledIcon(new ImageIcon("img/not_folder.png"));
@@ -55,17 +55,17 @@ public class ViewerPanel extends JPanel implements Observer {
         btn_load.setOpaque(false);
         btn_load.setContentAreaFilled(false);
         btn_load.setBorderPainted(false);
-        btn_load.addActionListener(controller.getActionListener(DataId.ACTION_VIEWER_BTN_LOAD));
+        btn_load.addActionListener(controller.getEventListener(DataId.ACTION_VIEWER_BTN_LOAD));
 
         btn_edit.setOpaque(false);
         btn_edit.setContentAreaFilled(false);
         btn_edit.setBorderPainted(false);
-        btn_edit.addActionListener(controller.getActionListener(DataId.ACTION_VIEWER_BTN_EDIT,jTextPane.getStyledDocument()));
+        btn_edit.addActionListener(controller.getEventListener(DataId.ACTION_VIEWER_BTN_EDIT,jTextPane.getStyledDocument()));
 
         btn_save.setOpaque(false);
         btn_save.setContentAreaFilled(false);
         btn_save.setBorderPainted(false);
-        btn_save.addActionListener(controller.getActionListener(DataId.ACTION_VIEWER_BTN_SAVE));
+        btn_save.addActionListener(controller.getEventListener(DataId.ACTION_VIEWER_BTN_SAVE));
 
         menuPanel.add(btn_load);
         menuPanel.add(btn_edit);

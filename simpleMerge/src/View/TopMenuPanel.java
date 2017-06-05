@@ -1,12 +1,11 @@
 package View;
 
-import Controller.Controller;
+import Controller.ViewController;
 import Data.DataId;
 
 import Observer.*;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 /**
@@ -21,9 +20,9 @@ public class TopMenuPanel extends JPanel implements Observer{
     JButton btn_rightAll =new JButton(new ImageIcon("img/pink_rightAll.png"));
 
     Font f1;
-    Controller controller;
+    ViewController controller;
 
-    TopMenuPanel(Controller controller){
+    TopMenuPanel(ViewController controller){
         this.controller = controller;
         setLayout(null);
         btn_saveAll.setDisabledIcon(new ImageIcon("img/gray_saveAll.png"));
@@ -35,7 +34,7 @@ public class TopMenuPanel extends JPanel implements Observer{
         btn_saveAll.setOpaque(false);
         btn_saveAll.setContentAreaFilled(false);
         btn_saveAll.setBorderPainted(false);
-        btn_saveAll.addActionListener(controller.getActionListener(DataId.ACTION_BTN_SAVE_ALL));
+        btn_saveAll.addActionListener(controller.getEventListener(DataId.ACTION_BTN_SAVE_ALL));
         add(btn_saveAll);
 
         btn_leftAll.setSize(80,80);
@@ -43,7 +42,7 @@ public class TopMenuPanel extends JPanel implements Observer{
         btn_leftAll.setOpaque(false);
         btn_leftAll.setContentAreaFilled(false);
         btn_leftAll.setBorderPainted(false);
-        btn_leftAll.addActionListener(controller.getActionListener(DataId.ACTION_BTN_LEFT_ALL));
+        btn_leftAll.addActionListener(controller.getEventListener(DataId.ACTION_BTN_LEFT_ALL));
         add(btn_leftAll);
 
         btn_rightAll.setSize(80,80);
@@ -51,7 +50,7 @@ public class TopMenuPanel extends JPanel implements Observer{
         btn_rightAll.setOpaque(false);
         btn_rightAll.setContentAreaFilled(false);
         btn_rightAll.setBorderPainted(false);
-        btn_rightAll.addActionListener(controller.getActionListener(DataId.ACTION_BTN_RIGHT_ALL));
+        btn_rightAll.addActionListener(controller.getEventListener(DataId.ACTION_BTN_RIGHT_ALL));
         add(btn_rightAll);
 
         lb_diffLine.setSize(200,20);

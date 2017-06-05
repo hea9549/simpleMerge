@@ -71,9 +71,11 @@ public class ViewerModel extends Observable {
         String str = "";
         for(int i = 0;i<contentsBlock.size();i++){
             for(int j = 0 ; j<contentsBlock.get(i).getContents().size();j++){
-                str += contentsBlock.get(i).getContents().get(j).getContentString()+"\n";
+                if(j == contentsBlock.get(i).getContents().size()-1)str += contentsBlock.get(i).getContents().get(j).getContentString();
+                else str += contentsBlock.get(i).getContents().get(j).getContentString()+"\n";
             }
         }
+
         return str;
     }
 
