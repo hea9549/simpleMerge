@@ -1,23 +1,16 @@
 package Controller;
 
-import Data.ComparableBlock;
 import Data.ContentService;
 import Data.ContentServiceImpl;
 import Data.DataId;
 import Model.*;
 import View.MainFrame;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
-import static Data.DataId.ACTION_BTN_COMPARE;
-
 /**
  * @author ParkHaeSung
  * @since 2017-05-24
  * */
-public class MainController implements Controller{
+public class MainController extends ViewController {
     private ViewerController leftViewerController;
     private ViewerController rightViewerController;
     private CenterController centerController;
@@ -67,44 +60,24 @@ public class MainController implements Controller{
     }
 
     @Override
-    public ActionListener getActionListener(DataId id) {
-        return new MainViewActionListener(id);
-    }
-
-    @Override
-    public ActionListener getActionListener(DataId id, Object extraData) {
-        return null;
-    }
-
-    private class MainViewActionListener implements ActionListener {
-        private DataId actionSubjectId;
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            ViewerModel leftModel,rightModel;
-            ContentService contentService;
-            switch (actionSubjectId){
-                case ACTION_BTN_LEFT_ALL:
-                    leftModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");
-                    rightModel = (ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel");
-                    contentService = new ContentServiceImpl();
-                    while(contentService.merge(rightModel,leftModel))setNextBlockIndex();
-                    break;
-                case ACTION_BTN_RIGHT_ALL:
-                    leftModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");
-                    rightModel = (ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel");
-                    contentService = new ContentServiceImpl();
-                    while(contentService.merge(leftModel,rightModel))setNextBlockIndex();
-                    break;
-                case ACTION_BTN_SAVE_ALL:
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        public MainViewActionListener(DataId actionId){
-            this.actionSubjectId = actionId;
+    public void onEventLoad(DataId id, Object extraData) {
+        ViewerModel leftModel,rightModel;
+        ContentService contentService;
+        switch (id){
+            case ACTION_BTN_LEFT_ALL:
+                leftModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");
+                rightModel = (ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel");
+                contentService = new ContentServiceImpl();
+                while(contentService.merge(rightModel,leftModel))setNextBlockIndex();
+                break;
+            case ACTION_BTN_RIGHT_ALL:
+                leftModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");
+                rightModel = (ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel");
+                contentService = new ContentServiceImpl();
+                while(contentService.merge(leftModel,rightModel))setNextBlockIndex();
+                break;
+            default:
+                break;
         }
     }
 

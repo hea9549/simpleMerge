@@ -8,93 +8,71 @@ import Model.ViewerModel;
 
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
-import javax.swing.text.View;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 
 /**
  * Created by ParkHaeSung on 2017-05-23.
  */
-public class ViewerController implements Controller {
+public class ViewerController extends ViewController {
     private ViewerModel model;
     public ViewerController(ViewerModel model) {
         this.model = model;
     }
 
     @Override
-    public ActionListener getActionListener(DataId id) {
-        return new ViewerPanelActionListener(id);
+    public void onEventLoad(DataId id, Object extraData) {
+        switch (id) {
+            case ACTION_VIEWER_BTN_EDIT:
+                editAction((StyledDocument)extraData);
+                break;
+            case ACTION_VIEWER_BTN_LOAD:
+                loadAction();
+                break;
+            case ACTION_VIEWER_BTN_SAVE:
+                saveAction();
+                break;
+        }
     }
 
-    @Override
-    public ActionListener getActionListener(DataId id, Object extraData) {
-        return new ViewerPanelActionListener(id,extraData);
-    }
-
-    private class ViewerPanelActionListener implements ActionListener {
-        private DataId actionId;
-        private Object extraData;
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            switch (actionId) {
-                case ACTION_VIEWER_BTN_EDIT:
-                    if(model.isEditing()){
-                        StyledDocument styledDocument = (StyledDocument)extraData;
-                        ArrayList<ComparableBlock> inputBlock= new ArrayList<ComparableBlock>();
-                        ComparableBlock comparableBlock = new ComparableBlock(ComparableBlock.DEFAULT);
-                        try {
-                            String[] texts =styledDocument.getText(0,styledDocument.getLength()).split("\n");
-                            for(int i = 0;i<texts.length;i++){
-                                comparableBlock.addContents(new ComparableString.Builder().setFlags(ComparableString.DEFAULT).setContent(texts[i]).build());
-                            }
-                            inputBlock.add(comparableBlock);
-                        } catch (BadLocationException e1) {
-                            e1.printStackTrace();
-                        }
-                        model.setCanSave(true);
-                        model.setContentsBlock(inputBlock);
-                    }else{
-                        model.setCanSave(false);
-                    }
-                    model.setEditing(!model.isEditing());
-                    checkCanCompare();
-                    break;
-                case ACTION_VIEWER_BTN_LOAD:
-                    File file;
-                    FileService fileService = new TextFileService();
-                    ArrayList<ComparableString> contents = fileService.getContents(file = fileService.getFilePath());
-                    model.setFile(file);
-                    ArrayList<ComparableBlock> comparableBlocks = new ArrayList<>();
-                    if(contents!= null){
-                        comparableBlocks.add(new ComparableBlock(ComparableBlock.DEFAULT,contents));
-                    }
-                    model.setContentsBlock(comparableBlocks);
-                    checkCanCompare();
-                    break;
-                case ACTION_VIEWER_BTN_SAVE:
-                    ArrayList<String> stringToSave = new ArrayList<>();
-                    fileService = new TextFileService();
-
-                    for(int i = 0; i< model.getContentsBlock().size(); i++){
-                        for(int j = 0; j<model.getContentsBlock().get(i).getContents().size(); j++) {
-                            stringToSave.add(model.getContentsBlock().get(i).getContents(j).getContentString());
-                        }
-                    }
-                    model.setFile(fileService.saveFile(model.getFile(), stringToSave));
-                    break;
-
+    private void editAction(StyledDocument viewStringData) {
+        if(model.isEditing()){
+            ArrayList<ComparableBlock> inputBlock= new ArrayList<ComparableBlock>();
+            ComparableBlock comparableBlock = new ComparableBlock(ComparableBlock.DEFAULT);
+            try {
+                String[] texts =viewStringData.getText(0,viewStringData.getLength()).split("\n");
+                for(int i = 0;i<texts.length;i++){
+                    comparableBlock.addContents(new ComparableString.Builder().setFlags(ComparableString.DEFAULT).setContent(texts[i]).build());
+                }
+                inputBlock.add(comparableBlock);
+            } catch (BadLocationException e1) {
+                e1.printStackTrace();
             }
+            model.setCanSave(true);
+            model.setContentsBlock(inputBlock);
+        }else{
+            model.setCanSave(false);
         }
+        model.setEditing(!model.isEditing());
+        checkCanCompare();
+    }
 
-        public ViewerPanelActionListener(DataId actionId) {
-            this.actionId = actionId;
+    private void loadAction() {
+        File file;
+        FileService fileService = new TextFileService();
+        ArrayList<ComparableString> contents = fileService.getContents(file = fileService.getFilePath());
+        model.setFile(file);
+        ArrayList<ComparableBlock> comparableBlocks = new ArrayList<>();
+        if(contents!= null){
+            comparableBlocks.add(new ComparableBlock(ComparableBlock.DEFAULT,contents));
         }
-        public ViewerPanelActionListener(DataId actionId,Object extraData){
-            this.actionId = actionId;
-            this.extraData = extraData;
-        }
+        model.setContentsBlock(comparableBlocks);
+        checkCanCompare();
+    }
+
+    private void saveAction(){
+        FileService fileService = new TextFileService();
+        model.setFile(fileService.saveFile(model.getFile(), model.getRawData()));
     }
 
     private void checkCanCompare() {
