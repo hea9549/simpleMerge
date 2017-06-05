@@ -2,6 +2,7 @@ package DataTest;
 
 import Data.ComparableBlock;
 import Data.ContentService;
+import Model.ViewerModel;
 import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
@@ -23,8 +24,10 @@ public class ContentServiceTest extends TestCase {
     ArrayList<ComparableBlock> left = new ArrayList<>();
     ArrayList<ComparableBlock> right = new ArrayList<>();
     ArrayList<ComparableBlock>[] result = new ArrayList[2];
+    ViewerModel sourceModel = new ViewerModel();
+    ViewerModel targetModel = new ViewerModel();
 
-    @Before
+
     protected void setUp() throws Exception{
         mock = createMock(ContentService.class);
         runner = new RunContentService();
@@ -33,18 +36,20 @@ public class ContentServiceTest extends TestCase {
 
     }
 
-    @Test
     public void testCompare(){
-        System.out.println("1");
         expect(mock.compare(left, right)).andReturn(result);
         //mock.compare(left, right);
-        System.out.println("2");
         replay(mock);
-        System.out.println("3");
         assertEquals(result, runner.compare(left, right));
-        System.out.println("4");
         verify(mock);
-        System.out.println("5");
+
+    }
+    public void testMerge(){
+        expect(mock.merge(sourceModel, targetModel)).andReturn(true);
+        replay(mock);
+        assertEquals(true, runner.merge(sourceModel, targetModel));
+        verify(mock);
+
     }
 
 }
