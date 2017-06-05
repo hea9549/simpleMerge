@@ -49,7 +49,7 @@ public class TextFileService implements FileService {
     }
 
     @Override
-    public File saveFile(File fileToSave, ArrayList<String> contentsToSave,String optionTitleString) {
+    public File saveFile(File fileToSave, ArrayList<String> contentsToSave, String optionTitleString) {
         BufferedWriter bw = null;
         if(fileToSave == null){
             Object options[]={"예","아니오"};
@@ -70,7 +70,9 @@ public class TextFileService implements FileService {
                 fileToSave =newFile;
             }else{
                 int dotLength = newFile.getPath().split(".").length-1;
-                if(!newFile.getPath().split(".")[dotLength].equals("txt"))
+                if(dotLength == -1){
+                    fileToSave = new File(newFile.getPath()+".txt");
+                }else if(!newFile.getPath().split(".")[dotLength].equals("txt"))
                     fileToSave = new File(newFile.getPath()+".txt");
             }
 

@@ -10,6 +10,5 @@ public interface FileService {
     ArrayList<ComparableString> getContents(File filePath);
     File getFilePath();
     File saveFile(File fileToSave, ArrayList<String> contentsToSave);
-
     File saveFile(File fileToSave, ArrayList<String> contentsToSave, String optionTitleString);
 }

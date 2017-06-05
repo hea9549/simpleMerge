@@ -17,7 +17,7 @@ import static Data.DataId.*;
 public class CenterController implements Controller {
     CenterModel centerModel;
     ViewerModel leftViewerModel,rightViewerModel;
-    CenterController(CenterModel centerModel){
+    public CenterController(CenterModel centerModel){
         this.centerModel = centerModel;
         leftViewerModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");
         rightViewerModel = (ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel");
