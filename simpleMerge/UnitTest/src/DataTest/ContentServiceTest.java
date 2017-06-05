@@ -4,8 +4,6 @@ import Data.ComparableBlock;
 import Data.ContentService;
 import Model.ViewerModel;
 import junit.framework.TestCase;
-import org.junit.Before;
-import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 

@@ -2,9 +2,9 @@ package ControllerTest;
 
 import Controller.CenterController;
 import Controller.MainController;
-import Controller.ViewerController;
 import Data.ComparableBlock;
 import Data.ComparableString;
+import Data.ContentServiceImpl;
 import Data.DataId;
 import Model.CenterModel;
 import Model.ModelProvider;
@@ -13,15 +13,22 @@ import org.junit.Before;
 import org.junit.Test;
 
 import javax.swing.*;
+import javax.swing.text.View;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import static Data.DataId.ACTION_BTN_LEFT_ALL;
+import static Data.DataId.ACTION_BTN_RIGHT_ALL;
+import static Data.DataId.ACTION_BTN_SAVE_ALL;
+import static junit.framework.TestCase.assertEquals;
+
 /**
- * Created by ParkHaeSung on 2017-06-01.
+ * Created by chaebyeonghun on 2017. 6. 5..
  */
-public class ViewerControllerTest {
+public class MainControllerTest {
+
     public MainController mainController;
-    public ViewerController viewerController;
+    public CenterController centerController;
     public ViewerModel leftModel,rightModel;
     public CenterModel centerModel;
     public ArrayList<ComparableBlock> testLeftBlocks = new ArrayList<>();
@@ -34,9 +41,11 @@ public class ViewerControllerTest {
         testRightBlocks.clear();
         testLeftBlocks.clear();
         mainController = new MainController();
+        centerController = new CenterController((CenterModel)ModelProvider.getInstance().getModel("centerModel"));
+        centerModel = (CenterModel)ModelProvider.getInstance().getModel("centerModel");
+
         leftModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");
         rightModel = (ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel");
-        viewerController = new ViewerController(leftModel);
 
         ComparableBlock testLeftBlock1 = new ComparableBlock(ComparableBlock.DIFF);
         ComparableString testLeftString1 = new ComparableString.Builder()
@@ -56,28 +65,23 @@ public class ViewerControllerTest {
         rightModel.setContentsBlock(testRightBlocks);
     }
     @Test
-    public void testEditAction(){
-        ActionListener underTest = viewerController.getEventListener(DataId.ACTION_VIEWER_BTN_EDIT);
+    public void testLeftAllAction(){
+
+        ActionListener underTest = mainController.getEventListener(ACTION_BTN_LEFT_ALL);
         JButton testButton = new JButton();
         testButton.addActionListener(underTest);
         testButton.doClick();
+        assertEquals(string2,leftModel.toString());
+
     }
     @Test
-    public void testLoadAction(){
-        ActionListener underTest = viewerController.getEventListener(DataId.ACTION_VIEWER_BTN_LOAD);
+    public void testRightAllAction(){
+        ActionListener underTest = mainController.getEventListener(ACTION_BTN_RIGHT_ALL);
         JButton testButton = new JButton();
         testButton.addActionListener(underTest);
         testButton.doClick();
-
-        //맥이라 테스트를 진행할수없음. 테스트 요망
-    }
-    @Test
-    public void testSaveAction(){
-        ActionListener underTest = viewerController.getEventListener(DataId.ACTION_VIEWER_BTN_SAVE);
-        JButton testButton = new JButton();
-        testButton.addActionListener(underTest);
-        testButton.doClick();
-
+        assertEquals(string1,rightModel.toString());
 
     }
+
 }

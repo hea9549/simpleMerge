@@ -4,11 +4,11 @@ import Data.ComparableBlock;
 import Data.ComparableString;
 import Data.ContentService;
 import Data.ContentServiceImpl;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static junit.framework.TestCase.assertEquals;
 
 /**
  * Created by ParkHaeSung on 2017-06-02.

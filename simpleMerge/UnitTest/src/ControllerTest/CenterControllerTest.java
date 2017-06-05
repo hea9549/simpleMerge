@@ -2,7 +2,6 @@ package ControllerTest;
 
 import Controller.CenterController;
 import Controller.MainController;
-import Controller.ViewerController;
 import Data.ComparableBlock;
 import Data.ComparableString;
 import Data.DataId;
@@ -16,27 +15,34 @@ import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 /**
- * Created by ParkHaeSung on 2017-06-01.
+ * Created by chaebyeonghun on 2017. 6. 5..
  */
-public class ViewerControllerTest {
+public class CenterControllerTest {
+
     public MainController mainController;
-    public ViewerController viewerController;
+    public CenterController centerController;
     public ViewerModel leftModel,rightModel;
     public CenterModel centerModel;
     public ArrayList<ComparableBlock> testLeftBlocks = new ArrayList<>();
     public ArrayList<ComparableBlock> testRightBlocks = new ArrayList<>();
     String string1 = "abc";
-    String string2 = "abc wioe giji woqw";
+    String string2 = "abcdefg";
 
     @Before
-    public void init(){
+    public void initTest(){
         testRightBlocks.clear();
         testLeftBlocks.clear();
         mainController = new MainController();
+        centerController = new CenterController((CenterModel)ModelProvider.getInstance().getModel("centerModel"));
+        centerModel = (CenterModel)ModelProvider.getInstance().getModel("centerModel");
+
         leftModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");
         rightModel = (ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel");
-        viewerController = new ViewerController(leftModel);
 
         ComparableBlock testLeftBlock1 = new ComparableBlock(ComparableBlock.DIFF);
         ComparableString testLeftString1 = new ComparableString.Builder()
@@ -54,30 +60,64 @@ public class ViewerControllerTest {
         testRightBlocks.add(testRightBlock1);
         leftModel.setContentsBlock(testLeftBlocks);
         rightModel.setContentsBlock(testRightBlocks);
+
     }
     @Test
-    public void testEditAction(){
-        ActionListener underTest = viewerController.getEventListener(DataId.ACTION_VIEWER_BTN_EDIT);
-        JButton testButton = new JButton();
-        testButton.addActionListener(underTest);
-        testButton.doClick();
-    }
-    @Test
-    public void testLoadAction(){
-        ActionListener underTest = viewerController.getEventListener(DataId.ACTION_VIEWER_BTN_LOAD);
+    public void testCompareButton(){
+        ActionListener underTest = centerController.getEventListener(DataId.ACTION_BTN_COMPARE);
         JButton testButton = new JButton();
         testButton.addActionListener(underTest);
         testButton.doClick();
 
-        //맥이라 테스트를 진행할수없음. 테스트 요망
+        assertFalse(centerModel.isCanCompare());
+        assertTrue(centerModel.isCanUpperBlock());
+        assertTrue(centerModel.isCanLowerBlock());
+        assertTrue(centerModel.isCanLeftMerge());
+        assertTrue(centerModel.isCanRightMerge());
+
     }
     @Test
-    public void testSaveAction(){
-        ActionListener underTest = viewerController.getEventListener(DataId.ACTION_VIEWER_BTN_SAVE);
+    public void testMergeLeftButton(){
+        ActionListener underTest = centerController.getEventListener(DataId.ACTION_BTN_MERGE_LEFT);
+        JButton testButton = new JButton();
+        testButton.addActionListener(underTest);
+        testButton.doClick();
+
+        assertTrue(leftModel.isCanSave());
+        assertTrue(rightModel.isCanSave());
+        assertEquals(0,string2.compareTo(leftModel.toString()));
+
+    }
+    @Test
+    public void testMergeRightButton(){
+        ActionListener underTest = centerController.getEventListener(DataId.ACTION_BTN_MERGE_RIGHT);
+        JButton testButton = new JButton();
+        testButton.addActionListener(underTest);
+        testButton.doClick();
+
+        assertTrue(leftModel.isCanSave());
+        assertTrue(rightModel.isCanSave());
+        assertEquals(0,string1.compareTo(rightModel.toString()));
+
+    }
+    @Test
+    public void testActionButtonUpper(){
+        ActionListener underTest = centerController.getEventListener(DataId.ACTION_BTN_UPPER);
+        JButton testButton = new JButton();
+        testButton.addActionListener(underTest);
+        testButton.doClick();
+
+
+
+    }
+    @Test
+    public void testActionButtonLower(){
+        ActionListener underTest = centerController.getEventListener(DataId.ACTION_BTN_LOWER);
         JButton testButton = new JButton();
         testButton.addActionListener(underTest);
         testButton.doClick();
 
 
     }
+
 }
