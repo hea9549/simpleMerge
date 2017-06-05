@@ -65,4 +65,25 @@ public class ViewerModel extends Observable {
         this.canSave = canSave;
         notifyChange(new UpdateEvent(DataId.UPDATE_VIEWER_CAN_SAVE,canSave));
     }
+
+    @Override
+    public String toString(){
+        String str = "";
+        for(int i = 0;i<contentsBlock.size();i++){
+            for(int j = 0 ; j<contentsBlock.get(i).getContents().size();j++){
+                str += contentsBlock.get(i).getContents().get(j).getContentString()+"\n";
+            }
+        }
+        return str;
+    }
+
+    public ArrayList<String> getRawData(){
+        ArrayList<String> datas = new ArrayList<>();
+        for(int i = 0;i<contentsBlock.size();i++){
+            for(int j = 0 ; j<contentsBlock.get(i).getContents().size();j++){
+                datas.add(contentsBlock.get(i).getContents().get(j).getContentString());
+            }
+        }
+        return datas;
+    }
 }
