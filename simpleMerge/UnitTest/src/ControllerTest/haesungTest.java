@@ -16,7 +16,7 @@ import org.junit.Test;
 import javax.swing.*;
 import java.util.ArrayList;
 
-import static org.easymock.*;
+import static org.easymock.EasyMock.*;
 import static org.easymock.EasyMock.createMock;
 
 /**
