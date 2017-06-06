@@ -1,7 +1,7 @@
 package DataTest;
 
 import Data.ComparableString;
-import Data.FileService;
+import Service.FileService;
 
 import java.io.File;
 import java.util.ArrayList;

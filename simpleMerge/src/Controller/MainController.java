@@ -1,7 +1,7 @@
 package Controller;
 
-import Data.ContentService;
-import Data.ContentServiceImpl;
+import Service.ContentService;
+import Service.ContentServiceImpl;
 import Data.DataId;
 import Model.*;
 import View.MainFrame;
@@ -21,18 +21,21 @@ public class MainController extends ViewController {
         this.leftViewerController = new ViewerController((ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel"));
         this.rightViewerController = new ViewerController((ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel"));
         this.centerController = new CenterController((CenterModel)ModelProvider.getInstance().getModel("centerModel"));
+
         this.mainFrame = new MainFrame(this, leftViewerController, rightViewerController,centerController);
+
         ((ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel")).addObserver(mainFrame.getLeftViewer());
         ((ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel")).addObserver(mainFrame.getRightViewer());
         ((CenterModel)ModelProvider.getInstance().getModel("centerModel")).addObserver(mainFrame.getCenterMenuPanel());
+        ((CenterModel)ModelProvider.getInstance().getModel("centerModel")).addObserver(mainFrame.getLeftViewer());
+        ((CenterModel)ModelProvider.getInstance().getModel("centerModel")).addObserver(mainFrame.getRightViewer());
         ((TopModel)ModelProvider.getInstance().getModel("topModel")).addObserver(mainFrame.getTopMenuPanel());
         ((ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel")).viewerModelInit();
         ((ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel")).viewerModelInit();
         ((CenterModel)ModelProvider.getInstance().getModel("centerModel")).initModel();
         ((TopModel)ModelProvider.getInstance().getModel("topModel")).initModel();
-        this.mainModel = new MainModel();
-        mainModel.addObserver(mainFrame);
-        ModelProvider.getInstance().registerModel("mainModel",mainModel);
+
+
 
     }
     private boolean setNextBlockIndex(){
@@ -69,12 +72,14 @@ public class MainController extends ViewController {
                 rightModel = (ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel");
                 contentService = new ContentServiceImpl();
                 while(contentService.merge(rightModel,leftModel))setNextBlockIndex();
+                ((TopModel)ModelProvider.getInstance().getModel("topModel")).setDiffLine(leftModel.getDiffLines());
                 break;
             case ACTION_BTN_RIGHT_ALL:
                 leftModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");
                 rightModel = (ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel");
                 contentService = new ContentServiceImpl();
                 while(contentService.merge(leftModel,rightModel))setNextBlockIndex();
+                ((TopModel)ModelProvider.getInstance().getModel("topModel")).setDiffLine(leftModel.getDiffLines());
                 break;
             default:
                 break;
@@ -94,6 +99,9 @@ public class MainController extends ViewController {
         CenterModel centerModel = new CenterModel();
         ModelProvider.getInstance().registerModel("centerModel",centerModel);
 
+        this.mainModel = new MainModel();
+        mainModel.addObserver(mainFrame);
+        ModelProvider.getInstance().registerModel("mainModel",mainModel);
     }
 
 }
