@@ -36,11 +36,12 @@ public class ViewerControllerTest {
     public TopModel topModel;
     public ArrayList<ComparableBlock> testLeftBlocks = new ArrayList<>();
     public ArrayList<ComparableBlock> testRightBlocks = new ArrayList<>();
+    StyledDocument styledDocument = new DefaultStyledDocument();
     String string1 = "abc";
     String string2 = "abc wioe giji woqw";
-    String testString = "liooo";
+
     @Before
-    public void init(){
+    public void init() throws BadLocationException {
         testRightBlocks.clear();
         testLeftBlocks.clear();
         mainController = new MainController();
@@ -66,6 +67,7 @@ public class ViewerControllerTest {
         testRightBlocks.add(testRightBlock1);
         leftModel.setContentsBlock(testLeftBlocks);
         rightModel.setContentsBlock(testRightBlocks);
+        styledDocument.insertString(0,string1, AttributeUtil.getAddedAttribute());
     }
     @Test
     public void testEditActionEditingFalse(){
@@ -81,9 +83,8 @@ public class ViewerControllerTest {
         assertFalse(topModel.isCanRightAll());
     }
     @Test
-    public void testEditActionEditingTrue() throws BadLocationException {
-        StyledDocument styledDocument = new DefaultStyledDocument();
-        styledDocument.insertString(0,"abcd", AttributeUtil.getAddedAttribute());
+    public void testEditActionEditingTrue(){
+
         ActionListener underTest = viewerController.getEventListener(DataId.ACTION_VIEWER_BTN_EDIT,styledDocument);
         leftModel.setEditing(true);
         JButton testButton = new JButton();
@@ -91,7 +92,7 @@ public class ViewerControllerTest {
         testButton.doClick();
         assertTrue(leftModel.isCanSave());
         assertFalse(leftModel.isEditing());
-        assertTrue(leftModel.getContentsBlock().get(0).getContents().get(0).getContentString().equals("abcd"));
+        assertTrue(leftModel.getContentsBlock().get(0).getContents().get(0).getContentString().equals(string1));
     }
-   
+
 }

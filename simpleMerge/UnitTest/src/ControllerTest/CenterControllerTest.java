@@ -37,7 +37,7 @@ public class CenterControllerTest {
     StyledDocument styledDocument1 = new DefaultStyledDocument();
     StyledDocument styledDocument2 = new DefaultStyledDocument();
     ActionListener compareAction,mergeLeftAction,mergeRightAction,upperAction,lowerAction,leftEditAction,rightEditAction;
-    JButton testButton,leftEditButton,rightEditButton,compareButton = new JButton();
+    JButton testButton,leftEditButton,rightEditButton,compareButton;
     String string1 = "hi my name is Byunghoon\nhihi\nkkk\nlolo";
     String string2 = "hi my name is Gunmo\nhihi\naki\nlolo";
 
@@ -53,6 +53,10 @@ public class CenterControllerTest {
         rightModel = (ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel");
         leftController = new ViewerController(leftModel);
         rightController = new ViewerController(rightModel);
+        testButton = new JButton();
+        leftEditButton = new JButton();
+        rightEditButton = new JButton();
+        compareButton = new JButton();
 
         styledDocument1.insertString(0,string1, AttributeUtil.getAddedAttribute());
         styledDocument2.insertString(0,string2, AttributeUtil.getAddedAttribute());
@@ -74,10 +78,17 @@ public class CenterControllerTest {
         leftModel.setContentsBlock(testLeftBlocks);
         rightModel.setContentsBlock(testRightBlocks);
 
+        compareAction = centerController.getEventListener(DataId.ACTION_BTN_COMPARE);
+        lowerAction = centerController.getEventListener(DataId.ACTION_BTN_LOWER);
+        upperAction = centerController.getEventListener(DataId.ACTION_BTN_UPPER);
+        mergeLeftAction = centerController.getEventListener(DataId.ACTION_BTN_MERGE_LEFT);
+        mergeRightAction = centerController.getEventListener(DataId.ACTION_BTN_MERGE_RIGHT);
+        leftEditAction = leftController.getEventListener(DataId.ACTION_VIEWER_BTN_EDIT,styledDocument1);
+        rightEditAction = rightController.getEventListener(DataId.ACTION_VIEWER_BTN_EDIT,styledDocument2);
+
     }
     @Test
     public void testCompareAction(){
-        compareAction = centerController.getEventListener(DataId.ACTION_BTN_COMPARE);
         testButton.addActionListener(compareAction);
         testButton.doClick();
 
@@ -90,7 +101,6 @@ public class CenterControllerTest {
     }
     @Test
     public void testMergeLeftAction(){
-        mergeLeftAction = centerController.getEventListener(DataId.ACTION_BTN_MERGE_LEFT);
         testButton.addActionListener(mergeLeftAction);
         testButton.doClick();
 
@@ -101,7 +111,7 @@ public class CenterControllerTest {
     }
     @Test
     public void testMergeRightAction(){
-        mergeRightAction = centerController.getEventListener(DataId.ACTION_BTN_MERGE_RIGHT);
+
         testButton.addActionListener(mergeRightAction);
         testButton.doClick();
 
@@ -113,10 +123,6 @@ public class CenterControllerTest {
     @Test
     public void testActionButtonUpper(){
 
-        upperAction = centerController.getEventListener(DataId.ACTION_BTN_UPPER);
-        compareAction = centerController.getEventListener(DataId.ACTION_BTN_COMPARE);
-        leftEditAction = leftController.getEventListener(DataId.ACTION_VIEWER_BTN_EDIT,styledDocument1);
-        rightEditAction = rightController.getEventListener(DataId.ACTION_VIEWER_BTN_EDIT,styledDocument2);
 
         JButton leftEditButton = new JButton();
         leftEditButton.addActionListener(leftEditAction);
@@ -141,10 +147,6 @@ public class CenterControllerTest {
     public void testActionButtonLower() throws BadLocationException {
 
         lowerAction = centerController.getEventListener(DataId.ACTION_BTN_LOWER);
-        compareAction = centerController.getEventListener(DataId.ACTION_BTN_COMPARE);
-        leftEditAction = leftController.getEventListener(DataId.ACTION_VIEWER_BTN_EDIT,styledDocument1);
-        rightEditAction = rightController.getEventListener(DataId.ACTION_VIEWER_BTN_EDIT,styledDocument2);
-
         leftEditButton.addActionListener(leftEditAction);
         rightEditButton.addActionListener(rightEditAction);
         compareButton.addActionListener(compareAction);
