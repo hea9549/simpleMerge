@@ -10,6 +10,7 @@ import java.util.ArrayList;
  * Created by jgm on 6/4/17.
  */
 public class RunFileService {
+/*
     FileService fs;
 
     public void setFs(FileService fs){
@@ -30,5 +31,6 @@ public class RunFileService {
         System.out.println("Save File Test  ");
         fs.saveFile(fileToSave, contentsToSave);
     }
+*/
 
 }
