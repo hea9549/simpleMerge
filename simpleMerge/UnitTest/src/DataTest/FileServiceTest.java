@@ -1,8 +1,7 @@
 package DataTest;
 
-import Data.ComparableBlock;
 import Data.ComparableString;
-import Data.FileService;
+import Service.FileService;
 import junit.framework.TestCase;
 
 import java.io.File;

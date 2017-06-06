@@ -1,7 +1,7 @@
 package DataTest;
 
 import Data.ComparableBlock;
-import Data.ContentService;
+import Service.ContentService;
 import Model.ViewerModel;
 import junit.framework.TestCase;
 

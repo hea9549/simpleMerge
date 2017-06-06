@@ -5,10 +5,12 @@ import Data.ComparableBlock;
 import Data.ComparableString;
 import Data.DataId;
 import Observer.*;
+
 import javax.swing.*;
 import javax.swing.text.*;
 import java.awt.*;
 import java.util.ArrayList;
+
 import Util.AttributeUtil;
 
 /**
@@ -16,31 +18,32 @@ import Util.AttributeUtil;
  */
 public class ViewerPanel extends JPanel implements Observer {
     JPanel menuPanel;
-    JButton btn_load=new JButton(new ImageIcon("img/folder.png"));
-    JButton btn_edit=new JButton(new ImageIcon("img/edit.png"));
-    JButton btn_save=new JButton(new ImageIcon("img/save.png"));
+    JButton btn_load = new JButton(new ImageIcon("img/folder.png"));
+    JButton btn_edit = new JButton(new ImageIcon("img/edit.png"));
+    JButton btn_save = new JButton(new ImageIcon("img/save.png"));
     JTextPane jTextPane;
     JScrollPane scroll;
     StyledDocument styledDocument;
     ViewController controller;
+
     public ViewerPanel(ViewController controller) {
-        this.controller =controller;
-        this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+        this.controller = controller;
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         btn_load.setDisabledIcon(new ImageIcon("img/not_folder.png"));
         btn_edit.setDisabledIcon(new ImageIcon("img/not_edit.png"));
         btn_save.setDisabledIcon(new ImageIcon("img/not_save.png"));
-        menuPanel = new JPanel(new FlowLayout()){
+        menuPanel = new JPanel(new FlowLayout()) {
             @Override
             public Dimension getPreferredSize() {
-                return new Dimension(600,70);
+                return new Dimension(600, 70);
             }
         };
         jTextPane = new JTextPane();
         jTextPane.setContentType("text/html");
-        scroll=new JScrollPane(jTextPane){
+        scroll = new JScrollPane(jTextPane) {
             @Override
             public Dimension getPreferredSize() {
-                return new Dimension(600,630);
+                return new Dimension(600, 630);
             }
         };
         scroll.setViewportView(jTextPane);
@@ -51,7 +54,7 @@ public class ViewerPanel extends JPanel implements Observer {
         setVisible(true);
     }
 
-    private void setMenuPanel(){
+    private void setMenuPanel() {
         btn_load.setOpaque(false);
         btn_load.setContentAreaFilled(false);
         btn_load.setBorderPainted(false);
@@ -60,7 +63,7 @@ public class ViewerPanel extends JPanel implements Observer {
         btn_edit.setOpaque(false);
         btn_edit.setContentAreaFilled(false);
         btn_edit.setBorderPainted(false);
-        btn_edit.addActionListener(controller.getEventListener(DataId.ACTION_VIEWER_BTN_EDIT,jTextPane.getStyledDocument()));
+        btn_edit.addActionListener(controller.getEventListener(DataId.ACTION_VIEWER_BTN_EDIT, jTextPane.getStyledDocument()));
 
         btn_save.setOpaque(false);
         btn_save.setContentAreaFilled(false);
@@ -83,14 +86,29 @@ public class ViewerPanel extends JPanel implements Observer {
     private void updateContent(ArrayList<ComparableBlock> contentsBlock) {
         styledDocument = jTextPane.getStyledDocument();
         try {
-            styledDocument.remove(0,styledDocument.getLength());
+            styledDocument.remove(0, styledDocument.getLength());
             for (ComparableBlock comparableBlock : contentsBlock) {
-                for (ComparableString contents : comparableBlock.getContents()) {
-                        if(contents.isDefaultString() || contents.isEqualString())styledDocument.insertString(styledDocument.getLength(), contents.getContentString()+"\n", AttributeUtil.getDefaultAttribute());
-                        if(contents.isAddedString())styledDocument.insertString(styledDocument.getLength(), contents.getContentString()+"\n", AttributeUtil.getAddedAttribute());
-                        if(contents.isEmptyString())styledDocument.insertString(styledDocument.getLength(), contents.getContentString()+"\n", AttributeUtil.getEmptyAttribute());
-                        if(contents.isDiffString())styledDocument.insertString(styledDocument.getLength(), contents.getContentString()+"\n", AttributeUtil.getDiffAttribute());
+                if (comparableBlock.isSelect()){
+                    for (ComparableString contents : comparableBlock.getContents()) {
+                        styledDocument.insertString(styledDocument.getLength(), contents.getContentString() + "\n", AttributeUtil.getClickAttribute());
                     }
+                    continue;
+                }
+                for (ComparableString contents : comparableBlock.getContents()) {
+                    if (contents.isDefaultString() || contents.isEqualString()) {
+                        styledDocument.insertString(styledDocument.getLength(), contents.getContentString() + "\n", AttributeUtil.getDefaultAttribute());
+                    }
+                    if (contents.isAddedString()) {
+                        styledDocument.insertString(styledDocument.getLength(), contents.getContentString() + "\n", AttributeUtil.getAddedAttribute());
+                    }
+                    if (contents.isEmptyString()) {
+                        styledDocument.insertString(styledDocument.getLength(), contents.getContentString() + "\n", AttributeUtil.getEmptyAttribute());
+                    }
+                    if (contents.isDiffString()) {
+                        styledDocument.insertString(styledDocument.getLength(), contents.getContentString() + "\n", AttributeUtil.getDiffAttribute());
+                    }
+
+                }
             }
             jTextPane.setDocument(styledDocument);
         } catch (BadLocationException e) {
@@ -102,29 +120,32 @@ public class ViewerPanel extends JPanel implements Observer {
 
     @Override
     public void updateView(UpdateEvent updateEvent) {
-        switch (updateEvent.getId()){
+        switch (updateEvent.getId()) {
             case UPDATE_VIEWER_CONTENT:
-                updateContent((ArrayList)updateEvent.getObject());
+                updateContent((ArrayList) updateEvent.getObject());
                 break;
             case UPDATE_VIEWER_CAN_EDIT:
-                if((Boolean)updateEvent.getObject()){
+                if ((Boolean) updateEvent.getObject()) {
                     btn_edit.setEnabled(true);
-                }
-                else{
+                } else {
                     btn_edit.setEnabled(false);
                 }
                 break;
             case UPDATE_VIEWER_IS_EDITING:
-                if((Boolean)updateEvent.getObject()){
+                if ((Boolean) updateEvent.getObject()) {
                     jTextPane.setEditable(true);
                     btn_edit.setIcon(new ImageIcon("img/red_edit.png"));
-                }else{
+                } else {
                     jTextPane.setEditable(false);
                     btn_edit.setIcon(new ImageIcon("img/edit.png"));
                 }
                 break;
             case UPDATE_VIEWER_CAN_SAVE:
-                btn_save.setEnabled((Boolean)updateEvent.getObject());
+                btn_save.setEnabled((Boolean) updateEvent.getObject());
+                break;
+            case UPDATE_CENTER_COMPARE_BLOCK_INDEX:
+                controller.getEventListener(DataId.UPDATE_VIEWER_BEFORE_REPAINT_REQUEST,updateEvent.getObject()).actionPerformed(null);
+                break;
         }
     }
 }

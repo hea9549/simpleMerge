@@ -5,6 +5,9 @@ import Model.CenterModel;
 import Model.ModelProvider;
 import Model.TopModel;
 import Model.ViewerModel;
+import Observer.BlockSelectEvent;
+import Service.FileService;
+import Service.TextFileService;
 
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
@@ -32,10 +35,24 @@ public class ViewerController extends ViewController {
             case ACTION_VIEWER_BTN_SAVE:
                 saveAction();
                 break;
+            case UPDATE_VIEWER_BEFORE_REPAINT_REQUEST:
+                BlockSelectEvent event = (BlockSelectEvent)extraData;
+                if(event.getAfterIndex() == -1){
+                    model.setBlockIsSelect(false,event.getBeforeIndex());
+                    return;
+                }
+                model.setBlockIsSelect(false,event.getBeforeIndex());
+                model.setBlockIsSelect(true,event.getAfterIndex());
         }
     }
 
     private void editAction(StyledDocument viewStringData) {
+        ((CenterModel)ModelProvider.getInstance().getModel("centerModel")).setCanUpperBlock(false);
+        ((CenterModel)ModelProvider.getInstance().getModel("centerModel")).setCanLowerBlock(false);
+        ((CenterModel)ModelProvider.getInstance().getModel("centerModel")).setCanLeftMerge(false);
+        ((CenterModel)ModelProvider.getInstance().getModel("centerModel")).setCanRightMerge(false);
+        ((TopModel)ModelProvider.getInstance().getModel("topModel")).setCanLeftAll(false);
+        ((TopModel)ModelProvider.getInstance().getModel("topModel")).setCanRightAll(false);
         if(model.isEditing()){
             ArrayList<ComparableBlock> inputBlock= new ArrayList<ComparableBlock>();
             ComparableBlock comparableBlock = new ComparableBlock(ComparableBlock.DEFAULT);
@@ -81,13 +98,8 @@ public class ViewerController extends ViewController {
                 &&((ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel")).getContentsBlock()!=null
                 &&((ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel")).getContentsBlock()!=null){
             ((CenterModel)ModelProvider.getInstance().getModel("centerModel")).setCanCompare(true);
-            ((TopModel)ModelProvider.getInstance().getModel("topModel")).setCanLeftAll(true);
-            ((TopModel)ModelProvider.getInstance().getModel("topModel")).setCanRightAll(true);
         }else{
             ((CenterModel)ModelProvider.getInstance().getModel("centerModel")).setCanCompare(false);
-
-            ((TopModel)ModelProvider.getInstance().getModel("topModel")).setCanLeftAll(false);
-            ((TopModel)ModelProvider.getInstance().getModel("topModel")).setCanRightAll(false);
         }
 
     }

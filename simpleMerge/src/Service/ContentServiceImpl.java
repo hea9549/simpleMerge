@@ -1,6 +1,8 @@
-package Data;
+package Service;
 
 
+import Data.ComparableBlock;
+import Data.ComparableString;
 import Model.CenterModel;
 import Model.ModelProvider;
 import Model.ViewerModel;
@@ -30,7 +32,7 @@ public class ContentServiceImpl implements ContentService {
                 rightStringSet.add(rightContent.get(i).getContents(j));
         }
 
-        contents = editDistance(leftStringSet, rightStringSet);
+        contents = runLCSAlgorithm(leftStringSet, rightStringSet);
 
         leftContent = contents[0];
         rightContent = contents[1];
@@ -77,13 +79,10 @@ public class ContentServiceImpl implements ContentService {
      * @param rightStrList An array list of strings which are read in the right file
      * @return
      */
-    private ArrayList<ComparableBlock>[] editDistance(ArrayList<ComparableString> leftStrList
+    private ArrayList<ComparableBlock>[] runLCSAlgorithm(ArrayList<ComparableString> leftStrList
             , ArrayList<ComparableString> rightStrList) {
         int leftStrListSize = leftStrList.size();
         int rightStrListSize = rightStrList.size();
-
-        int mismatchPenalty = 1;
-        int gapPenalty = 1;
 
         ArrayList<ComparableBlock>[] resultBlocks = new ArrayList[2];
 
@@ -93,33 +92,31 @@ public class ContentServiceImpl implements ContentService {
         ArrayList<ComparableString> leftStrResult = new ArrayList<>();
         ArrayList<ComparableString> rightStrResult = new ArrayList<>();
 
-        // Score matrix 이용하여 Edit Distance 구현
+        // Score matrix 이용하여 LCS Algorithm 구현
         int[][] scoreMatrix = new int[leftStrListSize + 1][rightStrListSize + 1];
 
         scoreMatrix[0][0] = 0;
         for (int i = 1; i < leftStrListSize + 1; i++)
-            scoreMatrix[i][0] = i;
+            scoreMatrix[i][0] = 0;
         for (int j = 1; j < rightStrListSize + 1; j++)
-            scoreMatrix[0][j] = j;
+            scoreMatrix[0][j] = 0;
 
         for (int i = 1; i < leftStrListSize + 1; i++) {
             for (int j = 1; j < rightStrListSize + 1; j++) {
                 if (leftStrList.get(i - 1).getContentString()
                         .compareTo(rightStrList.get(j - 1).getContentString()) == 0)
-                    mismatchPenalty = -1;
+                    scoreMatrix[i][j] = scoreMatrix[i - 1][j - 1] + 1;
+                else if (scoreMatrix[i][j - 1] > scoreMatrix[i - 1][j])
+                    scoreMatrix[i][j] = scoreMatrix[i][j - 1];
                 else
-                    mismatchPenalty = 1;
-
-                scoreMatrix[i][j] = findMin(scoreMatrix[i - 1][j - 1] + mismatchPenalty
-                        , scoreMatrix[i - 1][j] + gapPenalty
-                        , scoreMatrix[i][j - 1] + gapPenalty);
+                    scoreMatrix[i][j] = scoreMatrix[i - 1][j];
             }
         }
 
         for (int i = 0; i < leftStrListSize + 1; i++) {
-            for (int j = 0; j < rightStrListSize + 1; j++) {
+            for (int j = 0; j < rightStrListSize + 1; j++)
                 System.out.print(scoreMatrix[i][j]);
-            }
+
             System.out.println();
         }
 
@@ -128,61 +125,41 @@ public class ContentServiceImpl implements ContentService {
 
         // Trace 하면서 가장 최선의 문자열 비교를 수행
         while (idx_left != 0 || idx_right != 0) {
-            // ScoreMatrix 위쪽 벽
-            if (idx_left == 0) {
+            // 문자열이 같을 때
+            if (idx_left > 0 && idx_right > 0 && (leftStrList.get(idx_left - 1).isSame(rightStrList.get(idx_right - 1)))) {
+                leftStrResult.add(makeCompStr(ComparableString.EQUAL
+                        , leftStrList.get(idx_left - 1).getContentString()));
+                rightStrResult.add(makeCompStr(ComparableString.EQUAL
+                        , leftStrList.get(idx_left - 1).getContentString()));
+
+                idx_left--;
+                idx_right--;
+            }
+            // 오른쪽 문자열이 추가되었을 경우
+            else if (idx_right > 0 && (idx_left == 0 || scoreMatrix[idx_left][idx_right - 1] > scoreMatrix[idx_left - 1][idx_right])) {
                 leftStrResult.add(makeCompStr(ComparableString.EMPTY, ""));
                 rightStrResult.add(makeCompStr(ComparableString.ADDED
                         , rightStrList.get(idx_right - 1).getContentString()));
 
                 idx_right--;
             }
-            // ScoreMatrix 왼쪽 벽
-            else if (idx_right == 0) {
+            // 왼쪽 문자열이 추가되었을 경우
+            else if (idx_left > 0 && (idx_right == 0 || scoreMatrix[idx_left][idx_right - 1] < scoreMatrix[idx_left - 1][idx_right])) {
                 leftStrResult.add(makeCompStr(ComparableString.ADDED
                         , leftStrList.get(idx_left - 1).getContentString()));
                 rightStrResult.add(makeCompStr(ComparableString.EMPTY, ""));
 
                 idx_left--;
             }
-            // ScoreMatrix 벽이 아닐 때
+            // 두 문자열이 다를 경우
             else {
-                int tempScore = scoreMatrix[idx_left][idx_right];
+                leftStrResult.add(makeCompStr(ComparableString.DIFF
+                        , leftStrList.get(idx_left - 1).getContentString()));
+                rightStrResult.add(makeCompStr(ComparableString.DIFF
+                        , rightStrList.get(idx_right - 1).getContentString()));
 
-                // ScoreMatrix를 위쪽으로 trace
-                if (tempScore == scoreMatrix[idx_left - 1][idx_right] + 1) {
-                    leftStrResult.add(makeCompStr(ComparableString.ADDED
-                            , leftStrList.get(idx_left - 1).getContentString()));
-                    rightStrResult.add(makeCompStr(ComparableString.EMPTY, ""));
-
-                    idx_left--;
-                }
-                // ScoreMatrix를 왼쪽으로 trace
-                else if (tempScore == scoreMatrix[idx_left][idx_right - 1] + 1) {
-                    leftStrResult.add(makeCompStr(ComparableString.EMPTY, ""));
-                    rightStrResult.add(makeCompStr(ComparableString.ADDED
-                            , rightStrList.get(idx_right - 1).getContentString()));
-
-                    idx_right--;
-                }
-                // ScoreMatrix를 대각선으로 trace
-                else {
-                    // 두 String이 같을 경우
-                    if (tempScore == scoreMatrix[idx_left - 1][idx_right - 1] - 1) {
-                        leftStrResult.add(makeCompStr(ComparableString.EQUAL
-                                , leftStrList.get(idx_left - 1).getContentString()));
-                        rightStrResult.add(makeCompStr(ComparableString.EQUAL
-                                , leftStrList.get(idx_left - 1).getContentString()));
-                    }
-                    // 두 String이 다를 경우
-                    else {
-                        leftStrResult.add(makeCompStr(ComparableString.DIFF
-                                , leftStrList.get(idx_left - 1).getContentString()));
-                        rightStrResult.add(makeCompStr(ComparableString.DIFF
-                                , rightStrList.get(idx_right - 1).getContentString()));
-                    }
-                    idx_left--;
-                    idx_right--;
-                }
+                idx_left--;
+                idx_right--;
             }
         }
 
@@ -194,7 +171,6 @@ public class ContentServiceImpl implements ContentService {
         ArrayList<ComparableString> tempLeftList = new ArrayList<>();
         ArrayList<ComparableString> tempRightList = new ArrayList<>();
 
-        comparingState prevState = comparingState.NOTCOMPARED;
         comparingState nowState;
         comparingState nextState;
 
@@ -226,11 +202,10 @@ public class ContentServiceImpl implements ContentService {
         return resultBlocks;
     }
 
-
-
     enum comparingState {
         NOTCOMPARED, EQUAL, DIFF, LEFTADDED, RIGHTADDED;
     }
+
     private comparingState getComparingState(ComparableString str1, ComparableString str2) {
         byte strState1 = str1.getState();
         byte strState2 = str2.getState();
@@ -251,15 +226,15 @@ public class ContentServiceImpl implements ContentService {
     @Override
     public boolean merge(ViewerModel sourceModel, ViewerModel targetModel) {
         CenterModel centerModel = (CenterModel) ModelProvider.getInstance().getModel("centerModel");
-        if(sourceModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).isEqualString())return false;
-        if(sourceModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).isEmptyString()){
+        if (sourceModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).isEqualString()) return false;
+        if (sourceModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).isEmptyString()) {
             sourceModel.getContentsBlock().remove(centerModel.getCompareBlockIndex());
             targetModel.getContentsBlock().remove(centerModel.getCompareBlockIndex());
             targetModel.setContentsBlock(targetModel.getContentsBlock());
             sourceModel.setContentsBlock(sourceModel.getContentsBlock());
             return true;
         }
-        for(int i = 0;i<sourceModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).getContents().size();i++){
+        for (int i = 0; i < sourceModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).getContents().size(); i++) {
             ComparableString str = sourceModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).getContents().get(i);
             ComparableString leftContents = targetModel.getContentsBlock().get(centerModel.getCompareBlockIndex()).getContents().get(i);
             leftContents.setContentString(str.getContentString());

@@ -1,4 +1,6 @@
-package Data;
+package Service;
+
+import Data.ComparableString;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
