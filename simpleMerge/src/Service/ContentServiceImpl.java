@@ -1,6 +1,8 @@
-package Data;
+package Service;
 
 
+import Data.ComparableBlock;
+import Data.ComparableString;
 import Model.CenterModel;
 import Model.ModelProvider;
 import Model.ViewerModel;

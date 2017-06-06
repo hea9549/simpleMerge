@@ -66,6 +66,11 @@ public class ViewerModel extends Observable {
         notifyChange(new UpdateEvent(DataId.UPDATE_VIEWER_CAN_SAVE,canSave));
     }
 
+    public void setBlockIsSelect(boolean isSelect,int index){
+        contentsBlock.get(index).setSelect(isSelect);
+        notifyChange(new UpdateEvent(DataId.UPDATE_VIEWER_CONTENT,contentsBlock));
+    }
+
     @Override
     public String toString(){
         String str = "";
@@ -87,5 +92,14 @@ public class ViewerModel extends Observable {
             }
         }
         return datas;
+    }
+
+    public int getDiffLines(){
+        int count = 0;
+        for(int i = 0 ; i < contentsBlock.size();i++){
+            if(contentsBlock.get(i).isEqualString())continue;
+            count += contentsBlock.get(i).getCount();
+        }
+        return count;
     }
 }

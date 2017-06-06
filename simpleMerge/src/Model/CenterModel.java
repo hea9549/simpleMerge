@@ -1,8 +1,11 @@
 package Model;
 
 import Data.DataId;
+import Observer.BlockSelectEvent;
 import Observer.Observable;
 import Observer.UpdateEvent;
+
+import java.util.Arrays;
 
 /**
  * Created by ParkHaeSung on 2017-05-30.
@@ -73,8 +76,19 @@ public class CenterModel extends Observable {
     }
 
     public void setCompareBlockIndex(int compareBlockIndex) {
+        int beforeIndex = this.compareBlockIndex;
+        if(compareBlockIndex ==-1){
+            notifyChange(new UpdateEvent(DataId.UPDATE_CENTER_COMPARE_BLOCK_INDEX, new BlockSelectEvent(beforeIndex,-1)));
+            return;
+        }
         ViewerModel leftViewerModel = ((ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel"));
         if(leftViewerModel.getContentsBlock().size()-1<compareBlockIndex) return;
         this.compareBlockIndex = compareBlockIndex;
+        notifyChange(new UpdateEvent(DataId.UPDATE_CENTER_COMPARE_BLOCK_INDEX, new BlockSelectEvent(beforeIndex,compareBlockIndex)));
     }
+
+    public void resetComparableBlockIndex(){
+        this.compareBlockIndex = 0;
+    }
+
 }
