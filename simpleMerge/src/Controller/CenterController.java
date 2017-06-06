@@ -3,7 +3,10 @@ package Controller;
 import Data.*;
 import Model.CenterModel;
 import Model.ModelProvider;
+import Model.TopModel;
 import Model.ViewerModel;
+import Service.ContentService;
+import Service.ContentServiceImpl;
 
 import java.util.ArrayList;
 
@@ -34,7 +37,7 @@ public class CenterController extends ViewController {
         for(int i = centerModel.getCompareBlockIndex()-1;i>=0 ;i--){
             if(leftModel.getContentsBlock().get(i).isEqualString())continue;
             centerModel.setCompareBlockIndex(i);
-            break;
+            return true;
         }
         return false;
     }
@@ -67,7 +70,9 @@ public class CenterController extends ViewController {
         targetModel.setCanSave(true);
         if(!setNextBlockIndex())if(!setPrevBlockIndex()){
             mergeFinishModelSetting();
+            centerModel.setCompareBlockIndex(-1);
         };
+        ((TopModel)ModelProvider.getInstance().getModel("topModel")).setDiffLine(leftViewerModel.getDiffLines());
     }
 
     private void compareAction() {
@@ -75,16 +80,21 @@ public class CenterController extends ViewController {
         ArrayList<ComparableBlock>[] compareResult = contentService.compare(leftViewerModel.getContentsBlock(),rightViewerModel.getContentsBlock());
         leftViewerModel.setContentsBlock(compareResult[0]);
         rightViewerModel.setContentsBlock(compareResult[1]);
+        centerModel.resetComparableBlockIndex();
         for(int i = 0;i<leftViewerModel.getContentsBlock().size();i++){
             if(leftViewerModel.getContentsBlock().get(i).isEqualString())continue;
             centerModel.setCompareBlockIndex(i);
             break;
         }
         centerModel.setCanCompare(false);
-        ((CenterModel)ModelProvider.getInstance().getModel("centerModel")).setCanUpperBlock(true);
-        ((CenterModel)ModelProvider.getInstance().getModel("centerModel")).setCanLowerBlock(true);
-        ((CenterModel)ModelProvider.getInstance().getModel("centerModel")).setCanLeftMerge(true);
-        ((CenterModel)ModelProvider.getInstance().getModel("centerModel")).setCanRightMerge(true);
+        CenterModel centerModel =((CenterModel)ModelProvider.getInstance().getModel("centerModel"));
+        centerModel.setCanUpperBlock(true);
+        centerModel.setCanLowerBlock(true);
+        centerModel.setCanLeftMerge(true);
+        centerModel.setCanRightMerge(true);
+        ((TopModel)ModelProvider.getInstance().getModel("topModel")).setDiffLine(leftViewerModel.getDiffLines());
+        ((TopModel)ModelProvider.getInstance().getModel("topModel")).setCanLeftAll(true);
+        ((TopModel)ModelProvider.getInstance().getModel("topModel")).setCanRightAll(true);
     }
 
 

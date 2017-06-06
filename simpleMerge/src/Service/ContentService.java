@@ -1,5 +1,6 @@
-package Data;
+package Service;
 
+import Data.ComparableBlock;
 import Model.ViewerModel;
 
 import java.util.ArrayList;

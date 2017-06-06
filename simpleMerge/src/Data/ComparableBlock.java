@@ -12,6 +12,7 @@ public class ComparableBlock {
     public static final byte ADDED = 0b00000100;
     public static final byte EMPTY = 0b00001000;
     private byte state = 0b00000000;
+    private boolean isSelect = false;
     private ArrayList<ComparableString> contents;
     public ComparableBlock(byte state){
         this.state = state;
@@ -81,5 +82,13 @@ public class ComparableBlock {
         if((state&(DIFF+ADDED)) != 0)return false;
         state += ADDED;
         return true;
+    }
+
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public void setSelect(boolean select) {
+        isSelect = select;
     }
 }

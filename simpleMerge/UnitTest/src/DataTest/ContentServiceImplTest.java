@@ -2,8 +2,8 @@ package DataTest;
 
 import Data.ComparableBlock;
 import Data.ComparableString;
-import Data.ContentService;
-import Data.ContentServiceImpl;
+import Service.ContentService;
+import Service.ContentServiceImpl;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

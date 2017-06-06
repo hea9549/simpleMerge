@@ -36,5 +36,5 @@ public abstract class ViewController implements Controller<ActionListener> {
         }
     }
 
-    public abstract void onEventLoad(DataId id,Object extraData);
+    protected abstract void onEventLoad(DataId id,Object extraData);
 }
