@@ -26,7 +26,7 @@ public class MainFrame extends JFrame implements Observer{
         setBackground(new Color(188, 181, 182));
         centerMenuPanel = new CenterMenuPanel(centerController);
         setLayout(new BorderLayout());
-        setBounds(100,0,1450,800);
+        setBounds(100,0,1350,800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         add(topMenuPanel,BorderLayout.NORTH);
