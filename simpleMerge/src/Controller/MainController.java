@@ -49,14 +49,15 @@ public class MainController extends ViewController {
         }
         return false;
     }
-    private void setPrevBlockIndex(){
+    private boolean setPrevBlockIndex(){
         ViewerModel leftModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");;
         CenterModel centerModel = (CenterModel)ModelProvider.getInstance().getModel("centerModel");
         for(int i = centerModel.getCompareBlockIndex()-1;i>=0 ;i--){
             if(leftModel.getContentsBlock().get(i).isEqualString())continue;
             centerModel.setCompareBlockIndex(i);
-            break;
+            return true;
         }
+        return false;
     }
     public static void main(String[] args){
         new MainController();
@@ -71,14 +72,16 @@ public class MainController extends ViewController {
                 leftModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");
                 rightModel = (ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel");
                 contentService = new ContentServiceImpl();
-                while(contentService.merge(rightModel,leftModel))setNextBlockIndex();
+                while(contentService.merge(rightModel,leftModel)){
+                    if(!setNextBlockIndex())if(!setPrevBlockIndex())((CenterModel)ModelProvider.getInstance().getModel("centerModel")).setCompareBlockIndex(-1);
+                }
                 ((TopModel)ModelProvider.getInstance().getModel("topModel")).setDiffLine(leftModel.getDiffLines());
                 break;
             case ACTION_BTN_RIGHT_ALL:
                 leftModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");
                 rightModel = (ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel");
                 contentService = new ContentServiceImpl();
-                while(contentService.merge(leftModel,rightModel))setNextBlockIndex();
+                while(contentService.merge(leftModel,rightModel))if(!setNextBlockIndex())if(!setPrevBlockIndex())((CenterModel)ModelProvider.getInstance().getModel("centerModel")).setCompareBlockIndex(-1);
                 ((TopModel)ModelProvider.getInstance().getModel("topModel")).setDiffLine(leftModel.getDiffLines());
                 break;
             default:
