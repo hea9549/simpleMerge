@@ -10,17 +10,14 @@ import Model.CenterModel;
 import Model.ModelProvider;
 import Model.ViewerModel;
 import Util.AttributeUtil;
-import com.oracle.tools.packager.Log;
 import org.junit.Before;
 import org.junit.Test;
-
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.StyledDocument;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -40,7 +37,7 @@ public class CenterControllerTest {
     StyledDocument styledDocument1 = new DefaultStyledDocument();
     StyledDocument styledDocument2 = new DefaultStyledDocument();
     ActionListener compareAction,mergeLeftAction,mergeRightAction,upperAction,lowerAction,leftEditAction,rightEditAction;
-    JButton testButton = new JButton();
+    JButton testButton,leftEditButton,rightEditButton,compareButton = new JButton();
     String string1 = "hi my name is Byunghoon\nhihi\nkkk\nlolo";
     String string2 = "hi my name is Gunmo\nhihi\naki\nlolo";
 
@@ -148,17 +145,14 @@ public class CenterControllerTest {
         leftEditAction = leftController.getEventListener(DataId.ACTION_VIEWER_BTN_EDIT,styledDocument1);
         rightEditAction = rightController.getEventListener(DataId.ACTION_VIEWER_BTN_EDIT,styledDocument2);
 
-        JButton leftEditButton = new JButton();
         leftEditButton.addActionListener(leftEditAction);
-        leftEditButton.doClick();
-        leftEditButton.doClick();
-        JButton rightEditButton = new JButton();
         rightEditButton.addActionListener(rightEditAction);
-        rightEditButton.doClick();
-        rightEditButton.doClick();
-
-        JButton compareButton = new JButton();
         compareButton.addActionListener(compareAction);
+
+        leftEditButton.doClick();
+        leftEditButton.doClick();
+        rightEditButton.doClick();
+        rightEditButton.doClick();
         compareButton.doClick();
 
         testButton.addActionListener(lowerAction);
