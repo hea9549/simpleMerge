@@ -22,6 +22,7 @@ public class ViewerPanel extends JPanel implements Observer {
     JTextPane jTextPane;
     JScrollPane scroll;
     StyledDocument styledDocument;
+    Font font;
     ViewController controller;
     public ViewerPanel(ViewController controller) {
         this.controller =controller;
@@ -37,6 +38,10 @@ public class ViewerPanel extends JPanel implements Observer {
         };
         jTextPane = new JTextPane();
         jTextPane.setContentType("text/html");
+
+        font=new Font("돋움",Font.PLAIN,20);
+        setJTextPaneFont(jTextPane, font);
+
         scroll=new JScrollPane(jTextPane){
             @Override
             public Dimension getPreferredSize() {
@@ -44,7 +49,6 @@ public class ViewerPanel extends JPanel implements Observer {
             }
         };
         scroll.setViewportView(jTextPane);
-        //scroll.getViewport().add(jTextPane);
         setMenuPanel();
         add(menuPanel);
         add(scroll);
@@ -70,14 +74,23 @@ public class ViewerPanel extends JPanel implements Observer {
         menuPanel.add(btn_load);
         menuPanel.add(btn_edit);
         menuPanel.add(btn_save);
-        //menuPanel.setBackground(new Color(239, 206, 197));
         menuPanel.setBackground(new Color(245, 210, 227));
-        //menuPanel.setBackground(new Color(50,0,10));
     }
 
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(600, 700);
+    }
+
+    public static void setJTextPaneFont(JTextPane jtp, Font font) {
+        MutableAttributeSet attrs = jtp.getInputAttributes();
+
+        StyleConstants.setFontFamily(attrs, font.getFamily());
+        StyleConstants.setFontSize(attrs, font.getSize() * 1);
+
+        StyledDocument doc = jtp.getStyledDocument();
+
+        doc.setCharacterAttributes(0, doc.getLength() + 1, attrs, false);
     }
 
     private void updateContent(ArrayList<ComparableBlock> contentsBlock) {
@@ -105,6 +118,7 @@ public class ViewerPanel extends JPanel implements Observer {
         switch (updateEvent.getId()){
             case UPDATE_VIEWER_CONTENT:
                 updateContent((ArrayList)updateEvent.getObject());
+                setJTextPaneFont(jTextPane, font);
                 break;
             case UPDATE_VIEWER_CAN_EDIT:
                 if((Boolean)updateEvent.getObject()){
