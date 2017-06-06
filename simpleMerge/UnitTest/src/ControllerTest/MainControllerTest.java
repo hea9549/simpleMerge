@@ -33,7 +33,7 @@ public class MainControllerTest {
     public CenterModel centerModel;
     public ArrayList<ComparableBlock> testLeftBlocks = new ArrayList<>();
     public ArrayList<ComparableBlock> testRightBlocks = new ArrayList<>();
-    String string1 = "abc";
+    String string1 = "abc qoueu fgqbgu soqperl";
     String string2 = "abc wioe giji woqw";
 
     @Before

@@ -93,34 +93,5 @@ public class ViewerControllerTest {
         assertFalse(leftModel.isEditing());
         assertTrue(leftModel.getContentsBlock().get(0).getContents().get(0).getContentString().equals("abcd"));
     }
-    @Test
-    public void testLoadAction(){
-        ActionListener underTest = viewerController.getEventListener(DataId.ACTION_VIEWER_BTN_LOAD);
-        JButton testButton = new JButton();
-        testButton.addActionListener(underTest);
-        testButton.doClick();
-        /*private void loadAction() {
-            File file;
-            FileService fileService = new TextFileService();
-            ArrayList<ComparableString> contents = fileService.getContents(file = fileService.getFilePath());
-            model.setFile(file);
-            ArrayList<ComparableBlock> comparableBlocks = new ArrayList<>();
-            if(contents!= null){
-                comparableBlocks.add(new ComparableBlock(ComparableBlock.DEFAULT,contents));
-            }
-            model.setContentsBlock(comparableBlocks);
-            checkCanCompare();
-        }*/
-
-        //맥이라 테스트를 진행할수없음. 테스트 요망
-    }
-    @Test
-    public void testSaveAction(){
-        ActionListener underTest = viewerController.getEventListener(DataId.ACTION_VIEWER_BTN_SAVE);
-        JButton testButton = new JButton();
-        testButton.addActionListener(underTest);
-        testButton.doClick();
-
-
-    }
+   
 }
