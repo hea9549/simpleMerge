@@ -16,7 +16,6 @@ public class MainFrame extends JFrame implements Observer{
     private JButton btn = new JButton("버튼 아이디 1");
     private ViewController controller;
 
-
     public MainFrame(ViewController mainController, ViewController leftViewerController, ViewController rightViewerController, ViewController centerController){
         super("Simple Merge");
         this.controller = mainController;

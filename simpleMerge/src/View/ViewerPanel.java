@@ -24,6 +24,7 @@ public class ViewerPanel extends JPanel implements Observer {
     StyledDocument styledDocument;
     Font font;
     ViewController controller;
+
     public ViewerPanel(ViewController controller) {
         this.controller =controller;
         this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
@@ -33,7 +34,7 @@ public class ViewerPanel extends JPanel implements Observer {
         menuPanel = new JPanel(new FlowLayout()){
             @Override
             public Dimension getPreferredSize() {
-                return new Dimension(600,70);
+                return new Dimension(600,50);
             }
         };
         jTextPane = new JTextPane();
@@ -45,7 +46,7 @@ public class ViewerPanel extends JPanel implements Observer {
         scroll=new JScrollPane(jTextPane){
             @Override
             public Dimension getPreferredSize() {
-                return new Dimension(600,630);
+                return new Dimension(600,650);
             }
         };
         scroll.setViewportView(jTextPane);
