@@ -1,19 +1,16 @@
 package ControllerTest;
 
-import Controller.CenterController;
 import Controller.MainController;
 import Data.*;
-import Model.CenterModel;
 import Model.ViewerModel;
+import Service.ContentService;
 import org.easymock.EasyMock;
 import org.easymock.IAnswer;
 import org.easymock.Mock;
 import org.easymock.TestSubject;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import static org.easymock.EasyMock.createMock;
 
