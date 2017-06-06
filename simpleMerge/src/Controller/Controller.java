@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by ParkHaeSung on 2017-06-02.
  */
-public interface Controller {
-    ActionListener getActionListener(DataId id);
-    ActionListener getActionListener(DataId id,Object extraData);
+public interface Controller <T> {
+    T getEventListener(DataId id);
+    T getEventListener(DataId id,Object extraData);
 }

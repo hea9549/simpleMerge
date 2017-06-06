@@ -1,6 +1,6 @@
 package View;
 
-import Controller.Controller;
+import Controller.ViewController;
 import Observer.*;
 import javax.swing.*;
 import java.awt.*;
@@ -14,10 +14,10 @@ public class MainFrame extends JFrame implements Observer{
     private TopMenuPanel topMenuPanel;
     private CenterMenuPanel centerMenuPanel;
     private JButton btn = new JButton("버튼 아이디 1");
-    private Controller controller;
+    private ViewController controller;
 
 
-    public MainFrame(Controller mainController,Controller leftViewerController,Controller rightViewerController, Controller centerController){
+    public MainFrame(ViewController mainController, ViewController leftViewerController, ViewController rightViewerController, ViewController centerController){
         super("Simple Merge");
         this.controller = mainController;
         leftViewer = new ViewerPanel(leftViewerController);

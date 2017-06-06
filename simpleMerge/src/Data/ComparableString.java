@@ -2,8 +2,7 @@ package Data;
 
 /**
  * @author ParkHaeSung
- * @apiNote
- * DEFAULT = 빈내용으로 객체 설정
+ * @apiNote DEFAULT = 빈내용으로 객체 설정
  * EQUAL = 같은 인덱스의 반대 String 과 내용이 같음.
  * DIFF = 같은 인덱스의 반대 String 과 내용이 다름.
  * ADDED = 반대 스트링에 없는 내용임 ( 추가됨 )
@@ -19,12 +18,15 @@ public class ComparableString {
     private byte state = 0b00000000;
     private String contentString;
 
-    private ComparableString(byte state, String content){
-        this.state =state;
+    private ComparableString(byte state, String content) {
+        this.state = state;
         this.contentString = content;
     }
 
-    public boolean isDefaultString() { return state == DEFAULT;}
+    public boolean isDefaultString() {
+        return state == DEFAULT;
+    }
+
     public boolean isEqualString() {
         return (EQUAL & state) == EQUAL;
     }
@@ -51,18 +53,18 @@ public class ComparableString {
 
     /**
      * if state is not Diff or already Empty, return false
-     * */
+     */
     public boolean setEmpty() {
-        if((state&(DIFF+EMPTY)) != 0)return false;
+        if ((state & (DIFF + EMPTY)) != 0) return false;
         state += EMPTY;
         return true;
     }
 
     /**
      * if state is not Diff or already Empty, return false
-     * */
+     */
     public boolean setAdded() {
-        if((state&(DIFF+ADDED)) != 0)return false;
+        if ((state & (DIFF + ADDED)) != 0) return false;
         state += ADDED;
         return true;
     }
@@ -82,8 +84,8 @@ public class ComparableString {
     public static class Builder {
         private byte state = 0;
         private String content = "";
+
         public Builder setFlags(byte... param) {
-            System.out.println("빌더 속인데요 파람은 = "+param[0]);
             for (int i = 0; i < param.length; i++) {
                 if (param[i] == EQUAL) state += EQUAL;
                 if (param[i] == DIFF) state += DIFF;
@@ -95,18 +97,24 @@ public class ComparableString {
 
         public ComparableString build() {
             checkValid();
-            return new ComparableString(state,content);
+            return new ComparableString(state, content);
         }
 
 
-        public Builder setContent(String content){
+        public Builder setContent(String content) {
             this.content = content;
             return this;
         }
 
         private void checkValid() {
-            if((ADDED & state) == ADDED && (EMPTY & state) == EMPTY)throw new IllegalArgumentException("더해진것과 빈게 동시에 있을 수 없음");
-            if((EQUAL & state) == EQUAL&& (DIFF & state) == DIFF) throw new IllegalArgumentException("같음과 다름이 동시에 존재할 수 없음");
+            if ((ADDED & state) == ADDED && (EMPTY & state) == EMPTY)
+                throw new IllegalArgumentException("더해진것과 빈게 동시에 있을 수 없음");
+            if ((EQUAL & state) == EQUAL && (DIFF & state) == DIFF)
+                throw new IllegalArgumentException("같음과 다름이 동시에 존재할 수 없음");
         }
+    }
+
+    public boolean isSame(ComparableString strToCompare) {
+        return (this.getContentString().compareTo(strToCompare.getContentString()) == 0);
     }
 }

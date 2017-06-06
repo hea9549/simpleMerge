@@ -14,10 +14,12 @@ import java.util.ArrayList;
 public class ViewerModel extends Observable {
     private ArrayList<ComparableBlock> contentsBlock;
     private boolean canEdit = false;
+    private boolean canSave = false;
     private boolean isEditing = false;
     private File file;
     public void viewerModelInit(){
         setEditing(false);
+        setCanSave(false);
     }
 
     public void setContentsBlock(ArrayList<ComparableBlock> contentsBlock) {
@@ -53,5 +55,37 @@ public class ViewerModel extends Observable {
     public void setEditing(boolean editing) {
         isEditing = editing;
         notifyChange(new UpdateEvent(DataId.UPDATE_VIEWER_IS_EDITING, isEditing));
+    }
+
+    public boolean isCanSave() {
+        return canSave;
+    }
+
+    public void setCanSave(boolean canSave) {
+        this.canSave = canSave;
+        notifyChange(new UpdateEvent(DataId.UPDATE_VIEWER_CAN_SAVE,canSave));
+    }
+
+    @Override
+    public String toString(){
+        String str = "";
+        for(int i = 0;i<contentsBlock.size();i++){
+            for(int j = 0 ; j<contentsBlock.get(i).getContents().size();j++){
+                if(j == contentsBlock.get(i).getContents().size()-1)str += contentsBlock.get(i).getContents().get(j).getContentString();
+                else str += contentsBlock.get(i).getContents().get(j).getContentString()+"\n";
+            }
+        }
+
+        return str;
+    }
+
+    public ArrayList<String> getRawData(){
+        ArrayList<String> datas = new ArrayList<>();
+        for(int i = 0;i<contentsBlock.size();i++){
+            for(int j = 0 ; j<contentsBlock.get(i).getContents().size();j++){
+                datas.add(contentsBlock.get(i).getContents().get(j).getContentString());
+            }
+        }
+        return datas;
     }
 }
