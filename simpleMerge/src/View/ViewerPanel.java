@@ -9,6 +9,7 @@ import Observer.*;
 import javax.swing.*;
 import javax.swing.text.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import Util.AttributeUtil;
@@ -81,6 +82,7 @@ public class ViewerPanel extends JPanel implements Observer {
         //menuPanel.setBackground(new Color(239, 206, 197));
         menuPanel.setBackground(new Color(245, 210, 227));
         //menuPanel.setBackground(new Color(50,0,10));
+
     }
 
     @Override
