@@ -64,6 +64,11 @@ public class ViewerPanel extends JPanel implements Observer {
         btn_edit.setContentAreaFilled(false);
         btn_edit.setBorderPainted(false);
         btn_edit.addActionListener(controller.getEventListener(DataId.ACTION_VIEWER_BTN_EDIT, jTextPane.getStyledDocument()));
+        btn_edit.addActionListener(i->{
+            StyledDocument styledDocument = jTextPane.getStyledDocument();
+            styledDocument.setCharacterAttributes(0,styledDocument.getLength(),AttributeUtil.getDefaultAttribute(),false);
+            jTextPane.setDocument(styledDocument);
+        });
 
         btn_save.setOpaque(false);
         btn_save.setContentAreaFilled(false);
