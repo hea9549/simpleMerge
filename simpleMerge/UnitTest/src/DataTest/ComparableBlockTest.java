@@ -2,12 +2,11 @@ package DataTest;
 
 import Data.ComparableBlock;
 import Data.ComparableString;
-import org.junit.Before;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static junit.framework.TestCase.assertEquals;
 
 /**
  * Created by jgm on 6/2/17.
