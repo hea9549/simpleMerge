@@ -48,7 +48,6 @@ public class CenterControllerTest {
         mainController = new MainController();
         centerController = new CenterController((CenterModel)ModelProvider.getInstance().getModel("centerModel"));
         centerModel = (CenterModel)ModelProvider.getInstance().getModel("centerModel");
-
         leftModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");
         rightModel = (ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel");
         leftController = new ViewerController(leftModel);
@@ -57,21 +56,14 @@ public class CenterControllerTest {
         leftEditButton = new JButton();
         rightEditButton = new JButton();
         compareButton = new JButton();
-
         styledDocument1.insertString(0,string1, AttributeUtil.getAddedAttribute());
         styledDocument2.insertString(0,string2, AttributeUtil.getAddedAttribute());
-
         ComparableBlock testLeftBlock1 = new ComparableBlock(ComparableBlock.DIFF);
-        ComparableString testLeftString1 = new ComparableString.Builder()
-                .setFlags(ComparableString.DIFF)
-                .setContent(string1).build();
+        ComparableString testLeftString1 = new ComparableString.Builder().setFlags(ComparableString.DIFF).setContent(string1).build();
         testLeftBlock1.addContents(testLeftString1);
         testLeftBlocks.add(testLeftBlock1);
-
         ComparableBlock testRightBlock1 = new ComparableBlock(ComparableBlock.DIFF);
-        ComparableString testRightString1 = new ComparableString.Builder()
-                .setFlags(ComparableString.DIFF)
-                .setContent(string2).build();
+        ComparableString testRightString1 = new ComparableString.Builder().setFlags(ComparableString.DIFF).setContent(string2).build();
         testRightBlock1.addContents(testRightString1);
 
         testRightBlocks.add(testRightBlock1);
@@ -121,35 +113,68 @@ public class CenterControllerTest {
 
     }
     @Test
-    public void testActionButtonUpper(){
-
-
-        JButton leftEditButton = new JButton();
+    public void testSegmentMergeLeftAction(){
+        JButton test1Button = new JButton();
+        test1Button.addActionListener(upperAction);
         leftEditButton.addActionListener(leftEditAction);
-        leftEditButton.doClick();
-        leftEditButton.doClick();
-        JButton rightEditButton = new JButton();
         rightEditButton.addActionListener(rightEditAction);
-        rightEditButton.doClick();
-        rightEditButton.doClick();
-
-        JButton compareButton = new JButton();
         compareButton.addActionListener(compareAction);
-        compareButton.doClick();
+        testButton.addActionListener(mergeLeftAction);
 
-        testButton.addActionListener(upperAction);
+        leftEditButton.doClick();
+        leftEditButton.doClick();
+        rightEditButton.doClick();
+        rightEditButton.doClick();
+        compareButton.doClick();
+        test1Button.doClick();
         testButton.doClick();
 
+        assertEquals("hi my name is Gunmo\nhihi\nkkk\nlolo",leftModel.toString());
+
+    }
+    @Test
+    public void testSegmentMergeRightAction(){
+        JButton test1Button = new JButton();
+        test1Button.addActionListener(upperAction);
+        leftEditButton.addActionListener(leftEditAction);
+        rightEditButton.addActionListener(rightEditAction);
+        compareButton.addActionListener(compareAction);
+        testButton.addActionListener(mergeRightAction);
+
+        leftEditButton.doClick();
+        leftEditButton.doClick();
+        rightEditButton.doClick();
+        rightEditButton.doClick();
+        compareButton.doClick();
+        test1Button.doClick();
+        testButton.doClick();
+
+        assertEquals("hi my name is Byunghoon\nhihi\naki\nlolo",rightModel.toString());
+
+    }
+    @Test
+    public void testUpperAction (){
+
+        leftEditButton.addActionListener(leftEditAction);
+        rightEditButton.addActionListener(rightEditAction);
+        compareButton.addActionListener(compareAction);
+        testButton.addActionListener(upperAction);
+        leftEditButton.doClick();
+        leftEditButton.doClick();
+        rightEditButton.doClick();
+        rightEditButton.doClick();
+        compareButton.doClick();
+        testButton.doClick();
         assertEquals(0,centerModel.getCompareBlockIndex());
 
     }
     @Test
-    public void testActionButtonLower() throws BadLocationException {
+    public void testLowerAction() {
 
-        lowerAction = centerController.getEventListener(DataId.ACTION_BTN_LOWER);
         leftEditButton.addActionListener(leftEditAction);
         rightEditButton.addActionListener(rightEditAction);
         compareButton.addActionListener(compareAction);
+        testButton.addActionListener(lowerAction);
 
         leftEditButton.doClick();
         leftEditButton.doClick();
@@ -157,7 +182,6 @@ public class CenterControllerTest {
         rightEditButton.doClick();
         compareButton.doClick();
 
-        testButton.addActionListener(lowerAction);
         testButton.doClick();
         assertEquals(2,centerModel.getCompareBlockIndex());
 

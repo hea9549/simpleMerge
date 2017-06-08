@@ -70,7 +70,7 @@ public class ViewerControllerTest {
         styledDocument.insertString(0,string1, AttributeUtil.getAddedAttribute());
     }
     @Test
-    public void testEditActionEditingFalse(){
+    public void testChangeEditingFalse(){
         ActionListener underTest = viewerController.getEventListener(DataId.ACTION_VIEWER_BTN_EDIT);
         leftModel.setEditing(false);
         JButton testButton = new JButton();
@@ -83,7 +83,7 @@ public class ViewerControllerTest {
         assertFalse(topModel.isCanRightAll());
     }
     @Test
-    public void testEditActionEditingTrue(){
+    public void testChangeEditingTrue(){
 
         ActionListener underTest = viewerController.getEventListener(DataId.ACTION_VIEWER_BTN_EDIT,styledDocument);
         leftModel.setEditing(true);
