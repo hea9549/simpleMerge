@@ -1,8 +1,9 @@
 package DataTest;
 
 import Data.ComparableString;
-import Data.FileService;
-import Data.TextFileService;
+
+import Service.FileService;
+
 
 import java.io.*;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
  * Created by jgm on 6/4/17.
  */
 public class RunFileService {
+
     FileService fs;
 
     public void setFs(FileService fs){
@@ -34,7 +36,7 @@ public class RunFileService {
     public File getFilePath(){
         System.out.println("Get File Path Test  ");
 
-        return new File("C:\\");
+        return new File("/home/jgm");
     }
 
     public void saveFile(File fileToSave, ArrayList<String> contentsToSave, String fileName){

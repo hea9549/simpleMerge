@@ -31,8 +31,13 @@ public class AttributeUtil {
         return emptyAttribute;
     }
 
-    public static SimpleAttributeSet setClickAttribute(SimpleAttributeSet attributeSet){
-        StyleConstants.setBackground(attributeSet,StyleConstants.getBackground(attributeSet).brighter());
+    public static SimpleAttributeSet getClickAttribute(){
+        SimpleAttributeSet select = new SimpleAttributeSet();
+        StyleConstants.setBackground(select, Color.magenta);
+        return select;
+    }
+    public static SimpleAttributeSet setUnClickAttribute(SimpleAttributeSet attributeSet){
+        StyleConstants.setBackground(attributeSet,StyleConstants.getBackground(attributeSet).darker());
         return attributeSet;
     }
 }

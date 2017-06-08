@@ -2,53 +2,49 @@ package ControllerTest;
 
 import Controller.CenterController;
 import Controller.MainController;
-import Controller.ViewerController;
 import Data.ComparableBlock;
 import Data.ComparableString;
 import Data.DataId;
 import Model.CenterModel;
 import Model.ModelProvider;
-import Model.TopModel;
 import Model.ViewerModel;
-import Util.AttributeUtil;
 import org.junit.Before;
 import org.junit.Test;
-//import sun.plugin.javascript.navig.Document;
 
 import javax.swing.*;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.DefaultStyledDocument;
-import javax.swing.text.StyledDocument;
+import javax.swing.text.View;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertTrue;
+import static Data.DataId.ACTION_BTN_LEFT_ALL;
+import static Data.DataId.ACTION_BTN_RIGHT_ALL;
+import static Data.DataId.ACTION_BTN_SAVE_ALL;
+import static junit.framework.TestCase.assertEquals;
 
 /**
- * Created by ParkHaeSung on 2017-06-01.
+ * Created by chaebyeonghun on 2017. 6. 5..
  */
-public class ViewerControllerTest {
+public class MainControllerTest {
+
     public MainController mainController;
-    public ViewerController viewerController;
+    public CenterController centerController;
     public ViewerModel leftModel,rightModel;
     public CenterModel centerModel;
-    public TopModel topModel;
     public ArrayList<ComparableBlock> testLeftBlocks = new ArrayList<>();
     public ArrayList<ComparableBlock> testRightBlocks = new ArrayList<>();
-    String string1 = "abc";
+    String string1 = "abc qoueu fgqbgu soqperl";
     String string2 = "abc wioe giji woqw";
-    String testString = "liooo";
+
     @Before
     public void init(){
         testRightBlocks.clear();
         testLeftBlocks.clear();
         mainController = new MainController();
+        centerController = new CenterController((CenterModel)ModelProvider.getInstance().getModel("centerModel"));
         centerModel = (CenterModel)ModelProvider.getInstance().getModel("centerModel");
+
         leftModel = (ViewerModel)ModelProvider.getInstance().getModel("leftViewerModel");
         rightModel = (ViewerModel)ModelProvider.getInstance().getModel("rightViewerModel");
-        topModel = (TopModel)ModelProvider.getInstance().getModel("topModel");
-        viewerController = new ViewerController(leftModel);
 
         ComparableBlock testLeftBlock1 = new ComparableBlock(ComparableBlock.DIFF);
         ComparableString testLeftString1 = new ComparableString.Builder()
@@ -68,30 +64,23 @@ public class ViewerControllerTest {
         rightModel.setContentsBlock(testRightBlocks);
     }
     @Test
-    public void testEditActionEditingFalse(){
-        ActionListener underTest = viewerController.getEventListener(DataId.ACTION_VIEWER_BTN_EDIT);
-        leftModel.setEditing(false);
+    public void testLeftAllAction(){
+
+        ActionListener underTest = mainController.getEventListener(ACTION_BTN_LEFT_ALL);
         JButton testButton = new JButton();
         testButton.addActionListener(underTest);
         testButton.doClick();
-        assertFalse(leftModel.isCanSave());
-        assertTrue(leftModel.isEditing());
-        assertFalse(centerModel.isCanCompare());
-        assertFalse(topModel.isCanLeftAll());
-        assertFalse(topModel.isCanRightAll());
+        assertEquals(string2,leftModel.toString());
+
     }
     @Test
-    public void testEditActionEditingTrue() throws BadLocationException {
-        StyledDocument styledDocument = new DefaultStyledDocument();
-        styledDocument.insertString(0,"abcd", AttributeUtil.getAddedAttribute());
-        ActionListener underTest = viewerController.getEventListener(DataId.ACTION_VIEWER_BTN_EDIT,styledDocument);
-        leftModel.setEditing(true);
+    public void testRightAllAction(){
+        ActionListener underTest = mainController.getEventListener(ACTION_BTN_RIGHT_ALL);
         JButton testButton = new JButton();
         testButton.addActionListener(underTest);
         testButton.doClick();
-        assertTrue(leftModel.isCanSave());
-        assertFalse(leftModel.isEditing());
-        assertTrue(leftModel.getContentsBlock().get(0).getContents().get(0).getContentString().equals("abcd"));
+        assertEquals(string1,rightModel.toString());
+
     }
-   
+
 }

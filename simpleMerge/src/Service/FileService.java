@@ -1,4 +1,6 @@
-package Data;
+package Service;
+
+import Data.ComparableString;
 
 import java.io.File;
 import java.util.ArrayList;
