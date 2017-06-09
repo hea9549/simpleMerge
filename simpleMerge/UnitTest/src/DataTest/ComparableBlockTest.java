@@ -1,21 +1,18 @@
 package DataTest;
 
+
 import Data.ComparableBlock;
 import Data.ComparableString;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by jgm on 6/2/17.
  */
 public class ComparableBlockTest {
-
-
-
-
 
     @Test
     void getCountTest(){

@@ -13,7 +13,7 @@ import Model.ViewerModel;
 import Util.AttributeUtil;
 import org.junit.Before;
 import org.junit.Test;
-import sun.plugin.javascript.navig.Document;
+//import sun.plugin.javascript.navig.Document;
 
 import javax.swing.*;
 import javax.swing.text.BadLocationException;

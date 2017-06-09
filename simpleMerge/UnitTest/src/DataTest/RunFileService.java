@@ -1,36 +1,57 @@
 package DataTest;
 
 import Data.ComparableString;
+
 import Service.FileService;
 
-import java.io.File;
+
+import java.io.*;
 import java.util.ArrayList;
 
 /**
  * Created by jgm on 6/4/17.
  */
 public class RunFileService {
-/*
+
     FileService fs;
 
     public void setFs(FileService fs){
         this.fs = fs;
     }
 
-    public ArrayList<ComparableString> getContents(String filePath){
+    public ArrayList<ComparableString> getContents(File file){
         System.out.println("Get Contents Test  ");
-        return fs.getContents(filePath);
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            br.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 
-    public String getFilePath(){
+    public File getFilePath(){
         System.out.println("Get File Path Test  ");
-        return fs.getFilePath();
+
+        return new File("/home/jgm");
     }
 
-    public void saveFile(File fileToSave, ArrayList<String> contentsToSave){
+    public void saveFile(File fileToSave, ArrayList<String> contentsToSave, String fileName){
         System.out.println("Save File Test  ");
-        fs.saveFile(fileToSave, contentsToSave);
-    }
-*/
+        BufferedWriter bw = null;
+        fileToSave = new File(fileToSave.getAbsolutePath()+"/"+fileName);
 
+        try {
+            bw = new BufferedWriter(new FileWriter(fileToSave));
+            System.out.println("file made");
+            bw.write("");
+            bw.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -12,6 +12,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+/*<<<<<<< HEAD*/
+
+import static org.easymock.EasyMock.*;
+/*=======
+>>>>>>> 210393f4aa42fa904a0d5d1159e5a25537677a56*/
 import static org.easymock.EasyMock.createMock;
 
 /**
