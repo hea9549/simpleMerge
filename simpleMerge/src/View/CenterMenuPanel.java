@@ -11,22 +11,22 @@ import java.awt.*;
  */
 public class CenterMenuPanel extends JPanel implements Observer {
 
-    JButton btn_right=new JButton(new ImageIcon("img/right.png"));
-    JButton btn_left=new JButton(new ImageIcon("img/left.png"));
-    JButton btn_up=new JButton(new ImageIcon("img/up.png"));
-    JButton btn_down=new JButton(new ImageIcon("img/down.png"));
-    JButton btn_compare=new JButton(new ImageIcon("img/compare.png"));
+    JButton btn_right=new JButton(new ImageIcon(getClass().getClassLoader().getResource("right.png")));
+    JButton btn_left=new JButton(new ImageIcon(getClass().getClassLoader().getResource("left.png")));
+    JButton btn_up=new JButton(new ImageIcon(getClass().getClassLoader().getResource("up.png")));
+    JButton btn_down=new JButton(new ImageIcon(getClass().getClassLoader().getResource("down.png")));
+    JButton btn_compare=new JButton(new ImageIcon(getClass().getClassLoader().getResource("compare.png")));
 
     ViewController controller;
     CenterMenuPanel(ViewController controller){
         setLayout(null);
         this.controller = controller;
 
-        btn_right.setDisabledIcon(new ImageIcon("img/gray_right.png"));
-        btn_left.setDisabledIcon(new ImageIcon("img/gray_left.png"));
-        btn_up.setDisabledIcon(new ImageIcon("img/gray_up.png"));
-        btn_down.setDisabledIcon(new ImageIcon("img/gray_down.png"));
-        btn_compare.setDisabledIcon(new ImageIcon("img/gray_compare.png"));
+        btn_right.setDisabledIcon(new ImageIcon(getClass().getClassLoader().getResource("gray_right.png")));
+        btn_left.setDisabledIcon(new ImageIcon(getClass().getClassLoader().getResource("gray_left.png")));
+        btn_up.setDisabledIcon(new ImageIcon(getClass().getClassLoader().getResource("gray_up.png")));
+        btn_down.setDisabledIcon(new ImageIcon(getClass().getClassLoader().getResource("gray_down.png")));
+        btn_compare.setDisabledIcon(new ImageIcon(getClass().getClassLoader().getResource("gray_compare.png")));
 
         btn_right.setSize(50,50);
         btn_right.setLocation(40, 80);
@@ -114,7 +114,6 @@ public class CenterMenuPanel extends JPanel implements Observer {
                 }
                 break;
             case UPDATE_CENTER_CAN_COMPARE:
-                System.out.println("컴페어가능여부가 도착했어요! ="+(Boolean)updateEvent.getObject());
                 if((Boolean)updateEvent.getObject()){
                     btn_compare.setEnabled(true);
                 }

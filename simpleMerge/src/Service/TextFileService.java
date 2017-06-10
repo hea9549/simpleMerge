@@ -26,7 +26,7 @@ public class TextFileService implements FileService {
                 contents.add(new ComparableString.Builder().setFlags(ComparableString.DEFAULT).setContent(s).build());
             }
             in.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "File Select Error. please reselect File", "error", JOptionPane.ERROR_MESSAGE);
             return null;
         }

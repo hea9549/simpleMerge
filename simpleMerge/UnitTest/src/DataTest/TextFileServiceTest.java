@@ -25,7 +25,7 @@ public class  TextFileServiceTest{
     @Test
     public void getContentsTest() {
         System.out.println("GetContentsTest Start");
-        File file = new File("/home/jgm/title.txt");
+        File file = new File("C:\\Users\\ParkHaeSung\\Desktop\\2017컴공\\title.txt");
         mock = createMock(FileService.class);
         runner = new RunFileService();
         runner.setFs(mock);
@@ -38,7 +38,7 @@ public class  TextFileServiceTest{
     @Test
     public void getFilePathTest(){
         System.out.println("GetFilePathTest Start");
-        File fm = new File("/home/jgm");
+        File fm = new File("C:\\Users\\ParkHaeSung\\Desktop\\2017컴공\\");
         mock = createMock(FileService.class);
         runner = new RunFileService();
         runner.setFs(mock);
@@ -51,7 +51,7 @@ public class  TextFileServiceTest{
     @Test
     public void SaveFileTest(){
         System.out.println("SaveFileTest Start");
-        File fileToSave = new File("/home/jgm");
+        File fileToSave = new File("C:\\Users\\ParkHaeSung\\Desktop\\2017컴공\\");
         ArrayList<String> contentsToSave = new ArrayList<>();
         String optionTitleString = new String("title.txt");
         File result = new File(fileToSave.getAbsoluteFile()+"/" + optionTitleString);

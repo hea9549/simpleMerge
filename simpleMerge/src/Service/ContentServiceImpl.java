@@ -33,14 +33,6 @@ public class ContentServiceImpl implements ContentService {
         }
 
         contents = runLCSAlgorithm(leftStringSet, rightStringSet);
-
-        leftContent = contents[0];
-        rightContent = contents[1];
-        for (int i = 0; i < leftContent.size(); i++) {
-            for (int j = 0; j < leftContent.get(i).getContents().size(); j++) {
-                System.out.println("알고리즘 속 왼쪽꺼 , state = " + leftContent.get(i).getContents().get(j).getState());
-            }
-        }
         return contents;
     }
 
@@ -111,13 +103,6 @@ public class ContentServiceImpl implements ContentService {
                 else
                     scoreMatrix[i][j] = scoreMatrix[i - 1][j];
             }
-        }
-
-        for (int i = 0; i < leftStrListSize + 1; i++) {
-            for (int j = 0; j < rightStrListSize + 1; j++)
-                System.out.print(scoreMatrix[i][j]);
-
-            System.out.println();
         }
 
         int idx_left = leftStrListSize;

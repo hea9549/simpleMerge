@@ -36,7 +36,7 @@ public class RunFileService {
     public File getFilePath(){
         System.out.println("Get File Path Test  ");
 
-        return new File("/home/jgm");
+        return new File("C:\\Users\\ParkHaeSung\\Desktop\\2017컴공\\");
     }
 
     public void saveFile(File fileToSave, ArrayList<String> contentsToSave, String fileName){

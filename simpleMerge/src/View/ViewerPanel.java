@@ -19,9 +19,9 @@ import Util.AttributeUtil;
  */
 public class ViewerPanel extends JPanel implements Observer {
     JPanel menuPanel;
-    JButton btn_load = new JButton(new ImageIcon("img/folder.png"));
-    JButton btn_edit = new JButton(new ImageIcon("img/edit.png"));
-    JButton btn_save = new JButton(new ImageIcon("img/save.png"));
+    JButton btn_load = new JButton(new ImageIcon(getClass().getClassLoader().getResource("folder.png")));
+    JButton btn_edit = new JButton(new ImageIcon(getClass().getClassLoader().getResource("edit.png")));
+    JButton btn_save = new JButton(new ImageIcon(getClass().getClassLoader().getResource("save.png")));
     JTextPane jTextPane;
     JScrollPane scroll;
     StyledDocument styledDocument;
@@ -31,9 +31,9 @@ public class ViewerPanel extends JPanel implements Observer {
     public ViewerPanel(ViewController controller) {
         this.controller = controller;
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        btn_load.setDisabledIcon(new ImageIcon("img/not_folder.png"));
-        btn_edit.setDisabledIcon(new ImageIcon("img/not_edit.png"));
-        btn_save.setDisabledIcon(new ImageIcon("img/not_save.png"));
+        btn_load.setDisabledIcon(new ImageIcon(getClass().getClassLoader().getResource("not_folder.png")));
+        btn_edit.setDisabledIcon(new ImageIcon(getClass().getClassLoader().getResource("not_edit.png")));
+        btn_save.setDisabledIcon(new ImageIcon(getClass().getClassLoader().getResource("not_save.png")));
         menuPanel = new JPanel(new FlowLayout()) {
             @Override
             public Dimension getPreferredSize() {
@@ -42,6 +42,8 @@ public class ViewerPanel extends JPanel implements Observer {
         };
         jTextPane = new JTextPane();
         jTextPane.setContentType("text/html");
+        DefaultCaret caret = (DefaultCaret) jTextPane.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
         font=new Font("돋움",Font.PLAIN,20);
         setJTextPaneFont(jTextPane, font);
 
@@ -103,10 +105,13 @@ public class ViewerPanel extends JPanel implements Observer {
 
     private void updateContent(ArrayList<ComparableBlock> contentsBlock) {
         styledDocument = jTextPane.getStyledDocument();
+
+        int focusOffset = 0;
         try {
             styledDocument.remove(0, styledDocument.getLength());
             for (ComparableBlock comparableBlock : contentsBlock) {
-                if (comparableBlock.isSelect()){
+                if (comparableBlock.isSelect()) {
+                    focusOffset = styledDocument.getLength();
                     for (ComparableString contents : comparableBlock.getContents()) {
                         styledDocument.insertString(styledDocument.getLength(), contents.getContentString() + "\n", AttributeUtil.getClickAttribute());
                     }
@@ -128,10 +133,11 @@ public class ViewerPanel extends JPanel implements Observer {
 
                 }
             }
+            setJTextPaneFont(jTextPane,font);
             jTextPane.setDocument(styledDocument);
+            jTextPane.setCaretPosition(focusOffset);
         } catch (BadLocationException e) {
             System.out.println("Exception occur in ViewerPanel");
-            //에러처리해야됨
         }
 
     }
@@ -141,8 +147,6 @@ public class ViewerPanel extends JPanel implements Observer {
         switch (updateEvent.getId()) {
             case UPDATE_VIEWER_CONTENT:
                 updateContent((ArrayList)updateEvent.getObject());
-                setJTextPaneFont(jTextPane, font);
-
                 break;
             case UPDATE_VIEWER_CAN_EDIT:
                 if ((Boolean) updateEvent.getObject()) {
@@ -154,10 +158,10 @@ public class ViewerPanel extends JPanel implements Observer {
             case UPDATE_VIEWER_IS_EDITING:
                 if ((Boolean) updateEvent.getObject()) {
                     jTextPane.setEditable(true);
-                    btn_edit.setIcon(new ImageIcon("img/red_edit.png"));
+                    btn_edit.setIcon(new ImageIcon(getClass().getClassLoader().getResource("red_edit.png")));
                 } else {
                     jTextPane.setEditable(false);
-                    btn_edit.setIcon(new ImageIcon("img/edit.png"));
+                    btn_edit.setIcon(new ImageIcon(getClass().getClassLoader().getResource("edit.png")));
                 }
                 break;
             case UPDATE_VIEWER_CAN_SAVE:

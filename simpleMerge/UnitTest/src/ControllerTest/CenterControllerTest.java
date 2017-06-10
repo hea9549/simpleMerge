@@ -37,7 +37,7 @@ public class CenterControllerTest {
     StyledDocument styledDocument1 = new DefaultStyledDocument();
     StyledDocument styledDocument2 = new DefaultStyledDocument();
     ActionListener compareAction,mergeLeftAction,mergeRightAction,upperAction,lowerAction,leftEditAction,rightEditAction;
-    JButton testButton,leftEditButton,rightEditButton,compareButton = new JButton();
+    JButton testButton= new JButton(),leftEditButton= new JButton(),rightEditButton= new JButton(),compareButton = new JButton();
     String string1 = "hi my name is Byunghoon\nhihi\nkkk\nlolo";
     String string2 = "hi my name is Gunmo\nhihi\naki\nlolo";
 
