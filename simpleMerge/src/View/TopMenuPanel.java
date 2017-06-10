@@ -15,8 +15,8 @@ public class TopMenuPanel extends JPanel implements Observer{
 
     JLabel lb_diffLine =new JLabel("Diff Line");
 
-    JButton btn_leftAll =new JButton(new ImageIcon("img/pink_leftAll.png"));
-    JButton btn_rightAll =new JButton(new ImageIcon("img/pink_rightAll.png"));
+    JButton btn_leftAll =new JButton(new ImageIcon(getClass().getClassLoader().getResource("pink_leftAll.png")));
+    JButton btn_rightAll =new JButton(new ImageIcon(getClass().getClassLoader().getResource("pink_rightAll.png")));
 
     Font f1;
     ViewController controller;
@@ -24,8 +24,8 @@ public class TopMenuPanel extends JPanel implements Observer{
     TopMenuPanel(ViewController controller){
         this.controller = controller;
         setLayout(null);
-        btn_leftAll.setDisabledIcon(new ImageIcon("img/gray_leftAll.png"));
-        btn_rightAll.setDisabledIcon(new ImageIcon("img/gray_rightAll.png"));
+        btn_leftAll.setDisabledIcon(new ImageIcon(getClass().getClassLoader().getResource("gray_leftAll.png")));
+        btn_rightAll.setDisabledIcon(new ImageIcon(getClass().getClassLoader().getResource("gray_rightAll.png")));
 
         btn_leftAll.setSize(80,80);
         btn_leftAll.setLocation(0, 10);

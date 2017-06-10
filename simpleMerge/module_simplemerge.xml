@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_simplemerge" default="compile.module.simplemerge">
+  <dirname property="module.simplemerge.basedir" file="${ant.file.module_simplemerge}"/>
+  
+  <property name="module.jdk.home.simplemerge" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.simplemerge" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.simplemerge" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.simplemerge" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="simplemerge.output.dir" value="${module.simplemerge.basedir}/out/production/simpleMerge"/>
+  <property name="simplemerge.testoutput.dir" value="${module.simplemerge.basedir}/out/test/simpleMerge"/>
+  
+  <path id="simplemerge.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="simplemerge.module.production.classpath">
+    <path refid="${module.jdk.classpath.simplemerge}"/>
+  </path>
+  
+  <path id="simplemerge.runtime.production.module.classpath">
+    <pathelement location="${simplemerge.output.dir}"/>
+  </path>
+  
+  <path id="simplemerge.module.classpath">
+    <path refid="${module.jdk.classpath.simplemerge}"/>
+    <pathelement location="${simplemerge.output.dir}"/>
+  </path>
+  
+  <path id="simplemerge.runtime.module.classpath">
+    <pathelement location="${simplemerge.testoutput.dir}"/>
+    <pathelement location="${simplemerge.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.simplemerge">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.simplemerge">
+    <patternset refid="excluded.from.module.simplemerge"/>
+  </patternset>
+  
+  <path id="simplemerge.module.sourcepath">
+    <dirset dir="${module.simplemerge.basedir}">
+      <include name="src"/>
+      <include name="img"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.simplemerge" depends="compile.module.simplemerge.production,compile.module.simplemerge.tests" description="Compile module simpleMerge"/>
+  
+  <target name="compile.module.simplemerge.production" depends="register.custom.compilers" description="Compile module simpleMerge; production classes">
+    <mkdir dir="${simplemerge.output.dir}"/>
+    <javac2 destdir="${simplemerge.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.simplemerge}/javac">
+      <compilerarg line="${compiler.args.simplemerge}"/>
+      <bootclasspath refid="simplemerge.module.bootclasspath"/>
+      <classpath refid="simplemerge.module.production.classpath"/>
+      <src refid="simplemerge.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.simplemerge"/>
+    </javac2>
+    
+    <copy todir="${simplemerge.output.dir}">
+      <fileset dir="${module.simplemerge.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.simplemerge.basedir}/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.simplemerge.tests" depends="register.custom.compilers,compile.module.simplemerge.production" description="compile module simpleMerge; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.simplemerge" description="cleanup module">
+    <delete dir="${simplemerge.output.dir}"/>
+    <delete dir="${simplemerge.testoutput.dir}"/>
+  </target>
+</project>
